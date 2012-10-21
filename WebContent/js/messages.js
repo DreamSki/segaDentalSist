@@ -85,8 +85,6 @@ function validateLogin(form) {
 
 function validateCreateProduct(form) {
 	  var name = form.txtNameProduct.value;
-	  var description = form.txtDescription.value;
-	  var isActive = form.txtIsActive.value;
 	  var price = form.txtPrice.value;
 	  
 	  if(name == "") {
@@ -100,7 +98,39 @@ function validateCreateProduct(form) {
 	  }
 	  
 	  return true;
-	}
+}
+
+function validatePayment(form) {
+	  var cardType = form.txtCardType.value;
+	  var numCard = form.numCard.value;
+	  var bank = form.txtBank.value;
+	  var ced = form.txtCedNumClient.value;
+	  var voucher = form.txtVoucher.value;
+		  
+	  if(cardType == "") {
+	    inlineMsg('txtCardType','Debe introducir el tipo de tarjeta del cliente.',2);
+	    return false;
+	  }
+	   if(numCard == "") {
+	    inlineMsg('numCard','Debe introducir el número de tarjeta del cliente.',2);
+	    return false;
+	  }
+	   if(bank == "") {
+	    inlineMsg('txtBank','Debe introducir el banco al que pertenece la tarjeta del cliente.',2);
+	    return false;
+	  }
+	   if(ced == "") {
+	    inlineMsg('txtCedNumClient','Debe introducir la cédula del cliente.',2);
+	    return false;
+	  }
+	   
+	  if(voucher == "") {
+	    inlineMsg('txtVoucher','Debe introducir el número de voucher.',2);
+	    return false;
+	  }
+	 
+	  return true;
+}
 
 
 

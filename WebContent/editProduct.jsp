@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="/segaDental/css/styleAdmin.css" />
+	<script type="text/javascript" src="/segaDental/js/messages.js"></script>
 	<title>Editar Producto</title>
 </head>
 <body>

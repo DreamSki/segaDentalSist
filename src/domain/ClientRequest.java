@@ -57,7 +57,7 @@ public class ClientRequest {
 		return name;
 	}
 
-	
+
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}

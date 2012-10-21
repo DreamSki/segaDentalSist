@@ -54,7 +54,8 @@ public class EditRequestServlet extends HttpServlet {
 					Long id = Long.valueOf(request.getParameter("id"));
 					
 					Client client = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClientRequest(clientId, id));
-					client.setId(clientId);
+					client.setClientId(clientId);
+					client.setClientProductId(id);
 					
 					@SuppressWarnings("unchecked")
 					ArrayList<StatusJustification> list = (ArrayList<StatusJustification>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListStatusJustification());

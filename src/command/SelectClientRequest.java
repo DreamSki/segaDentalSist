@@ -27,9 +27,9 @@ public class SelectClientRequest implements DatabaseCommand {
 		
 		Client clientRequest = new Client();
 		PreparedStatement sta = conn.prepareStatement("SELECT C.FIRST_NAME, C.LAST_NAME, C.IDENTITY_CARD," +
-						" C.EMAIL, AT.NAME, CA.STATE, CA.CITY,  CA.MUNICIPALITY, CA.URBANIZATION, CA.STREET, CA.PROPERTY_TYPE_ID, PR.NAME," +
+						" C.EMAIL, C.SEX, AT.NAME, CA.STATE, CA.CITY,  CA.MUNICIPALITY, CA.URBANIZATION, CA.STREET, CA.PROPERTY_TYPE_ID, PR.NAME," +
 						" CA.PROPERTY_NAME, CA.TOWER, CA.FLOOR, CA.APARTMENT, CC.NUMBER, CC.BANK, CCT.NAME, CC.EXPIRATION_DATE," +
-						" CC.CVC, P.NAME, P.PRICE" +
+						" CC.CVC, P.NAME, P.PRICE, CC.ID" +
 						" FROM CLIENT C, CLIENT_ADDRESS CA, CLIENT_CREDIT_CARD CC, ADDRESS_TYPE AT," +
 						" CREDIT_CARD_TYPE CCT, PRODUCT P, CLIENT_PRODUCT CP, PROPERTY_TYPE PR" +
 						" WHERE C.ID = CA.CLIENT_ID AND C.ID = CC.CLIENT_ID AND CA.ADDRESS_TYPE_ID = AT.ID" +
@@ -41,36 +41,37 @@ public class SelectClientRequest implements DatabaseCommand {
 		
 		while(rs.next()) {
 			
-			
 			clientRequest.setFirstName(rs.getString(1));
 			clientRequest.setLastName(rs.getString(2));
 			clientRequest.setIdentityCard(rs.getString(3));
 			clientRequest.setEmail(rs.getString(4));
+			clientRequest.setSex(rs.getString(5));
 			
 			ClientAddress address = new ClientAddress();
-			address.setAddressTypeName(rs.getString(5));
-			address.setState(rs.getString(6));
-			address.setCity(rs.getString(7));
-			address.setMunicipality(rs.getString(8));
-			address.setUrbanization(rs.getString(9));
-			address.setStreet(rs.getString(10));
-			address.setPropertyTypeId(rs.getInt(11));
-			address.setPropertyTypeName(rs.getString(12));
-			address.setPropertyName(rs.getString(13));
-			address.setTower(rs.getString(14));
-			address.setFloor(rs.getInt(15));
-			address.setApartment(rs.getString(16));
+			address.setAddressTypeName(rs.getString(6));
+			address.setState(rs.getString(7));
+			address.setCity(rs.getString(8));
+			address.setMunicipality(rs.getString(9));
+			address.setUrbanization(rs.getString(10));
+			address.setStreet(rs.getString(11));
+			address.setPropertyTypeId(rs.getInt(12));
+			address.setPropertyTypeName(rs.getString(13));
+			address.setPropertyName(rs.getString(14));
+			address.setTower(rs.getString(15));
+			address.setFloor(rs.getInt(16));
+			address.setApartment(rs.getString(17));
 			
 			ClientCard card = new ClientCard();
-			card.setCardNumber(rs.getLong(17));
-			card.setBank(rs.getString(18));
-			card.setCardType(rs.getString(19));
-			card.setExpirationDate(rs.getDate(20));
-			card.setCVC(rs.getInt(21));
+			card.setCardNumber(rs.getLong(18));
+			card.setBank(rs.getString(19));
+			card.setCardType(rs.getString(20));
+			card.setExpirationDate(rs.getDate(21));
+			card.setCVC(rs.getInt(22));
+			card.setId(rs.getInt(25));
 			
 			Product p = new Product();
-			p.setName(rs.getString(22));
-			p.setPrice(rs.getString(23));
+			p.setName(rs.getString(23));
+			p.setPrice(rs.getString(24));
 			
 			clientRequest.setAddress(address);
 			clientRequest.setCard(card);

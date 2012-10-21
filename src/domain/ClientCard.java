@@ -4,11 +4,21 @@ import java.sql.Date;
 
 public class ClientCard {
 
+	private int id;
 	private long cardNumber;
 	private String cardType;
 	private int cvc;
 	private String bank;
 	private Date expirationDate;
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
 	
 	public void setCardNumber(long cardNumber) {
 		this.cardNumber = cardNumber;

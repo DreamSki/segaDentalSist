@@ -50,7 +50,7 @@ public class ListRequestsServlet extends HttpServlet {
 			
 			if(user != null){
 				int roleId = user.getRoleId();
-				// Administradores
+				// root y verificadores
 				if(roleId == 3 || roleId == 8){
 					// perform list user operations
 					String info = (String)request.getAttribute("info")!=null?(String)request.getAttribute("info"):"";

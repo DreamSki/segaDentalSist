@@ -3,10 +3,13 @@ package domain;
 
 public class Client {
 
-	private long id;
+	
+	private long clientId;
+	private long clientProductId;
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String sex;
 	private String identityCard;
 	private ClientAddress address;
 	private ClientCard card;
@@ -17,16 +20,33 @@ public class Client {
 	 * 
 	 * @param id
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public void setClientId(long clientId) {
+		this.clientId = clientId;
 	}
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public long getId() {
-		return id;
+	public long getClientId() {
+		return clientId;
+	}
+
+	
+	/**
+	 * 
+	 * @param id
+	 */
+	public void setClientProductId(long clientProductId) {
+		this.clientProductId = clientProductId;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public long getClientProductId() {
+		return clientProductId;
 	}
 
 
@@ -53,6 +73,16 @@ public class Client {
 
 	public String getEmail() {
 		return email;
+	}
+	
+
+	
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getSext() {
+		return sex;
 	}
 
 	

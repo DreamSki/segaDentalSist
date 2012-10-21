@@ -5,9 +5,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="/segaDental/css/styleAdmin.css" />
+	<title>Editar Solicitudes y Renovaciones</title>
 	<script type="text/javascript" language="javascript" src="/segaDental/js/jquery.js"></script>
+	<script type="text/javascript" language="javascript" src="/segaDental/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" language="javascript" src="/segaDental/js/jquery.leanModal.min.js"></script>
-	<title>Editar Solicitud</title>
+	<script type="text/javascript" language="javascript" src="/segaDental/js/messages.js"></script>
 	<script type="text/javascript">
 			$(function() {
     			$('a[rel*=leanModal]').leanModal({ top : 200, closeButton: ".close_x" });	
@@ -37,10 +39,9 @@
 						
 				}
 			}
-		}
+		};
+		
 	</script>
-	
-	
 </head>
 <body>
 	<div id="container">
@@ -76,11 +77,27 @@
 				<br><br>
 				</div>
 				<p >
-				Buenos días/tardes, por favor con el Sr. <%= client.getFirstName() %> , mi nombre es 
+				<% String adj = "el";
+				   String pers = "Sr.";
+				   if (client.getSext().equalsIgnoreCase("f"))	{
+					   adj ="la";
+				   	   pers = "Sra.";
+				   }
+				   
+				   String plan = "";
+				   if (client.getProduct().getId() == 1)
+					   plan = "PLAN DE SEGURIDAD";
+				   else if (client.getProduct().getId() == 2)
+					   plan = "PLAN ODONTOLÓGICO";
+				   else 
+					   plan = "PLAN DE DESCUENTO MÉDICO";
+				   
+				%>
+				Buenos días/tardes, por favor con <%= adj  + " " + pers + " " + client.getFirstName() %> , mi nombre es 
 				<%=  user.getFirstName() + " " + user.getLastName() %> le estoy llamando del departamento de verificación
 				de <%=  client.getProduct().getName() %>.</p><br>
 				
-				<p>Por controles de calidad y seguridad Sr. <%= client.getFirstName() %>, su llamada a partir
+				<p>Por controles de calidad y seguridad <%= pers  + " " +client.getFirstName() %>, su llamada a partir
 				de este momento será  grabada. Mi llamada es para confirmar la información que usted le suministró a nuestro ejecutivo
 				de venta.</p><br>
 				
@@ -130,8 +147,8 @@
 					<br><br>
 				</div>
 				
-					Sr. <%= client.getFirstName() %>, le recordamos que la afiliación AL PLAN ODONTOLOGICO tiene un costo anual
-					de 1275,00 Bs, el cual será debitado de sus tarjetas de crédito, ¿Está usted de acuerdo?<br><br>
+					<%= pers + " " + client.getFirstName() %>, le recordamos que la afiliación al <%= plan %> tiene un costo anual
+					de  <%= client.getProduct().getPrice() %>Bs, el cual será debitado de sus tarjetas de crédito, ¿Está usted de acuerdo?<br><br>
 					<form action="#verificarRadio"  method="post">
 						<input type="radio" name="agree" value="0"> No<br>
 						<input type="radio" name="agree" value="1" checked> Si<br>
@@ -158,9 +175,9 @@
 					<h2> Bienvenida al Cliente </h2><br>
 					
 					<p>Esta operación la podrá verificar en sus estados de cuenta, bajo la razón social de Sega Dental C.A
-					¿Correcto Sr. <%= client.getFirstName() %>?</p><br><br>
+					¿Correcto  <%= pers + " " + client.getFirstName() %>?</p><br><br>
 					
-					<p>Por último, Sr.  <%= client.getFirstName() %> le damos la más cordial bienvenida a lo que será desde este momento,
+					<p>Por último, <%= pers + " " + client.getFirstName() %> le damos la más cordial bienvenida a lo que será desde este momento,
 					su asistencia odontológica en los 365 días del año, el cual con presentar su cédula de identidad en nuestros
 					consultorios y clínicas del servicio, en un lapso de 24 horas, ya usted podrá disfrutar de nuestros servicios.</p>
 				
@@ -182,61 +199,39 @@
 				</div>
 				
 					<h2> Registrar el pago </h2><br>
-					<form action="/segaDental/RegistrarPago"  method="post">
+					<form name="form" action="/segaDental/RegisterPaymentServlet" onsubmit="return validatePayment(this)" method="post">
+					<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value="<%= client.getClientProductId() %>"/>
+					<input type="hidden" id="txtNumCard" class="good_input" name="txtNumCard"  value="<%= card.getCardNumber() %>"/>
+					<input type="hidden" id="txtAmount" class="good_input" name="txtAmount"  value="<%= client.getProduct().getPrice() %>"/>
+				
 					<fieldset>
 						<label for="nameCard">Tipo de Tarjeta:</label>
-						<input type="text" name="txtCardType" id="txtCardType" maxlength="50" size="20" value="<%= card.getCardType() %>"/> <br><br>
+						<input type="text" name="txtCardType" id="txtCardType" maxlength="50" size="20" value="<%= card.getCardType() %>" readonly="readonly"/> <br><br>
 							
 						<label for="description">Número de Tarjeta:</label>
 						<% String cardNumber = String.valueOf(card.getCardNumber());
 							String aux = cardNumber.substring(cardNumber.length() - 4);
 							aux = "**" + aux;
 						%>
-						<input type="text" name="txtPrice" id="txtPrice" maxlength="50" size="30" value="<%= aux %>"/> <br><br>
+						<input type="text" name="numCard" id="numCard" maxlength="50" size="30" value="<%= aux %>" readonly="readonly"/> <br><br>
 						<label for="nameCard">Banco:</label>
-						<input type="text" name="txtPrice" id="txtPrice" maxlength="50" size="30" value="<%= card.getBank() %>"/> <br><br>
+						<input type="text" name="txtBank" id="txtBank" maxlength="50" size="30" value="<%= card.getBank() %>" readonly="readonly"/> <br><br>
 							
 							
-						<label for="nameCard">Cédula:</label>
-							<% String[] cedula = client.getIdentityCard().split("-");
-							   String number = cedula[1];
-							   String type = cedula[0];
-							%>
-							<select name="txtCardType" id="txtCardType">
-								<% 	
-								 if (number.equals("V")){
-									
-								 %>
-									<option value="0" selected>V</option>
-									<option value="1">E</option>
-								<% 	
-								 }else {
-								 %>
-									<option value="0" >V</option>
-									<option value="1" selected>E</option>
-								<% 	
-								 }
-								 %>
-							</select>
-							<input type="text" name="txtPrice" id="txtPrice" maxlength="50" size="10" value="<%= number %>"/> <br><br>
+						<label for="cedClient">Cédula:</label>
+						<input type="text" name="txtCedNumClient" id="txtCedNumClient" maxlength="50" size="10" value="<%=client.getIdentityCard() %>" readonly="readonly"/> <br><br>
 						
-						<label for="description">Número de Voucher:</label>
-						<input type="text" name="txtPrice" id="txtPrice" maxlength="50" size="10"/> <br><br>
+						<label for="voucher">Número de Voucher:</label>
+						<input type="text" name="txtVoucher" id="txtVoucher" maxlength="50" size="10"/> <br><br>
 					</fieldset>
 	
 				
 					<div class="buttonCenterVerif">
 						<input type="button" class="button" value="Volver"  onClick="mostrardiv('requestInfo4','requestInfo3');"/>
-						<input type="button" class="button" value="Siguiente"  onClick="mostrardiv('requestInfo3','requestInfo4');" />
+						<input type="submit"  class="button"  name="sbmtButton" value="Agregar" style="margin-left:20px;" />
 					</div>
 					</form>
-				
-							
-						
 				</div>
-				
-				
-
 		    <div id="footer"></div>
 		</div>
 	</div>
@@ -251,7 +246,7 @@
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
 				<form action="/segaDental/EditClientEmailServlet" method="get">
-				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getId() %>"/>
+				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
 				
@@ -275,7 +270,7 @@
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
 				<form action="/segaDental/EditClientEmailServlet" method="get">
-				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getId() %>"/>
+				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%=client.getClientId()%>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
 				
@@ -299,7 +294,7 @@
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
 				<form action="/segaDental/EditClientEmailServlet" method="get">
-				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getId() %>"/>
+				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
 				
