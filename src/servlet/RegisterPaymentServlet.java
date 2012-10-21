@@ -76,11 +76,15 @@ public class RegisterPaymentServlet extends HttpServlet {
 			String voucher = request.getParameter("txtVoucher");
 			String clientProductId = request.getParameter("clientProductId"); 
 			String amount = request.getParameter("txtAmount"); 
+			String cardId = request.getParameter("txtCardId"); 
 			
 			Payment payment = new Payment();
 			payment.setClientProductId(Integer.valueOf(clientProductId));
+			payment.setCreditCardId(Integer.valueOf(cardId));
+			payment.setAmount(amount);
 			
-			System.out.println("aqui toy " + cardType + "  " + numCard + " " + bank + " " + cedNumber + " " + voucher + " " + clientProductId + " " + amount);
+			
+			System.out.println("aqui toy " + cardType + "  " + numCard + " " + bank + " " + cedNumber + " " + voucher + " " + clientProductId + " " + amount + " " + cardId);
 
 			request.setAttribute("info", "Solicitud todavia sin guardar en BD :).");
 			request.setAttribute("error", "");
