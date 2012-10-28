@@ -8,6 +8,22 @@
 	<link rel="stylesheet" type="text/css" href="/segaDental/css/styleAdmin.css" />
 	<script type="text/javascript" src="/segaDental/js/messages.js"></script>
 	<title>Editar Usuario</title>
+	<script>
+	
+	function roomField() {
+		var select = document.getElementById("txtRoleId");
+		var position = select.options.selectedIndex;
+		var roleId = select.options[position].value;
+		var div = document.getElementById("roomInfo");
+
+		if((roleId == "-1") || (roleId == "1") || (roleId == "3") || (roleId == "7")){
+			div.style.display="none";
+		} else {
+			div.style.display = "block";
+		}	
+	}
+	
+	</script>
 </head>
 <body>
 	<div id="container">
@@ -78,7 +94,7 @@
 					<label for="name">Repetir Contraseña:</label>
 					<input type="password" name="txtPasswordRpt" id="txtPasswordRpt" maxlength="50" value="<%= userInfo.getPassword() %>" /><br><br>
 					<label for="name">Rol:</label>
-						<select name="txtRoleId" id="txtRoleId">
+						<select name="txtRoleId" id="txtRoleId" onchange="roomField();">
 							<option value="-1">Seleccionar</option>
 							<%
 								for(domain.UserRole u : userRoles) {
@@ -94,6 +110,17 @@
 								}
 							%>
 						</select><br><br>	
+				<%		
+					if((userInfo.getRoleId()==2) || (userInfo.getRoleId()==4) || (userInfo.getRoleId()==5) || (userInfo.getRoleId()==6)){
+				%>
+					<div id="roomInfo"  style="display:block">
+				<%	
+					} else {
+				%>
+					<div id="roomInfo"  style="display:none">				
+				<%		
+					}
+				%>
 					<label for="sala">Sala:</label>
 						<select name="txtNumSal" id="txtNumSal">
 							<option value="0">Seleccionar</option>
@@ -111,13 +138,14 @@
 								}
 							%>
 						</select><br><br>	
+						</div>
 					<label for="producto">Producto:</label>
 							<%
 								for(Product upr : products) {
 									domain.UserProduct userProd = new domain.UserProduct();
 									userProd.setUserId(userId);
 									userProd.setProductId(upr.getId());
-									System.out.println("userId:'"+userId+"', productId:'"+upr.getId()+"', userProducts.contains(userProd):"+userProducts.contains(userProd));
+
 									if(userProducts.contains(userProd)){
 							%>
 								<input type="checkbox" class="listProducts" name="txtProductoId" id="txtProductoId" value="<%= upr.getId()%>" checked="checked"> <%= upr.getName()%><br>

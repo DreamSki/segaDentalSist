@@ -65,7 +65,7 @@ public class EditUserServlet extends HttpServlet {
 					ArrayList<UserRoom> roomList = (ArrayList<UserRoom>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListUserRooms());
 					request.setAttribute("userRooms", roomList);
 					
-					ArrayList<Product> productList = (ArrayList<Product>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListProducts());
+					ArrayList<Product> productList = (ArrayList<Product>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListActiveProducts());
 					request.setAttribute("products",  productList);
 					rd = getServletContext().getRequestDispatcher("/editUser.jsp");			
 
