@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="/segaDental/js/messages.js"></script>
 	<title>Crear Usuario</title>
 	<script>
-	
+
 	function roomField() {
 		var select = document.getElementById("txtRoleId");
 		var position = select.options.selectedIndex;
@@ -22,7 +22,7 @@
 			div.style.display = "block";
 		}	
 	}
-	
+
 	</script>
 </head>
 <body>
@@ -55,68 +55,70 @@
 						type="java.util.ArrayList<domain.UserRoom>" scope="request" />
 					<jsp:useBean id="products"
 						type="java.util.ArrayList<domain.Product>" scope="request" />
-					<label for="name">Nombres:</label>
-					<input type="text" name="txtName" id="txtName" maxlength="50" size="40" /> <br><br>
-					<label for="LastName">Apellidos:</label>
-					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" /> <br><br>
-					<label for="cedId">C&eacute;dula de identidad:</label>
-					<select name="txtCedId" id="txtCedId">
-						<option value="V-">V</option>
-						<option value="E-">E</option>
-					</select>
-					<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" /> <br><br>
-					<label for="name">Nombre de usuario:</label>
-					<input type="text" name="txtUserName" id="txtUserName" maxlength="50" /> <br><br>
-					<label for="name">Contraseña:</label>
-					<input type="password" name="txtPassword" id="txtPassword" maxlength="50" /><br><br>
-					<label for="name">Repetir Contraseña:</label>
-					<input type="password" name="txtPasswordRpt" id="txtPasswordRpt" maxlength="50" /><br><br>
-					<label for="name">Rol:</label>
-						<select name="txtRoleId" id="txtRoleId" onchange="roomField();">
-							<option value="-1">Seleccionar</option>
-							<%
-								for(domain.UserRole u : userRoles) {
-							%>
-							<option value="<%=u.getId()%>"><%=u.getName()%></option>
-							<%
-								}
-							%>
-						</select><br><br>
-					<div id="roomInfo"  style="display:none">	
-					<label for="sala">Sala:</label>
-						<select name="txtNumSal" id="txtNumSal">
-							<option value="0">Seleccionar</option>
-							<%
-								for(domain.UserRoom ur : userRooms) {
-							%>
-							<option value="<%=ur.getId()%>"><%=ur.getName()%></option>
-							<%
-								}
-							%>
-						</select><br><br>	
-					</div>
-					<label for="producto">Producto:</label>
-							<%
-								for(Product upr : products) {
-							%>
-								<input type="checkbox" class="listProducts" name="txtProductoId" id="txtProductoId" value="<%= upr.getId()%>"> <%= upr.getName()%><br>
-							
-							<%
-							}											
-				String error = (String) request.getAttribute("error");
-				if (error != null){
-				%>
-					<div>
-						<%= error %>
-					</div>
-					<%
-				}
-				%>	
-				<br>
-				<div style="text-align:center">
-						<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
-						<input type="submit"  class="button"  name="sbmtButton" value="Agregar" style="margin-left:20px;" />
-				</div>				
+					<fieldset>
+						<label for="name">Nombres:</label>
+						<input type="text" name="txtName" id="txtName" maxlength="50" size="40" /> <br><br>
+						<label for="LastName">Apellidos:</label>
+						<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" /> <br><br>
+						<label for="cedId">C&eacute;dula de identidad:</label>
+						<select name="txtCedId" id="txtCedId">
+							<option value="V-">V</option>
+							<option value="E-">E</option>
+						</select>
+						<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" /> <br><br>
+						<label for="name">Nombre de usuario:</label>
+						<input type="text" name="txtUserName" id="txtUserName" maxlength="50" /> <br><br>
+						<label for="name">Contraseña:</label>
+						<input type="password" name="txtPassword" id="txtPassword" maxlength="50" /><br><br>
+						<label for="name">Repetir Contraseña:</label>
+						<input type="password" name="txtPasswordRpt" id="txtPasswordRpt" maxlength="50" /><br><br>
+						<label for="name">Rol:</label>
+							<select name="txtRoleId" id="txtRoleId" onchange="roomField();">
+								<option value="-1">Seleccionar</option>
+								<%
+									for(domain.UserRole u : userRoles) {
+								%>
+								<option value="<%=u.getId()%>"><%=u.getName()%></option>
+								<%
+									}
+								%>
+							</select><br><br>
+						<div id="roomInfo"  style="display:none">	
+						<label for="sala">Sala:</label>
+							<select name="txtNumSal" id="txtNumSal">
+								<option value="0">Seleccionar</option>
+								<%
+									for(domain.UserRoom ur : userRooms) {
+								%>
+								<option value="<%=ur.getId()%>"><%=ur.getName()%></option>
+								<%
+									}
+								%>
+							</select><br><br>	
+						</div>
+						<label for="producto">Producto:</label>
+								<%
+									for(Product upr : products) {
+								%>
+									<input type="checkbox" class="listProducts" name="txtProductoId" id="txtProductoId" value="<%= upr.getId()%>"> <%= upr.getName()%><br>
+
+								<%
+								}											
+					String error = (String) request.getAttribute("error");
+					if (error != null){
+					%>
+						<div>
+							<%= error %>
+						</div>
+						<%
+					}
+					%>	
+					<br>
+					<div style="text-align:center">
+							<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
+							<input type="submit"  class="button"  name="sbmtButton" value="Agregar" style="margin-left:20px;" />
+					</div>				
+				</fieldset>
 			</form>
 		    <div id="footer"></div>
 		</div>

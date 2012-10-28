@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import command.CommandExecutor;
 
 import domain.Client;
+import domain.ClientRequest;
 import domain.StatusJustification;
 import domain.User;
 
@@ -48,9 +49,30 @@ public class SendBackRequestServlet extends HttpServlet {
 				
 				if(roleId == 3 || roleId == 8){
 					/*Se debe modificar el estado del user_product, cambiar la justificacion etc. PENDIENTE POR HACER */
+					String clientProductId = request.getParameter("clientProductId");
+					String justificationId = request.getParameter("justif");
+					ClientRequest cr = new ClientRequest();
+					cr.setId(Integer.valueOf(clientProductId));
+					cr.setJustificationId(Integer.valueOf(justificationId));
+					String otherJustif = null;
+					if (justificationId.equals("5")){
+						otherJustif = request.getParameter("otherJustif");
+						cr.setJustification(otherJustif);
+					}
 					
-					rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
-					rd.forward(request, response);
+					System.out.println("ClientR " + cr.getId() + " justId " + cr.getJustificationId() + " otherJ " + cr.getJustification());
+					Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientRequest(cr));
+					
+					if(rowsUpdated == 1){
+						request.setAttribute("info", "La devolución fue realizada sastifactoriamente.");
+						rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
+						rd.forward(request, response);
+					} else {
+						request.setAttribute("info", "");
+						request.setAttribute("error", "Ocurrió un error durante la devolucion. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
+						rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
+						rd.forward(request, response);
+					}
 				} else {
 					request.setAttribute("error", "Usted no posee permisos para realizar esta operación");
 					rd = getServletContext().getRequestDispatcher("/mainMenu.jsp");

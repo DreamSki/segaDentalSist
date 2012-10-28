@@ -100,6 +100,16 @@ function validateCreateProduct(form) {
 	  return true;
 }
 
+function validateJustification(form) {
+	if (form.otherJustif.value == ""){
+		alert('Debe introducir una justificación.');
+		form.otherJustif.focus();
+		return false;
+	}
+   return true;
+}
+
+
 function validatePayment(form) {
 	  var cardType = form.txtCardType.value;
 	  var numCard = form.numCard.value;

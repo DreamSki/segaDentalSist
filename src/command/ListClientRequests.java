@@ -21,7 +21,7 @@ public class ListClientRequests implements DatabaseCommand {
 		/* ¿Necesito hacer que la consulta obtenga el numero de beneficiarios de cada cliente , no se hacerlo */
 		ResultSet rs = sta.executeQuery("SELECT C.ID, C.FIRST_NAME, C.LAST_NAME, CP.ID, CP.EXPIRATION_DATE, CP.STATUS_ID, P.ID, P.NAME, P.PRICE" +
 				" FROM CLIENT C, CLIENT_PRODUCT CP, PRODUCT P" +
-				" WHERE C.ID = CP.CLIENT_ID AND CP.PRODUCT_ID = P.ID" +
+				" WHERE C.ID = CP.CLIENT_ID AND CP.PRODUCT_ID = P.ID AND STATUS_ID != 4 AND STATUS_ID != 1" +
 				" ORDER BY CP.EXPIRATION_DATE ASC");
 		while(rs.next()) {
 			ClientRequest clientRequest = new ClientRequest();

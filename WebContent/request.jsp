@@ -10,6 +10,7 @@
 	<title>Administrador Solicitudes</title>
 	<script type="text/javascript" language="javascript" src="/segaDental/js/jquery.js"></script>
 	<script type="text/javascript" language="javascript" src="/segaDental/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="/segaDental/js/messages.js"></script>
 	<script type="text/javascript" src="/segaDental/js/jconfirmaction.jquery.js"></script>
 	<script type="text/javascript" language="javascript" src="/segaDental/js/jquery.leanModal.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
@@ -49,9 +50,32 @@
 			
 	</script>
 	<script type="text/javascript">
+			var tipo;
+			var idClientRequest;
+			
 			$(function() {
     			$('a[rel*=leanModal]').leanModal({ top : 200, closeButton: ".close_x" });		
 			});
+			
+			function loadVars(var1, var2, var3) {
+				tipo = var1;
+				idClientRequest = var2;
+				$('.tipo').text(var1);
+				$('.cliente').text(var3);
+			};
+			
+			function setV(f){
+				f.elements['clientProductId'].value = idClientRequest;
+				var radioButtons = document.getElementsByName("justif");
+				for (var x = 0; x < radioButtons.length; x ++) {
+					if (radioButtons[x].checked) {
+						if (radioButtons[x].value == 5){
+							return validateJustification(f);
+						}
+					}
+				}
+				return true;
+			}
 	</script>
 	
 </head>
@@ -145,8 +169,8 @@
 				<img alt="logo" src="/segaDental/images/delete.png" height="16" width="16" style="padding-left: 15px;"/>
 			</a>
 			
-        	
-        	<a id="go" rel="leanModal" href="#signupCed" style="color: #f7941e; font-weight: bold;">
+        	<a id="go" rel="leanModal" href="#signupCed" style="color: #f7941e; font-weight: bold;" 
+			onclick="return loadVars('<%=cr.getTypeName()%>',<%=cr.getId()%>,'<%=cr.getName()%>' )" >
         		<img alt="logo" src="/segaDental/images/sendBack.png" height="16" width="16" style="padding-left: 15px;"/>
         	</a><br>
 			
@@ -168,20 +192,17 @@
   		<div id="footer"></div>
 	</div>
  			
-	<% 
-	/** texto a mostrar cuando se intente devolver una solicitud**/
-	
-	String tipo = "Solicitud"; 
-	%>
 	<div id="signupCed">
 		<div id="signup-ct">
-			<h3 id="see_id" class="sprited" >Devolución de <%= tipo %></h3><br><br>
-			<span>¿Está seguro que desea devolver la <%= tipo %> del cliente Pedro Perez? </span> <br><br>
+			<h3 id="see_id" class="sprited" >Devolución de <span class="tipo"></span></h3>
+			<br><br>
+			<span>¿Está seguro que desea devolver la <span class="tipo"></span> del cliente <span class="cliente"></span>? </span> <br><br>
 			<div id="signup-header">
 				<a class="close_x" id="close_x"  href="#"></a>
 			</div>
-			<form action="/segaDental/ReturnRequestServlet" method="get">
-			  <div class="txt-fld">
+			<form action="/segaDental/SendBackRequestServlet" method="get"  onsubmit="return setV(this)">
+				<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value=""/>
+				  <div class="txt-fld">
    			  	<%
 				for(domain.StatusJustification sj : statusJustification) { 	
 					if (sj.getId() != 5){
@@ -191,8 +212,8 @@
 					}
 				}
 				%>
-				<input type="radio" name="justif" value="5"> 
-					Otro: <input name="OtherJustif" />
+				<input type="radio" name="justif" value="5" checked> 
+					Otro: <input name="otherJustif" />
 			  </div><br>
 			  <div class="btn-fld">
 				  <input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />

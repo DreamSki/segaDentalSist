@@ -53,7 +53,7 @@
 					<%
 					}
 					%>
-				</fieldset>
+				
 				
 <%
 	String error = (String) request.getAttribute("error");
@@ -70,6 +70,7 @@
 						<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 						<input type="submit" name="sbmtButton" class="button" value="Aceptar" style="margin-left:20px;" />
 					</div>
+				 </fieldset>
 				</form>
 		    <div id="footer"></div>
 		</div>

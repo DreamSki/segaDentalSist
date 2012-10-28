@@ -23,7 +23,7 @@ import domain.User;
 @WebServlet(description = "servlet to list requests", urlPatterns = { "/ListRequestsServlet" })
 public class ListRequestsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	public void init() throws ServletException {
 		super.init();
 		try {
@@ -47,7 +47,7 @@ public class ListRequestsServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession();
 			User user = (User)session.getAttribute("user");
-			
+
 			if(user != null){
 				int roleId = user.getRoleId();
 				// root y verificadores
@@ -59,13 +59,13 @@ public class ListRequestsServlet extends HttpServlet {
 					@SuppressWarnings("unchecked")
 					ArrayList<ClientRequest> listClient = (ArrayList<ClientRequest>)CommandExecutor.getInstance().executeDatabaseCommand(new ListClientRequests());
 					request.setAttribute("clientRequest", listClient);
-					
+
 					@SuppressWarnings("unchecked")
 					ArrayList<StatusJustification> list = (ArrayList<StatusJustification>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListStatusJustification());
-					
+
 					request.setAttribute("listClientRequests", listClient);
 					request.setAttribute("statusJustification", list);
-					
+
 					request.setAttribute("info", info);
 					request.setAttribute("error", error);
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/request.jsp");
@@ -80,12 +80,12 @@ public class ListRequestsServlet extends HttpServlet {
 				RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
 				rd.forward(request, response);
 			}
-			
+
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
 	}
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

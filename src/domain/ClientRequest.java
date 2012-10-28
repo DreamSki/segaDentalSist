@@ -13,6 +13,9 @@ public class ClientRequest {
 	private Product product;
 	private String typeName;
 	private int type;
+	private int justificationId;
+	private String justification;
+	
 	
 	
 	
@@ -102,4 +105,22 @@ public class ClientRequest {
 	public int getType(){
 		return type;
 	}
+	
+	public void setJustificationId(int justificationId){
+		this.justificationId = justificationId;
+	}
+	
+	public int getJustificationId(){
+		return justificationId;
+	}
+	
+	public void setJustification(String justification){
+		this.justification = justification;
+	}
+	
+	public String getJustification(){
+		return justification;
+	}
+	
+	
 }
