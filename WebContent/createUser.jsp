@@ -5,8 +5,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<link rel="stylesheet" type="text/css" href="/segaDental/css/styleAdmin.css" />
 	<script type="text/javascript" src="/segaDental/js/messages.js"></script>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+	<script src="/segaDental/js/jquery.bgiframe.min.js" type="text/javascript"></script>
+	<script src="/segaDental/js/jquery.multiSelect.js" type="text/javascript"></script>
+	<link href="/segaDental/css/jquery.multiSelect.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="/segaDental/css/styleAdmin.css" />
+	
 	<title>Crear Usuario</title>
 	<script>
 
@@ -23,6 +29,20 @@
 		}	
 	}
 
+	</script>
+	<script type="text/javascript">
+			
+			$(document).ready( function() {
+				
+				// Options displayed in comma-separated list
+				$("#txtProductoId").multiSelect({ 
+						oneOrMoreSelected: '*',
+						selectAllText: 'Todos',
+						noneSelected: 'Seleccionar'}
+				);
+				
+			});
+			
 	</script>
 </head>
 <body>
@@ -97,13 +117,17 @@
 							</select><br><br>	
 						</div>
 						<label for="producto">Producto:</label>
+						<select name="txtProductoId[]" id="txtProductoId" multiple="multiple">
 								<%
 									for(Product upr : products) {
 								%>
-									<input type="checkbox" class="listProducts" name="txtProductoId" id="txtProductoId" value="<%= upr.getId()%>"> <%= upr.getName()%><br>
+									<option value="<%= upr.getId()%>"><%= upr.getName()%></option>
 
 								<%
-								}											
+								}	
+								%>
+						</select><br><br>
+					<%
 					String error = (String) request.getAttribute("error");
 					if (error != null){
 					%>

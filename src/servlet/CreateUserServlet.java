@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -81,7 +82,6 @@ public class CreateUserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		RequestDispatcher rd;
 
 		try{
@@ -99,9 +99,8 @@ public class CreateUserServlet extends HttpServlet {
 			} else {
 				roomId = null;
 			}
-
-			String[] productIds = request.getParameterValues("txtProductoId");
-
+			
+			String[] productIds = request.getParameterValues("txtProductoId[]");
 			User user = new User();
 			user.setFirstName(firstName);
 			user.setLastName(lastName);

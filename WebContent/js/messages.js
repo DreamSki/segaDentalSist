@@ -6,8 +6,9 @@ function validate(form) {
   var pass = form.txtPassword.value;
   var passRpt = form.txtPasswordRpt.value;
   var rol = form.txtRoleId.value;  
-  var sala = form.txtNumSal.value;  
-  var nameRegex = /[\d\w\sαινσϊ]+/i;;
+  var sala = form.txtNumSal.value;   
+  var products = form.elements["txtProductoId[]"];
+  var nameRegex = /[\d\w\sαινσϊ]+/i;
   var cedulaRegex = /^[0-9]+(([\.][0-9])?[0-9]*)*$/;
   
   if(name == "") {
@@ -58,9 +59,14 @@ function validate(form) {
     inlineMsg('txtNumSal','Debe escoger la sala en la que se encuentra el usuario.');
     return false;
   }
+  for (var x = 0; x < products.length; x ++) {
+	if (products[x].checked) {
+		return true;
+	}
+  }
   
-  
-  return true;
+  inlineMsg('txtProductoId','Debe seleccinar al menos un producto.', 2);
+  return false;
 }
 
 

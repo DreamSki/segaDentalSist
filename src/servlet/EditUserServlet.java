@@ -109,7 +109,7 @@ public class EditUserServlet extends HttpServlet {
 				roomId = null;
 			}
 			
-			String[] productIds = request.getParameterValues("txtProductoId");
+			String[] productIds = request.getParameterValues("txtProductoId[]");
 			
 			User user = new User();
 			user.setId(userId);
