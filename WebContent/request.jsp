@@ -133,8 +133,6 @@
 				<%
 				} else {
 				%>	
-        		
-        		
     <div id="dt_example">
 	<div id="container">
 	<div id="demo">
@@ -160,12 +158,12 @@
 			<td><p><%= cr.getTypeName() %></p></td>
 			<td><p><%= cr.getName() %></p></td>
 			<td><p><%= cr.getProduct().getName() %></p></td>
-			<td><p><%= cr.getExpirationDate() %></p></td>
+			<td><p><%= (cr.getExpirationDate()!=null)?cr.getExpirationDate(): "N/A" %></p></td>
 			<td><p>
 			<a href="/segaDental/EditRequestServlet?clientId=<%=cr.getClientId()%>&type=<%=cr.getTypeName()%>&id=<%=cr.getId()%>" style="color: transparent" >
 				<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
 			</a> 
-			<a href="/segaDental/DeleteRequestServlet?clientId=<%=cr.getClientId()%>" name="<%= cr.getName() %>" class="ask">
+			<a href="/segaDental/DeleteRequestServlet?id=<%=cr.getId()%>&type=<%=cr.getTypeName()%>" name="<%= cr.getName() %>" class="ask">
 				<img alt="logo" src="/segaDental/images/delete.png" height="16" width="16" style="padding-left: 15px;"/>
 			</a>
 			

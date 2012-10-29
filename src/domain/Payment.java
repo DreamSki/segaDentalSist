@@ -9,7 +9,8 @@ public class Payment {
 	private int creditCardId;
 	private Date date;
 	private String amount;
-	
+	private String voucher;
+	private int checkerId;
 	
 	/**
 	 * 
@@ -66,6 +67,23 @@ public class Payment {
 
 	public String getAmount(){
 		return amount;
+	}
+	
+	public void setVoucher(String voucher){
+		this.voucher = voucher;
+	}
+
+	public String getVoucher(){
+		return voucher;
+	}
+	
+	
+	public void setCheckerId(int checkerId){
+		this.checkerId = checkerId;
+	}
+
+	public int getCheckerId(){
+		return checkerId;
 	}
 	
 	

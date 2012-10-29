@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import domain.Client;
 import domain.ClientAddress;
-import domain.ClientCard;
+import domain.ClientCreditCard;
 import domain.Product;
 
 
@@ -61,7 +61,7 @@ public class SelectClientRequest implements DatabaseCommand {
 			address.setFloor(rs.getInt(16));
 			address.setApartment(rs.getString(17));
 			
-			ClientCard card = new ClientCard();
+			ClientCreditCard card = new ClientCreditCard();
 			card.setId(rs.getInt(18));
 			card.setCardNumber(rs.getLong(19));
 			card.setBank(rs.getString(20));

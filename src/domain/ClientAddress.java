@@ -140,10 +140,10 @@ public class ClientAddress {
 	public String getDirection(){
 		if (!property_type_name.equals("Edificio"))
 		this.direction = "Urbanización " + urbanization + ", calle " + street + ", " + property_type_name + 
-			" " + propertyName + ". Municipio " + municipality + ", ciudad " + city ;
+			" " + propertyName + ". Municipio " + municipality + ", ciudad " + city + ", estado " + state ;
 		else
 			this.direction = "Urbanización " + urbanization + ", Calle " + street + ", " + property_type_name + 
-			" " + propertyName  + ".Piso " + floor + ", apartamento " + apartment +". Municipio " + municipality + ", ciudad " + city ;
+			" " + propertyName  + ".Piso " + floor + ", apartamento " + apartment +". Municipio " + municipality + ", ciudad " + city + ", estado " + state ;
 		return direction;
 	}
 	

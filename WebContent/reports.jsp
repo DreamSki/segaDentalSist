@@ -56,7 +56,7 @@
 		<div id="content">  
         		<jsp:useBean id="products" type="java.util.ArrayList<domain.Product>" scope="request"/>  	
         		<jsp:useBean id="clientStatus" type="java.util.ArrayList<domain.ClientStatus>" scope="request"/>  	
-        		<h2>Escoja el reporte que desea generar:</h2></br></br>
+        		<h2>Escoja el reporte que desea generar:</h2><br><br>
 				<form name="form" action="/segaDental/CreateReportServlet"  method="post">
 					<fieldset>
 						<label for="date">Intervalo de Fechas:</label>

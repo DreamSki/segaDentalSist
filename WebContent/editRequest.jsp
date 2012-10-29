@@ -1,3 +1,4 @@
+<%@page import="domain.CreditCard"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -60,13 +61,14 @@
             <div id="leftmenu_bottom"></div>
         </div>  
 		<div id="content">
-        		<h2>Verificar <%= request.getAttribute("type") %>:</h2>
+        		<h2>Verificar <%=request.getAttribute("type")%>:</h2>
 	        	<p>&nbsp;</p>
            		<jsp:useBean id="client" type="domain.Client" scope="request"/> 
            		<jsp:useBean id="user" type="domain.User" scope="request"/> 
 				<jsp:useBean id="statusJustification" type="java.util.ArrayList<domain.StatusJustification>" scope="request"/>  	
+        		<jsp:useBean id="cardType" type="java.util.ArrayList<domain.CreditCard>" scope="request"/>  	
         		<%@page import="domain.ClientAddress"%>
-				<%@page import="domain.ClientCard"%>
+				<%@page import="domain.ClientCreditCard"%>
 				
 				<div id="requestInfo1" style="display:block;">
 				<div style="text-align:center;">
@@ -77,53 +79,57 @@
 				<br><br>
 				</div>
 				<p >
-				<% String adj = "el";
-				   String pers = "Sr.";
-				   if (client.getSext().equalsIgnoreCase("f"))	{
-					   adj ="la";
-				   	   pers = "Sra.";
-				   }
-				   
-				   String plan = "";
-				   if (client.getProduct().getId() == 1)
-					   plan = "PLAN DE SEGURIDAD";
-				   else if (client.getProduct().getId() == 2)
-					   plan = "PLAN ODONTOLÓGICO";
-				   else 
-					   plan = "PLAN DE DESCUENTO MÉDICO";
-				   
+				<%
+					String adj = "el";
+						   String pers = "Sr.";
+						   if (client.getSext().equalsIgnoreCase("f"))	{
+							   adj ="la";
+						   	   pers = "Sra.";
+						   }
+						   
+						   String plan = "";
+						   if (client.getProduct().getId() == 1)
+							   plan = "PLAN DE SEGURIDAD";
+						   else if (client.getProduct().getId() == 2)
+							   plan = "PLAN ODONTOLÓGICO";
+						   else 
+							   plan = "PLAN DE DESCUENTO MÉDICO";
 				%>
-				Buenos días/tardes, por favor con <%= adj  + " " + pers + " " + client.getFirstName() %> , mi nombre es 
-				<%=  user.getFirstName() + " " + user.getLastName() %> le estoy llamando del departamento de verificación
-				de <%=  client.getProduct().getName() %>.</p><br>
+				Buenos días/tardes, por favor con <%=adj  + " " + pers + " " + client.getFirstName()%> , mi nombre es 
+				<%=user.getFirstName() + " " + user.getLastName()%> le estoy llamando del departamento de verificación
+				de <%=client.getProduct().getName()%>.</p><br>
 				
-				<p>Por controles de calidad y seguridad <%= pers  + " " +client.getFirstName() %>, su llamada a partir
+				<p>Por controles de calidad y seguridad <%=pers  + " " +client.getFirstName()%>, su llamada a partir
 				de este momento será  grabada. Mi llamada es para confirmar la información que usted le suministró a nuestro ejecutivo
 				de venta.</p><br>
 				
 				<p>¿Su número de cédula es? <span style="font-weight: bold;">Esperamos respuesta del cliente. </span>	
 					<a id="go" rel="leanModal" href="#signupCed" style="color: #f7941e; font-weight: bold;">(Modificar)</a><br>
-					<span style="margin-left: 20px; color: gray;"> <%= client.getIdentityCard() %>	
+					<span style="margin-left: 20px; color: gray;"> <%=client.getIdentityCard()%>	
 					</span><br><br>
 			
 				¿Su direcciones completa es? <span style="font-weight: bold;">Esperamos respuesta del cliente.</span>
-				<% ClientAddress address = client.getAddress();%>
-					<a id="go" rel="leanModal" href="#signupEmail" style="color: #f7941e; font-weight: bold;">(Modificar)</a><br>
+				<%
+					ClientAddress address = client.getAddress();
+				%>
+					<a id="go" rel="leanModal" href="#signupAddress" style="color: #f7941e; font-weight: bold;">(Modificar)</a><br>
 					<span style="margin-left: 20px; color: gray;"> 
-					<%= address.getDirection()  %> 
+					<%=address.getDirection()%> 
 					</span><br><br>
 
 				
 				¿Su correo electrónico es? <span style="font-weight: bold;">Esperamos respuesta del cliente.</span>
 					<a id="go" rel="leanModal" href="#signupEmail" style="color: #f7941e; font-weight: bold;">(Modificar)</a><br>
-					<span style="margin-left: 20px; color: gray;"> <%= client.getEmail() %> 
+					<span style="margin-left: 20px; color: gray;"> <%=client.getEmail()%> 
 					</span><br><br>
 
 				
 				¿Sus instrumentos de créditos son: visa ó mastercard, del banco? <span style="font-weight: bold;">Esperamos respuesta del cliente.</span>
 					<a id="go" rel="leanModal" href="#signupCard" style="color: #f7941e; font-weight: bold;">(Modificar)</a><br>
 					<span style="margin-left: 20px; color: gray;"> 
-					<% ClientCard card = client.getCard();%>
+					<%
+ 						ClientCreditCard card = client.getCard();
+ 					%>
 					Tipo: <%= card.getCardType() + ". Banco: " + card.getBank() %>
 					</span><br><br>
 					
@@ -131,7 +137,6 @@
 					<br>
 					
 					<div class="buttonCenterVerif">
-						<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 						<input type="button" class="button" value="Siguiente"  onClick="mostrardiv('requestInfo1','requestInfo2');"/>
 					</div>
 				</div>
@@ -246,14 +251,31 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form action="/segaDental/EditClientEmailServlet" method="get">
+				<form action="/segaDental/EditClientIdentCardServlet" method="get">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
 				
      			  <div class="txt-fld">
-					<label for="clientEmail">Cédula:</label>
-				    <input id="txtCedClient" class="good_input" name="txtCedClient" type="text"  value="<%= client.getIdentityCard() %>"/>
+					<label for="identityCard">Cédula:</label>
+					<select name="txtCedId" id="txtCedId" class="good_input">
+						<%
+							String [] ced = client.getIdentityCard().split("-");
+							if (ced[0].equals("V")){
+						%>
+								<option value="V-" selected="selected">V</option>
+								<option value="E-">E</option>
+					 	<%
+						}else{
+							%>
+							<option value="V-" >V</option>
+							<option value="E-" selected="selected">E</option>
+				 			<%
+					 	}
+					 	
+					 	%>
+					</select>
+				    <input id="txtCedIdNum" class="good_input" name="txtCedIdNum" type="text"  value="<%= ced[1] %>"/>
 				  </div>
 				  
 				  <div class="btn-fld">
@@ -287,6 +309,71 @@
 			</div>
 		</div>	
 		
+		
+		<div id="signupAddress">
+			<div id="signup-ct">
+				<h3 id="see_id" class="sprited" >Modificación</h3><br><br>
+				<span>¿Está seguro que desea modificar la dirección del cliente <%= client.getFirstName() %> ? </span> <br>
+				<div id="signup-header">
+					<a class="close_x" id="close_x"  href="#"></a>
+				</div>
+				<form action="/segaDental/EditClientAddressServlet" method="get">
+				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%=client.getClientId()%>"/>
+				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
+				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
+				  <input type="hidden" id="propertyTypeId" class="good_input" name="propertyTypeId"  value="<%= address.getPropertyTypeId() %>"/>
+				
+				  <fieldset>
+				  <div class="txt-fld">
+     				<label for="state">Estado:</label>
+				    <input id="txtState" class="good_input" name="txtState" type="text"  value="<%= address.getState() %>"/>
+				    <br>
+				    <label for="city">Ciudad:</label>
+				    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= address.getCity() %>"/>
+					<br>
+				  	<label for="municipality">Municipio:</label>
+				    <input id="txtMunicipality" class="good_input" name="txtMunicipality" type="text"  value="<%= address.getMunicipality() %>"/>
+					<br>
+					<label for="urbanization">Urbanizacion:</label>
+				    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text"  value="<%= address.getUrbanization() %>"/>
+				    <br>
+				    <label for="street">Calle:</label>
+				    <input id="txtStreet" class="good_input" name="txtStreet" type="text"  value="<%= address.getStreet() %>"/>
+				    <br>
+				    <label for="propetyName">Nombre de la propiedad:</label>
+				    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= address.getPropertyName() %>"/>
+				    <br>
+				    <%
+				    	if (address.getPropertyTypeId() == 1 || address.getPropertyTypeId() == 3 ||  address.getPropertyTypeId() == 5 )
+				    	{
+				    
+				    %>
+					   	<label for="tower">Torre:</label>
+					    <input id="txtTower" class="good_input" name="txtTower" type="text"  value="<%= address.getTower() %>"/>
+					    <br>
+					    <label for="floor">Piso:</label>
+					    <input id="txtFloor" class="good_input" name="txtFloor" type="text"  value="<%= address.getFloor() %>"/>
+					    <br>
+					    <label for="apartment">Apartamento:</label>
+					    <input id="txtApartment" class="good_input" name="txtApartment" type="text"  value="<%= address.getPropertyName()%>"/>
+						<br>
+					<%
+				    	}
+				    
+				    %>
+						
+				  </div>
+				  <br><br>
+				  <div class="btn-fld">
+					 <input type="submit"  class="buttonPopUpSA"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />
+				  </div>
+				  </fieldset>
+				  
+				 </form>
+			</div>
+		</div>	
+		
+		
 		<div id="signupCard">
 			<div id="signup-ct">
 				<h3 id="see_id" class="sprited" >Modificación</h3><br><br>
@@ -294,26 +381,38 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form action="/segaDental/EditClientEmailServlet" method="get">
+				<form action="/segaDental/EditClientCardServlet" method="get">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
-				
-     			  <div class="txt-fld">
-					<label for="card">Tipo tarjeta:</label>
-				    <input id="txtCardType" class="good_input" name="txtCardType" type="text"  value="<%= card.getCardType() %>"/>
-				  </div><br>
+				  <fieldset>
+     			  	<div class="txt-fld">
+					  	<label for="tarjeta">Tipo Tarjeta:</label>
+								<select class="good_input" name="txtCardType" id="txtCardType">
+									<%
+										for(CreditCard cc : cardType) {
+											String selected = "";
+											System.out.println(" aqui " + card.getCardType() +  " " + cc.getName());
+											if (card.getCardType().equals(cc.getName())){
+												selected = "selected=selected";
+											}
+									%>
+										<option value="<%=cc.getId()%>" <%= selected %>> <%=cc.getName()%> </option>
+									<%
+										}
+									%>
+								</select><br>
+				  </div>
 				  
 				  <div class="txt-fld">
 					<label for="clientEmail">Banco:</label>
 				    <input id="txtBank" class="good_input" name="txtBank" type="text"  value="<%= card.getBank() %>" style="margin-left:25px;"/>
-				  </div>
-				  
-				
+				  </div><br>
 				  
 				  <div class="btn-fld">
 						<input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />
 				  </div>
+				  </fieldset>
 				 </form>
 			</div>
 		</div>	
@@ -321,13 +420,15 @@
 		
 	<div id="noAgree">
 		<div id="signup-ct">
-			<h3 id="see_id" class="sprited" >Devolución de Solicitud</h3><br><br>
-			<span>¿Está seguro que desea devolver la solicitud del cliente Pedro Perez? </span> <br><br>
+			<h3 id="see_id" class="sprited" >Devolución de <%= request.getParameter("type")%></h3>
+			<br><br>
+			<span>¿Está seguro que desea devolver la <%= request.getParameter("type")%> del cliente <%= client.getFirstName() %> ? </span> <br><br>
 			<div id="signup-header">
 				<a class="close_x" id="close_x"  href="#"></a>
 			</div>
-			<form action="/segaDental/SendBackRequestServlet" method="get">
-			  <div class="txt-fld">
+			<form action="/segaDental/SendBackRequestServlet" method="get"  onsubmit="return setV(this)">
+				<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value="<%= client.getClientProductId() %>"/>
+				  <div class="txt-fld">
    			  	<%
 				for(domain.StatusJustification sj : statusJustification) { 	
 					if (sj.getId() != 5){
@@ -337,8 +438,8 @@
 					}
 				}
 				%>
-				<input type="radio" name="justif" value="5"> 
-					Otro: <input name="OtherJustif" />
+				<input type="radio" name="justif" value="5" checked> 
+					Otro: <input name="otherJustif" />
 			  </div><br>
 			  <div class="btn-fld">
 				  <input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />

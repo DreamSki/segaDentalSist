@@ -12,7 +12,7 @@ public class Client {
 	private String sex;
 	private String identityCard;
 	private ClientAddress address;
-	private ClientCard card;
+	private ClientCreditCard card;
 	private Product product;
 	
 	
@@ -104,11 +104,11 @@ public class Client {
 	}
 	
 	
-	public void setCard(ClientCard card) {
+	public void setCard(ClientCreditCard card) {
 		this.card = card;
 	}
 
-	public ClientCard getCard() {
+	public ClientCreditCard getCard() {
 		return card;
 	}
 	

@@ -19,9 +19,10 @@ public class ListClientRequests implements DatabaseCommand {
 		Statement sta = conn.createStatement();
 		/* ¿COMO SE CUALES SON LOS CLIENT_PRODUCT QUE SE DEVUELVEN? QUE ESTADO TOMA? */
 		/* ¿Necesito hacer que la consulta obtenga el numero de beneficiarios de cada cliente , no se hacerlo */
+		/* Faltaria poner el limite de requests que se va a traer y ver bien cuales son los que se va a traer */
 		ResultSet rs = sta.executeQuery("SELECT C.ID, C.FIRST_NAME, C.LAST_NAME, CP.ID, CP.EXPIRATION_DATE, CP.STATUS_ID, P.ID, P.NAME, P.PRICE" +
 				" FROM CLIENT C, CLIENT_PRODUCT CP, PRODUCT P" +
-				" WHERE C.ID = CP.CLIENT_ID AND CP.PRODUCT_ID = P.ID AND STATUS_ID != 4 AND STATUS_ID != 1" +
+				" WHERE C.ID = CP.CLIENT_ID AND CP.PRODUCT_ID = P.ID AND CP.STATUS_ID != 4 AND CP.STATUS_ID != 1 AND CP.IS_DELETED != 1" +
 				" ORDER BY CP.EXPIRATION_DATE ASC");
 		while(rs.next()) {
 			ClientRequest clientRequest = new ClientRequest();

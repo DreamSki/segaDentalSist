@@ -428,6 +428,38 @@ color:#7198E1;
   font-weight:bold;
 }
 
+
+#signupAddress fieldset{
+  padding: 1em;
+  font:12px Arial, Helvetica, sans-serif;
+  border: 0;
+}
+
+#signupAddress  fieldset label{
+  float:left;
+  width:40%;
+  height: 10px;
+  margin-top:3px;
+  margin-right:0.5em;
+  text-align:left;
+  font-weight:bold;
+}
+
+.buttonPopUpSA
+{
+	background-color: #1EB1DD;
+	color:#FAFAFA;
+	font-family: Verdana, Arial;
+	cursor: pointer;
+	
+}
+
+
+#signupAddress fieldset  input{
+  margin-top:3px;
+}
+
+
 #example_filter {
 	margin-bottom:10px;
 	padding-bottom:10px;
@@ -1035,13 +1067,26 @@ div.box {
 
 
 
-	#send_back ,  #signupCed, #signupEmail, #signupCard, #signupAddress, #noAgree {
+	#send_back ,  #signupCed, #signupEmail, #signupCard, #noAgree {
 		text-align: center;
 		width: 335px;
 		height: 220px;
 		font-size: 16px;
 		line-height: 1.5em;
 		background: url('../images/dialogo_2.png') left top no-repeat;
+		padding: 60px 15px 10px 15px;
+		font: 12px Arial, Helvetica, sans-serif;
+		display: none;
+		
+	}
+	
+	#signupAddress {
+		text-align: center;
+		width: 430px;
+		height: 500px;
+		font-size: 16px;
+		line-height: 1.5em;
+		background: url('../images/dialogo3.png') left top no-repeat;
 		padding: 60px 15px 10px 15px;
 		font: 12px Arial, Helvetica, sans-serif;
 		display: none;

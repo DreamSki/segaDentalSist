@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import command.CommandExecutor;
 
 import domain.Payment;
-import domain.Product;
 import domain.User;
 
 /**
@@ -68,7 +67,10 @@ public class RegisterPaymentServlet extends HttpServlet {
 		
 		RequestDispatcher rd;
 		
-		//try{
+		try{
+			HttpSession session = request.getSession(true);
+			User user = (User) session.getAttribute("user");
+			
 			String cardType = request.getParameter("txtCardType");
 			String numCard = request.getParameter("txtNumCard");
 			String bank = request.getParameter("txtBank");
@@ -82,45 +84,33 @@ public class RegisterPaymentServlet extends HttpServlet {
 			payment.setClientProductId(Integer.valueOf(clientProductId));
 			payment.setCreditCardId(Integer.valueOf(cardId));
 			payment.setAmount(amount);
-			
-			
-			System.out.println("aqui toy " + cardType + "  " + numCard + " " + bank + " " + cedNumber + " " + voucher + " " + clientProductId + " " + amount + " " + cardId);
+			payment.setVoucher(voucher);
+			payment.setCheckerId(user.getId());
+			System.out.println("aqui toy " + cardType + "  " + numCard + " " + bank + " " + cedNumber + " " + voucher + " " + clientProductId + " " + amount + " " + cardId +
+					" " + user.getId());
 
-			request.setAttribute("info", "Solicitud todavia sin guardar en BD :).");
-			request.setAttribute("error", "");
-			rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
-			rd.forward(request, response);
+			Integer rowsUpdated  = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreatePayment(payment));
 			
-//			Product product = new Product();
-//			product.setName(name);
-//			product.setDescription(description);
-//			product.setStatus(isActive);
-//			product.setPrice(price);
-//						
-//			Integer rowsUpdated  = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateProduct(product));
-//			
-//			if(rowsUpdated == 1){
-//					request.setAttribute("info", "El producto fue creado exitosamente.");
-//					request.setAttribute("error", "");
-//					System.out.println("bien");
-//					rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
-//					rd.forward(request, response);
-//			}
-//			else{
-//				request.setAttribute("info", "");
-//				request.setAttribute("error", "Ocurrió un error durante la creación del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-//				System.out.println("error");
-//				rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
-//
-//				rd.forward(request, response);
-//			}
-//			
-//		}catch (Exception e) {
-//			request.setAttribute("info", "");
-//			request.setAttribute("error", "Ocurrió un error durante la creación del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-//			rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
-//
-//			rd.forward(request, response);
-//		}
+			if(rowsUpdated == 1){
+					request.setAttribute("info", "El pago fue registrado existosamente.");
+					request.setAttribute("error", "");
+					rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
+					rd.forward(request, response);
+			}
+			else{
+				request.setAttribute("info", "");
+				request.setAttribute("error", "Ocurrió un error durante el registro del pago. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
+				System.out.println("error");
+				rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
+				rd.forward(request, response);
+			}
+			
+		}catch (Exception e) {
+			request.setAttribute("info", "");
+			request.setAttribute("error", "Ocurrió un error durante el registro del pago. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
+			rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
+
+			rd.forward(request, response);
+		}
 	}
 }

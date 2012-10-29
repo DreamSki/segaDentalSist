@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import command.CommandExecutor;
 
 import domain.Client;
+import domain.CreditCard;
 import domain.StatusJustification;
 import domain.User;
 
@@ -60,6 +61,10 @@ public class EditRequestServlet extends HttpServlet {
 					@SuppressWarnings("unchecked")
 					ArrayList<StatusJustification> list = (ArrayList<StatusJustification>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListStatusJustification());
 					request.setAttribute("statusJustification", list);
+					
+					@SuppressWarnings("unchecked")
+					ArrayList<CreditCard> listCardType = (ArrayList<CreditCard>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListCardType());
+					request.setAttribute("cardType", listCardType);
 					
 					request.setAttribute("client", client);
 					request.setAttribute("type", typeRequest);
