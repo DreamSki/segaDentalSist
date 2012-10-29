@@ -1,5 +1,7 @@
 package domain;
 
+import java.sql.Date;
+
 
 public class Client {
 
@@ -9,6 +11,7 @@ public class Client {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private Date birthday;
 	private String sex;
 	private String identityCard;
 	private ClientAddress address;
@@ -121,7 +124,14 @@ public class Client {
 		return product;
 	}
 	
+	public void setBirthday(Date birthday){
+		this.birthday = birthday;
+	}
 
+	public Date getBirthday(){
+		return birthday;
+		
+	}
 
 
 }

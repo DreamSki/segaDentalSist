@@ -251,12 +251,13 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form action="/segaDental/EditClientIdentCardServlet" method="get">
+				<form  class="edit" action="/segaDental/EditClientIdentCardServlet" method="get">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
 				
-     			  <div class="txt-fld">
+     			  <fieldset>
+				  <div class="txt-fld">
 					<label for="identityCard">Cédula:</label>
 					<select name="txtCedId" id="txtCedId" class="good_input">
 						<%
@@ -281,6 +282,7 @@
 				  <div class="btn-fld">
 					 <input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />
 				  </div>
+				  </fieldset>
 				 </form>
 			</div>
 		</div>
@@ -292,19 +294,20 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form action="/segaDental/EditClientEmailServlet" method="get">
+				<form class="edit"  action="/segaDental/EditClientEmailServlet" method="get">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%=client.getClientId()%>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
-				
-     			  <div class="txt-fld">
-					<label for="clientEmail">Correo Electrónico:</label>
-				    <input id="txtEmailClient" class="good_input" name="txtEmailClient" type="text"  value="<%= client.getEmail() %>"/>
-				  </div>
-				  
-				  <div class="btn-fld">
-					 <input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />
-				  </div>
+				   <fieldset>
+					  <div class="txt-fld">
+						<label for="clientEmail">Correo Electrónico:</label>
+						<input id="txtEmailClient" class="good_input" name="txtEmailClient" type="text"  value="<%= client.getEmail() %>"/>
+					  </div>
+					  
+					  <div class="btn-fld">
+						 <input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />
+					  </div>
+				 </fieldset>
 				 </form>
 			</div>
 		</div>	
@@ -381,7 +384,7 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form action="/segaDental/EditClientCardServlet" method="get">
+				<form  class="edit" action="/segaDental/EditClientCardServlet" method="get">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
@@ -401,11 +404,11 @@
 									<%
 										}
 									%>
-								</select><br>
+								</select><br><br>
 				  </div>
 				  
 				  <div class="txt-fld">
-					<label for="clientEmail">Banco:</label>
+					<label for="clientEmail">Banco:</label> &nbsp;
 				    <input id="txtBank" class="good_input" name="txtBank" type="text"  value="<%= card.getBank() %>" style="margin-left:25px;"/>
 				  </div><br>
 				  

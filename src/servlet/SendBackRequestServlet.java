@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import command.CommandExecutor;
 
-import domain.Client;
 import domain.ClientRequest;
-import domain.StatusJustification;
 import domain.User;
 
 

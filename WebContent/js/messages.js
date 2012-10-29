@@ -47,6 +47,10 @@ function validate(form) {
     inlineMsg('txtPasswordRpt','Debe repetir la contrase&ntilde;a del usuario.', 2);
     return false;
   }
+  if (pass.length < 6){
+	  inlineMsg('txtPassword','Las contraseña debe tener una longitud mayor o igual a 6 caracteres.', 2);
+	  return false;
+  }
   if(passRpt != pass) {
     inlineMsg('txtPasswordRpt','Las contraseñas deben coincidir', 2);
     return false;

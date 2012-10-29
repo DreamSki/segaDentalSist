@@ -49,6 +49,16 @@ color: #006c92;
 color: #0098b6;
 }
 
+#contentP h2
+{
+color: #006c92;
+}
+
+#contentP h3
+{
+color: #0098b6;
+}
+
 #header
 {
 height:85px;
@@ -191,7 +201,7 @@ color:#006c92;
 
 
 /*CAMBIE ESTO*/
-#content
+#content, #contentP
 {
 width:700px;
 height:420px;
@@ -402,6 +412,70 @@ color:#7198E1;
   border: 0;
 }
 
+.address{
+  padding: 1em;
+  font:12px Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  border: 0;
+}
+
+#content .formClient #txtCityLabel{
+	padding-left: 18px;
+}
+
+#content .formClient #txtUrbanizationLabel{
+	padding-left: 18px;
+}
+
+#content .formClient #txtPropertyLabel{
+	padding-left: 18px;
+
+}
+
+#content .formClient #txtFloorLabel{
+	padding-left: 47px;
+
+}
+
+#content .formClient #txtAPLabel{
+	padding-left: 20px;
+
+}
+
+#content .formClient #txtFloor{
+	margin-left: 10px;
+
+}
+
+#content .formClient #txtApartment{
+	margin-left: 5px;
+
+}
+
+#content .formClient #txtCity{
+	margin-left: 76px;
+}
+
+#content .formClient #txtTower{
+	margin-left: 22px;
+}
+
+#content .formClient #txtState{
+	margin-left: 14px;
+}
+
+#content .formClient #txtUrbanization{
+	margin-left: 40px;
+}
+
+#content .formClient #txtStreet{
+	margin-left: 25px;
+}
+
+#content .formClient #txtPropetyName{
+	margin-left: 10px;
+}
+
 #contentLogin label{
   float:left;
   width:30%;
@@ -416,6 +490,7 @@ color:#7198E1;
   font:12px Arial, Helvetica, sans-serif;
   border: 0;
 }
+
   
 /* Cambie esto */
 #content form label{
@@ -427,6 +502,40 @@ color:#7198E1;
   text-align:left;
   font-weight:bold;
 }
+
+#contentAux fieldset, .edit fieldset{
+  padding: 1em;
+  font:12px Arial, Helvetica, sans-serif;
+  border: 0;
+}
+
+#contentProduct fieldset{
+  font:12px Arial, Helvetica, sans-serif;
+  border: 0;
+  margin-top: -15px;
+}
+
+
+
+#contentProduct label{
+
+	font-weight:bold;
+	padding-right: 119px;
+
+}
+
+  
+/* Cambie esto */
+#contentAux fieldset label{
+  float:left;
+  width:25%;
+  height: 30px;
+  margin-right:0.5em;
+  padding-top:0.2em;
+  text-align:left;
+  font-weight:bold;
+}
+
 
 
 #signupAddress fieldset{
@@ -704,19 +813,24 @@ table.display thead th {
 	* cursor: hand;
 	background-color: #A3A4A4;
 	font-size: 12px;
+	text-align:center;
 }
 
 table.display tbody td {
 	font-size: 11px;
+	text-align:center;
 }
 
 table.display tr.heading2 td {
 	border-bottom: 1px solid #aaa;
+	text-align:center;
 }
 
 table.display td {
 	padding: 3px 10px;
+	text-align:center;
 }
+
 
 table.display td.center {
 	text-align: center;
@@ -755,6 +869,7 @@ th:active {
  */
 table.display tr.odd.gradeA {
 	background-color: #80B6C8;
+	
 }
 
 table.display tr.even.gradeA {
@@ -948,6 +1063,10 @@ table.display tr.gradeA {
 	background-color: #eeffee;
 }
 
+table.display tr td p {
+	text-align:center;
+}
+
 div.box {
 	height: 100px;
 	padding: 10px;
@@ -960,6 +1079,8 @@ div.box {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * General page setup
  */
+ 
+ 
 #dt_example {
 	font: 80%/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
 	margin: 0;
