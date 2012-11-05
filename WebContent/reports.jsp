@@ -22,7 +22,7 @@
 			buttonText: "Seleccione una fecha",
 			dateFormat:'dd/mm/yy',
 			changeMonth: true,
-		    changeYear: true,
+		    changeYear: true
 		});
 		$('#txtDateEnd').datepicker({
 			showOn: "button",
@@ -33,7 +33,24 @@
 			changeMonth: true,
 		    changeYear: true
 		});
-		
+		$('#txtDateIniExp').datepicker({
+			showOn: "button",
+			buttonImage: "images/calendar.png",
+			buttonImageOnly: true,
+			buttonText: "Seleccione una fecha",
+			dateFormat:'dd/mm/yy',
+			changeMonth: true,
+		    changeYear: true
+		});
+		$('#txtDateEndExp').datepicker({
+			showOn: "button",
+			buttonImage: "images/calendar.png",
+			buttonImageOnly: true,
+			buttonText: "Seleccione una fecha",
+			dateFormat:'dd/mm/yy',
+			changeMonth: true,
+		    changeYear: true
+		});		
 	} );
 </script>
 </head>
@@ -59,9 +76,12 @@
         		<h2>Escoja el reporte que desea generar:</h2><br><br>
 				<form name="form" action="/segaDental/CreateReportServlet"  method="post">
 					<fieldset>
-						<label for="date">Intervalo de Fechas:</label>
+						<label for="date">Fecha Afiliación:</label>
 						Inicio: <input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" /> &nbsp;&nbsp;
 						Fin: <input  type="text" name="txtDateEnd" id="txtDateEnd" maxlength="50" size="10" /> <br><br>
+						<label for="date">Fecha Expiración:</label>
+						Inicio: <input  type="text" name="txtDateIniExp" id="txtDateIniExp" maxlength="50" size="10" /> &nbsp;&nbsp;
+						Fin: <input  type="text" name="txtDateEndExp" id="txtDateEndExp" maxlength="50" size="10" /> <br><br>
 						<label for="state">Estado:</label>
 						<select name="txtState">
 						  <option value="-1">Seleccionar</option>
