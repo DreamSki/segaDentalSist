@@ -96,6 +96,8 @@ function validateLogin(form) {
 function validateCreateProduct(form) {
 	  var name = form.txtNameProduct.value;
 	  var price = form.txtPrice.value;
+	  var priceRegex = /^[0-9]+(\.[0-9]+)?$/;
+	 
 	  
 	  if(name == "") {
 	    inlineMsg('txtNameProduct','Debe introducir el nombre del producto.',2);
@@ -106,6 +108,12 @@ function validateCreateProduct(form) {
 	    inlineMsg('txtPrice','Debe introducir el precio del producto.', 2);
 	    return false;
 	  }
+	  
+	  if(!price.match(priceRegex)) {
+		inlineMsg('txtPrice','Debe introducir un precio valido.',2);
+		return false;
+	  }
+	   
 	  
 	  return true;
 }

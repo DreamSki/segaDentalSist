@@ -9,14 +9,16 @@
 <title>Administrador Productos</title>
 <script type="text/javascript" language="javascript" src="/segaDental/js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="/segaDental/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="/segaDental/js/jconfirmaction.jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/segaDental/js/jquery.leanModal.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
 		$('#example').dataTable( {
 			"iDisplayLength": 8,
 			"bLengthChange": false,
+			"sScrollY": "250px",
+			"bPaginate": false,
 			"aoColumns": [
-				null,
+				{ "sType": "numeric" },
 				null,
 				null,
 				null,
@@ -41,11 +43,22 @@
 	} );
 </script>
 <script type="text/javascript">
-			var producto;
-			$(document).ready(function() {
-					$('.ask').jConfirmAction({title : "Eliminar Producto", question : "¿Desea eliminar el producto {0} ?", yesAnswer : "Aceptar", cancelAnswer : "Cancelar"});
-			});
+	var idProduct;
 			
+	$(function() {
+		$('a[rel*=leanModal]').leanModal({ top : 200, closeButton: ".close_x" });		
+	});
+	
+	function loadVars(var1, var2) {
+		idProduct = var1;
+		$('.product').text(var2);
+		
+	};
+	
+	function setV(f){
+		f.elements['productId'].value = idProduct;
+		return true;
+	}
 </script>
 </head>
 <body>
@@ -120,9 +133,10 @@
 										<a href="/segaDental/EditProductServlet?productId=<%= p.getId() %>" style="color: transparent" >
 											<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
 										</a> 
-										<a href="/segaDental/DeleteProductServlet?productId=<%= p.getId() %>" name="<%= p.getName() %>" class="ask">
-											<img alt="logo" src="/segaDental/images/delete.png" height="16" width="16" style="padding-left: 15px;"/>
-										</a>
+										<a id="go" rel="leanModal" href="#deleteProduct" style="color: #f7941e; font-weight: bold;" 
+										onclick="return loadVars(<%= p.getId()%>,'<%= p.getName()%>' )" >
+										<img alt="logo" src="/segaDental/images/delete.png" height="16" width="16" style="padding-left: 15px;"/>
+										</a><br>
 										</p>
 									</td>
 								</tr>
@@ -140,5 +154,24 @@
 			%>
 		</div>
  	</div>
+	
+	<div id="deleteProduct">
+		<div id="signup-ct">
+			<h3 id="see_id" class="sprited" > Eliminar Producto</h3>
+			<br><br>
+			<span>¿Está seguro que desea eliminar el producto <span class="product"></span>? </span> <br><br>
+			<div id="signup-header">
+				<a class="close_x" id="close_x"  href="#"></a>
+			</div>
+			<form action="/segaDental/DeleteProductServlet" method="post"  onsubmit="return setV(this)">
+				<input type="hidden" id="productId" class="good_input" name="productId"  value=""/>
+				<div class="btn-fld">
+					<input type="submit"  class="buttonPopUpDelete"  name="sbmtButton" value="Aceptar"  />
+				</div>
+		 </form>
+		</div>
+	</div>
+	
+
 </body>
 </html>
