@@ -536,6 +536,12 @@ color:#7198E1;
   font-weight:bold;
 }
 
+.noReg{
+  font:16px Arial, Helvetica, sans-serif;
+  margin-top: 40px;
+  text-align:center;
+  font-weight: bold;
+}
 
 
 #signupAddress fieldset{

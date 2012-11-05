@@ -101,7 +101,7 @@
 					if (products.size() == 0) {
 				%>	
 					<p>&nbsp;</p> 
-					<p>En estos momentos no hay productos registrados.</p>  
+					<p class="noReg">En estos momentos no hay productos registrados.</p>  
 				<%
 				} else {
 				%>		

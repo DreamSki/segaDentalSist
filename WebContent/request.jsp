@@ -131,7 +131,7 @@
 					if (listClientRequests.size() == 0) {
 				%>	
 					<p>&nbsp;</p> 
-					<p>En estos momentos no hay solicitudes ni renovaciones pendientes.</p>  
+					<p class="noReg">En estos momentos no hay solicitudes ni renovaciones pendientes.</p>  
 				<%
 				} else {
 				%>	

@@ -87,7 +87,6 @@ public class CreateProductServlet extends HttpServlet {
 			if(rowsUpdated == 1){
 					request.setAttribute("info", "El producto fue creado exitosamente.");
 					request.setAttribute("error", "");
-					System.out.println("bien");
 					rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
 					rd.forward(request, response);
 			}

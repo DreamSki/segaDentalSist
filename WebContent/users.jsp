@@ -80,22 +80,44 @@
 		<div id="content">  
         		<jsp:useBean id="users" type="java.util.ArrayList<domain.User>" scope="request"/>  	
         		<h2>Usuarios Registrados:</h2>
-    <div id="dt_example">
-	<div id="container">
-	<div id="demo">
-		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Nombre</th>
-				<th>Usuario</th>
-				<th>Rol</th>
-				<th>Sala</th>
-				<th>Producto</th>
-				<th>Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
+        		<%
+        			String info = (String)request.getAttribute("info");
+        			String error = (String)request.getAttribute("error");
+					if(!info.equalsIgnoreCase("")){
+				%>	
+				<p>&nbsp;</p> 
+				<p class="info-msg"><%= info %></p> 
+				<%	
+					}
+					if(!error.equalsIgnoreCase("")){
+				%>	
+           		<p>&nbsp;</p>    
+				<p class="error-msg"><%= error %></p>      
+           		<%	
+					}
+					if (users.size() == 0) {
+				%>	
+					<p>&nbsp;</p> 
+					<p class="noReg">En estos momentos no hay usuarios registrados.</p>  
+				<%
+				} else {
+				%>		
+			    <div id="dt_example">
+				<div id="container">
+				<div id="demo">
+					<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nombre</th>
+							<th>Usuario</th>
+							<th>Rol</th>
+							<th>Sala</th>
+							<th>Producto</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
 			<%
 				for(domain.User u : users) { 											
 				%>
@@ -127,8 +149,10 @@
 		</div>
 		</div>
 		<div class="spacer"></div>
-        	</div>
-            <div id="footer"></div>
+        </div>
+        <% 
+			}
+		%>
 	</div>
 	
 	<div id="deleteUser">
