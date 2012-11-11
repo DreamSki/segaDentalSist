@@ -17,6 +17,17 @@
        
 		<div id="contentLogin">
 				<form name="userForm" action="/segaDental/UserLoginServlet" onsubmit="return validateLogin(this)" method="post">
+					<%
+						String error = (String) request.getAttribute("error");
+					
+						if (error != null){
+					%>
+										<div style="color:red; font-weight:bold;">
+											<%= error %>
+										</div>
+					<%
+						}
+					%>		
 					<fieldset>
 						<label for="name">Nombre de usuario:</label>
 						<input type="text" name="txtName" id="txtName" maxlength="50" /> <br><br>
@@ -24,17 +35,7 @@
 						<input type="password" name="txtPassword" id="txtPassword" maxlength="50" />
 					</fieldset>
 					
-<%
-	String error = (String) request.getAttribute("error");
-
-	if (error != null){
-%>
-					<div>
-						<%= error %>
-					</div>
-<%
-	}
-%>		
+					
 					<br>
 					<div class="buttonCenter">
 						<input type="submit" name="sbmtButton" class="button" value="Acceder" />

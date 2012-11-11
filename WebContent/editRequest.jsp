@@ -82,7 +82,7 @@
 				<%
 					String adj = "el";
 						   String pers = "Sr.";
-						   if (client.getSext().equalsIgnoreCase("f"))	{
+						   if (client.getSex().equalsIgnoreCase("f"))	{
 							   adj ="la";
 						   	   pers = "Sra.";
 						   }
@@ -205,6 +205,8 @@
 				
 					<h2> Registrar el pago </h2><br>
 					<form name="form" action="/segaDental/RegisterPaymentServlet" onsubmit="return validatePayment(this)" method="post">
+					<input type="hidden" id="txtName" class="good_input" name="txtName"  value="<%= client.getFirstName() + " " + client.getLastName() %>"/>
+					<input type="hidden" id="clientEmail" class="good_input" name="clientEmail"  value="<%= client.getEmail() %>"/>
 					<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value="<%= client.getClientProductId() %>"/>
 					<input type="hidden" id="txtNumCard" class="good_input" name="txtNumCard"  value="<%= card.getCardNumber() %>"/>
 					<input type="hidden" id="txtAmount" class="good_input" name="txtAmount"  value="<%= client.getProduct().getPrice() %>"/>
@@ -212,20 +214,20 @@
 				
 					<fieldset>
 						<label for="nameCard">Tipo de Tarjeta:</label>
-						<input type="text" name="txtCardType" id="txtCardType" maxlength="50" size="20" value="<%= card.getCardType() %>" readonly="readonly"/> <br><br>
+						<input type="text" name="txtCardType" id="txtCardType" maxlength="50" size="20" value="<%= card.getCardType() %>" readonly="readonly" style="border:none;"/> <br><br>
 							
 						<label for="description">Número de Tarjeta:</label>
 						<% String cardNumber = String.valueOf(card.getCardNumber());
 							String aux = cardNumber.substring(cardNumber.length() - 4);
 							aux = "**" + aux;
 						%>
-						<input type="text" name="numCard" id="numCard" maxlength="50" size="30" value="<%= aux %>" readonly="readonly"/> <br><br>
+						<input type="text" name="numCard" id="numCard" maxlength="50" size="30" value="<%= aux %>" readonly="readonly" style="border:none;"/> <br><br>
 						<label for="nameCard">Banco:</label>
-						<input type="text" name="txtBank" id="txtBank" maxlength="50" size="30" value="<%= card.getBank() %>" readonly="readonly"/> <br><br>
+						<input type="text" name="txtBank" id="txtBank" maxlength="50" size="30" value="<%= card.getBank() %>" readonly="readonly" style="border:none;"/> <br><br>
 							
 							
 						<label for="cedClient">Cédula:</label>
-						<input type="text" name="txtCedNumClient" id="txtCedNumClient" maxlength="50" size="10" value="<%=client.getIdentityCard() %>" readonly="readonly"/> <br><br>
+						<input type="text" name="txtCedNumClient" id="txtCedNumClient" maxlength="50" size="10" value="<%=client.getIdentityCard() %>" readonly="readonly" style="border:none;"/> <br><br>
 						
 						<label for="voucher">Número de Voucher:</label>
 						<input type="text" name="txtVoucher" id="txtVoucher" maxlength="50" size="10"/> <br><br>
@@ -251,7 +253,7 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form  class="edit" action="/segaDental/EditClientIdentCardServlet" method="get">
+				<form  class="edit" action="/segaDental/EditClientIdentCardServlet" method="post" onsubmit="return validateCed(this)" >
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
@@ -294,7 +296,7 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form class="edit"  action="/segaDental/EditClientEmailServlet" method="get">
+				<form class="edit"  action="/segaDental/EditClientEmailServlet" method="post">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%=client.getClientId()%>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
@@ -320,7 +322,7 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div>
-				<form action="/segaDental/EditClientAddressServlet" method="get">
+				<form action="/segaDental/EditClientAddressServlet" method="post" onsubmit="return validateAddress(this)">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%=client.getClientId()%>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
@@ -384,32 +386,31 @@
 				<div id="signup-header">
 					<a class="close_x" id="close_x"  href="#"></a>
 				</div><br>
-				<form  class="edit" action="/segaDental/EditClientCardServlet" method="get">
+				<form  class="edit" action="/segaDental/EditClientCardServlet" method="post" onsubmit="return validateCreditCard(this)">
 				  <input type="hidden" id="clientId" class="good_input" name="clientId"  value="<%= client.getClientId() %>"/>
 				  <input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type")%>"/>
 				  <input type="hidden" id="id" class="good_input" name="id"  value="<%= request.getParameter("id")%>"/>
 				  <fieldset>
      			  	<div class="txt-fld">
 					  	<label for="tarjeta">Tipo Tarjeta:</label>
-								<select class="good_input" name="txtCardType" id="txtCardType">
-									<%
-										for(CreditCard cc : cardType) {
-											String selected = "";
-											System.out.println(" aqui " + card.getCardType() +  " " + cc.getName());
-											if (card.getCardType().equals(cc.getName())){
-												selected = "selected=selected";
-											}
-									%>
-										<option value="<%=cc.getId()%>" <%= selected %>> <%=cc.getName()%> </option>
-									<%
+							<select class="good_input" name="txtCardTypeEdit" id="txtCardTypeEdit">
+								<%
+									for(CreditCard cc : cardType) {
+										String selected = "";
+										if (card.getCardType().equals(cc.getName())){
+											selected = "selected=selected";
 										}
-									%>
-								</select><br><br>
+								%>
+									<option value="<%=cc.getId()%>" <%= selected %>> <%=cc.getName()%> </option>
+								<%
+									}
+								%>
+							</select><br><br>
 				  </div>
 				  
 				  <div class="txt-fld">
-					<label for="clientEmail">Banco:</label> &nbsp;
-				    <input id="txtBank" class="good_input" name="txtBank" type="text"  value="<%= card.getBank() %>" style="margin-left:25px;"/>
+					<label for="bank">Banco:</label> &nbsp;
+				    <input id="txtBankEdit" class="good_input" name="txtBankEdit" type="text"  value="<%= card.getBank() %>" style="margin-left:25px;"/>
 				  </div><br>
 				  
 				  <div class="btn-fld">
@@ -429,7 +430,7 @@
 			<div id="signup-header">
 				<a class="close_x" id="close_x"  href="#"></a>
 			</div>
-			<form action="/segaDental/SendBackRequestServlet" method="get"  onsubmit="return setV(this)">
+			<form action="/segaDental/SendBackRequestServlet" method="post"  onsubmit="return validateJustification(this)">
 				<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value="<%= client.getClientProductId() %>"/>
 				  <div class="txt-fld">
    			  	<%
@@ -442,7 +443,7 @@
 				}
 				%>
 				<input type="radio" name="justif" value="5" checked> 
-					Otro: <input name="otherJustif" />
+					Otro: <input name="otherJustif" id="otherJustif" />
 			  </div><br>
 			  <div class="btn-fld">
 				  <input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />

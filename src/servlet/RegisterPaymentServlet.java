@@ -1,6 +1,8 @@
 package servlet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,10 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import command.CommandExecutor;
 
 import domain.Payment;
 import domain.User;
+import Util.SendEmail;
 
 /**
  * Servlet implementation class RegisterPaymentServlet
@@ -71,6 +75,7 @@ public class RegisterPaymentServlet extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			User user = (User) session.getAttribute("user");
 			
+			String email = request.getParameter("clientEmail");
 			String cardType = request.getParameter("txtCardType");
 			String numCard = request.getParameter("txtNumCard");
 			String bank = request.getParameter("txtBank");
@@ -79,6 +84,7 @@ public class RegisterPaymentServlet extends HttpServlet {
 			String clientProductId = request.getParameter("clientProductId"); 
 			String amount = request.getParameter("txtAmount"); 
 			String cardId = request.getParameter("txtCardId"); 
+			String name = request.getParameter("txtName");
 			
 			Payment payment = new Payment();
 			payment.setClientProductId(Integer.valueOf(clientProductId));
@@ -92,25 +98,32 @@ public class RegisterPaymentServlet extends HttpServlet {
 			Integer rowsUpdated  = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreatePayment(payment));
 			
 			if(rowsUpdated == 1){
-					request.setAttribute("info", "El pago fue registrado existosamente.");
-					request.setAttribute("error", "");
-					rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
-					rd.forward(request, response);
+				Properties propertiesFile = new Properties();
+				propertiesFile.load( new FileInputStream( getServletContext().getInitParameter("properties") ) );
+				
+				SendEmail.sendEmail(propertiesFile, email, name, false, "contrato");
+
+				request.setAttribute("info", "El pago fue registrado existosamente.");
+				request.setAttribute("error", "");
+				rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
+				rd.forward(request, response);
 			}
 			else{
 				request.setAttribute("info", "");
 				request.setAttribute("error", "Ocurrió un error durante el registro del pago. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
 				System.out.println("error");
-				rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
+				rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
 				rd.forward(request, response);
 			}
 			
 		}catch (Exception e) {
 			request.setAttribute("info", "");
 			request.setAttribute("error", "Ocurrió un error durante el registro del pago. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-			rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
+			rd = getServletContext().getRequestDispatcher("ListRequestsServlet");			
 
 			rd.forward(request, response);
 		}
 	}
+	
+	
 }

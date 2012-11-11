@@ -89,6 +89,8 @@ public class CreateUserServlet extends HttpServlet {
 			String identityCardId = request.getParameter("txtCedId");
 			String identityCardNum = request.getParameter("txtCedIdNum");
 			String password = request.getParameter("txtPassword");
+			String encryptPassword = UserLoginServlet.getEncryptPassword(password);
+		
 			String userName = request.getParameter("txtUserName");
 			Integer roleId = Integer.valueOf(request.getParameter("txtRoleId"));
 			Integer roomId;
@@ -105,7 +107,7 @@ public class CreateUserServlet extends HttpServlet {
 			user.setLastName(lastName);
 			user.setIdentityCard(identityCardId+identityCardNum);
 			user.setUserName(userName);
-			user.setPassword(password);
+			user.setPassword(encryptPassword);
 			user.setRoleId(roleId);
 			user.setRoomId(roomId);
 

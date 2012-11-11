@@ -17,6 +17,7 @@ public class Client {
 	private ClientAddress address;
 	private ClientCreditCard card;
 	private Product product;
+	private String type;
 	
 	
 	/**
@@ -84,7 +85,7 @@ public class Client {
 		this.sex = sex;
 	}
 
-	public String getSext() {
+	public String getSex() {
 		return sex;
 	}
 
@@ -130,6 +131,15 @@ public class Client {
 
 	public Date getBirthday(){
 		return birthday;
+		
+	}
+	
+	public void setType(String type){
+		this.type = type;
+	}
+
+	public String getType(){
+		return type;
 		
 	}
 

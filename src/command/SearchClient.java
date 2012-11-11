@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import domain.Client;
 
@@ -19,9 +20,12 @@ public class SearchClient implements DatabaseCommand {
 	@Override
 	public Object executeDatabaseOperation(Connection conn) throws SQLException {
 		// List users in the database
+		
+		ArrayList<Client> list = new ArrayList<Client>();
+		
 		System.out.println("Entro aqui a la busqueda");
 		PreparedStatement sta = conn.prepareStatement("SELECT C.ID, C.FIRST_NAME, C.LAST_NAME, C.IDENTITY_CARD," +
-						" C.EMAIL" +
+						" C.EMAIL, C.SEX " +
 						" FROM CLIENT C" +
 						" WHERE C.IDENTITY_CARD = ?");
 		
@@ -35,11 +39,29 @@ public class SearchClient implements DatabaseCommand {
 			client.setLastName(rs.getString(3));
 			client.setIdentityCard(rs.getString(4));
 			client.setEmail(rs.getString(5));
-			System.out.println("clienteId " + client.getClientId());
+			client.setType("Titular");
+			list.add(client);
+			sta = conn.prepareStatement("SELECT CB.ID, CB.IDENTITY_CARD, CB.FIRST_NAME, CB.LAST_NAME, CB.EMAIL FROM CLIENT_BENEFICIARY CB" +
+					" WHERE CLIENT_PRODUCT_ID = (SELECT CP.ID FROM CLIENT_PRODUCT CP" +
+					" WHERE CP.ID = (SELECT C.ID FROM CLIENT C WHERE C.IDENTITY_CARD = ?))");
+			sta.setString(1, this.identityCard);
+			rs = sta.executeQuery();
+			while(rs.next()) {
+				Client benef = new Client();
+				benef.setClientId(rs.getInt(1));
+				benef.setIdentityCard(rs.getString(2));
+				benef.setFirstName(rs.getString(3));
+				benef.setLastName(rs.getString(4));
+				benef.setEmail(rs.getString(5));
+				benef.setType("Beneficiario");
+				list.add(benef);
+			}
 		} 
+		
+		
 		rs.close();
 		sta.close();
-		return client;
+		return list;
 	}
 
 }

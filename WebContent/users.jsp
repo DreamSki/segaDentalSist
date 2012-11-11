@@ -135,7 +135,11 @@
 							<a id="go" rel="leanModal" href="#deleteUser" style="color: #f7941e; font-weight: bold;" 
 								onclick="return loadVars(<%=u.getId()%>,'<%=u.getName()%>' )" >
 								<img alt="logo" src="/segaDental/images/delete.png" height="16" width="16" style="padding-left: 15px;"/>
-							</a><br>
+							</a>
+							<a href="/segaDental/EditUserPasswordServlet?userId=<%= u.getId() %>" style="color: transparent" >
+								<img alt="logo" src="/segaDental/images/editPassword2.png"  height="16" width="16" style="padding-left: 15px;" />
+							</a> 
+							<br>
 						</td>
 					</tr>
 				<% 

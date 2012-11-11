@@ -32,23 +32,30 @@ public class EditClientAddressServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd;
 
 		try{
 			int clientId = Integer.valueOf(request.getParameter("clientId"));
-			System.out.println("+++ id:"+ clientId);
+//			System.out.println("+++ id:"+ clientId);
 			String state = request.getParameter("txtState");
-			System.out.println("+++ name:"+ state);
+//			System.out.println("+++ name:"+ state);
 			String city = request.getParameter("txtCity");
-			System.out.println("+++ name:"+ city);
+//			System.out.println("+++ name:"+ city);
 			String municipality = request.getParameter("txtMunicipality"); 	
-			System.out.println("+++ name:"+ municipality);
+//			System.out.println("+++ name:"+ municipality);
 			String urbanization = request.getParameter("txtUrbanization"); 	
-			System.out.println("+++ name:"+ urbanization);
+//			System.out.println("+++ name:"+ urbanization);
 			String street = request.getParameter("txtStreet"); 	
-			System.out.println("+++ name:"+ street);
+//			System.out.println("+++ name:"+ street);
 			String propertyName = request.getParameter("txtPropetyName"); 
-			System.out.println("+++ name:"+ propertyName);
+//			System.out.println("+++ name:"+ propertyName);
 			
 			
 			ClientAddress address = new ClientAddress();
@@ -63,11 +70,11 @@ public class EditClientAddressServlet extends HttpServlet {
 			address.setPropertyTypeId(propertyTypeId);
 			if (propertyTypeId == 1 || propertyTypeId == 3 || propertyTypeId == 5){
 				String tower = request.getParameter("txtTower"); 	
-				System.out.println("+++ name:"+ tower);
+//				System.out.println("+++ name:"+ tower);
 				int floor = Integer.valueOf(request.getParameter("txtFloor")); 	
-				System.out.println("+++ name:"+ floor);
+//				System.out.println("+++ name:"+ floor);
 				String apartment = request.getParameter("txtApartment"); 	
-				System.out.println("+++ name:"+ apartment);
+//				System.out.println("+++ name:"+ apartment);
 			
 				address.setTower(tower);
 				address.setFloor(floor);
@@ -78,10 +85,10 @@ public class EditClientAddressServlet extends HttpServlet {
 			
 			String type = request.getParameter("type");
 			int id = Integer.valueOf(request.getParameter("id"));
-			System.out.println("+++ type:"+ type);
-			System.out.println("+++ id:"+ id);
-			System.out.println("aqui");
-						
+//			System.out.println("+++ type:"+ type);
+//			System.out.println("+++ id:"+ id);
+//			System.out.println("aqui");
+//						
 			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientAddress(clientId, address));
 			
 			if(rowsUpdated == 1){
@@ -106,13 +113,6 @@ public class EditClientAddressServlet extends HttpServlet {
 
 			rd.forward(request, response);
 		}
-	}
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		
 	}
 }

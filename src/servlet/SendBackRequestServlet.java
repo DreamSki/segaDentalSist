@@ -35,11 +35,18 @@ public class SendBackRequestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		doPost(request,response);
+	}
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd;
+		
 		try{
 			HttpSession session = request.getSession(true);
 			User user = (User) session.getAttribute("user");
-			RequestDispatcher rd;
 			   
 			if(user != null){
 				int roleId = user.getRoleId();
@@ -57,7 +64,6 @@ public class SendBackRequestServlet extends HttpServlet {
 						cr.setJustification(otherJustif);
 					}
 					
-					System.out.println("ClientR " + cr.getId() + " justId " + cr.getJustificationId() + " otherJ " + cr.getJustification());
 					Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientRequest(cr));
 					
 					if(rowsUpdated == 1){
@@ -80,15 +86,11 @@ public class SendBackRequestServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} catch (Exception e) {
-			throw new ServletException(e);
+			request.setAttribute("info", "");
+			request.setAttribute("error", "Ocurrió un error durante la devolucion. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
+			rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
+			rd.forward(request, response);
 		}		
-	}
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 		
 	}
 }

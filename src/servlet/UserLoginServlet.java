@@ -70,8 +70,8 @@ public class UserLoginServlet extends HttpServlet {
 		try{
 			String name = request.getParameter("txtName");
 			String password = request.getParameter("txtPassword");
-			//String encryptPassword = getEncryptPassword(password);
-			User user = (User) CommandExecutor.getInstance().executeDatabaseCommand(new command.UserExists(name, password));
+			String encryptPassword = getEncryptPassword(password);
+			User user = (User) CommandExecutor.getInstance().executeDatabaseCommand(new command.UserExists(name, encryptPassword));
 			RequestDispatcher rd;
 			
 			if(user != null){

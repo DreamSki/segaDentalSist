@@ -98,7 +98,8 @@ public class EditUserServlet extends HttpServlet {
 			String lastName = request.getParameter("txtLastName");
 			String identityCardId = request.getParameter("txtCedId");
 			String identityCardNum = request.getParameter("txtCedIdNum");
-			String password = request.getParameter("txtPassword");
+			
+			
 			String userName = request.getParameter("txtUserName");
 			Integer roleId = Integer.valueOf(request.getParameter("txtRoleId"));
 			Integer roomId;
@@ -117,7 +118,6 @@ public class EditUserServlet extends HttpServlet {
 			user.setLastName(lastName);
 			user.setIdentityCard(identityCardId+identityCardNum);
 			user.setUserName(userName);
-			user.setPassword(password);
 			user.setRoleId(roleId);
 			user.setRoomId(roomId);
 			

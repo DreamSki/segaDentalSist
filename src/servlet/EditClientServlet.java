@@ -44,13 +44,17 @@ public class EditClientServlet extends HttpServlet {
 			if(user != null){
 				int roleId = user.getRoleId();
 				
-				if(roleId == 1 || roleId == 8){
+				//Verificador y renovante.
+				if(roleId == 3 || roleId == 5 || roleId == 8){
 					
 					int clientId = Integer.valueOf(request.getParameter("clientId"));
-					request.setAttribute("clientId", clientId);
+					String  type = request.getParameter("type");
 					
-					Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId));
+					Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type));
+					request.setAttribute("clientId", clientId);
+					request.setAttribute("type", type);
 					request.setAttribute("clientInfo",clientInfo);
+					
 					rd = getServletContext().getRequestDispatcher("/editClient.jsp");			
 					rd.forward(request, response);
 				} else {
@@ -74,15 +78,19 @@ public class EditClientServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher rd;
-		String identityCardId = request.getParameter("txtCedId");
-		String identityCardNum = request.getParameter("txtCedIdNum");
-	
+		
 		try{
 		
 			int clientId = Integer.valueOf(request.getParameter("txtClientId"));
+			String type = request.getParameter("type");
+			
 			String firstName = request.getParameter("txtName");
 			String lastName = request.getParameter("txtLastName");
-			
+			String identityCardId = request.getParameter("txtCedId");
+			String identityCardNum = request.getParameter("txtCedIdNum");
+			String email = request.getParameter("txtEmail"); 
+			String sex = request.getParameter("txtGen"); 
+		
 			//String birthdate = request.getParameter("txtDateIni");
 				
 //			DateFormat formatter ; 
@@ -96,14 +104,6 @@ public class EditClientServlet extends HttpServlet {
 //			}  
 //			System.out.println("+++ bd:"+ date);
 //			
-			String state = request.getParameter("txtState");
-			String city = request.getParameter("txtCity");
-			String municipality = request.getParameter("txtMunicipality"); 	
-			String urbanization = request.getParameter("txtUrbanization"); 	
-			String street = request.getParameter("txtStreet"); 	
-			String propertyName = request.getParameter("txtPropetyName"); 
-			
-			String email = request.getParameter("txtEmail"); 
 			
 			Client c = new Client();
 			c.setClientId(clientId);
@@ -111,53 +111,74 @@ public class EditClientServlet extends HttpServlet {
 			c.setLastName(lastName);
 			c.setIdentityCard(identityCardId + identityCardNum);
 			c.setEmail(email);
+			c.setSex(sex);
 			
-		
-			ClientAddress address = new ClientAddress();
-			address.setCity(city);
-			address.setState(state);
-			address.setMunicipality(municipality);
-			address.setUrbanization(urbanization);
-			address.setStreet(street);
-			address.setPropertyName(propertyName);
-			
-			int propertyTypeId  = Integer.valueOf(request.getParameter("txtPropertyTypeId"));
-			address.setPropertyTypeId(propertyTypeId);
-			
-			if (propertyTypeId == 1 || propertyTypeId == 3 || propertyTypeId == 5){
-				String tower = request.getParameter("txtTower"); 	
-				int floor = Integer.valueOf(request.getParameter("txtFloor")); 	
-				String apartment = request.getParameter("txtApartment"); 	
-			
-				address.setTower(tower);
-				address.setFloor(floor);
-				address.setApartment(apartment);
+
+			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClient(c, type));
+			if(rowsUpdated == 1){
+				request.setAttribute("info", "El cliente fue editado exitosamente.");
+				request.setAttribute("error", "");
 			}
 			
-		
-			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClient(c));
-			if(rowsUpdated == 1){
-				rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientAddress(clientId, address));
-				if (rowsUpdated == 1){
-					request.setAttribute("info", "El cliente fue editado exitosamente.");
-					request.setAttribute("error", "");
-					rd = getServletContext().getRequestDispatcher("/search.jsp");			
-					rd.forward(request, response);
+			
+			if (type.equalsIgnoreCase("titular")){
+				String state = request.getParameter("txtState");
+				String city = request.getParameter("txtCity");
+				String municipality = request.getParameter("txtMunicipality"); 	
+				String urbanization = request.getParameter("txtUrbanization"); 	
+				String street = request.getParameter("txtStreet"); 	
+				String propertyName = request.getParameter("txtPropetyName"); 
+			
+				ClientAddress address = new ClientAddress();
+				address.setCity(city);
+				address.setState(state);
+				address.setMunicipality(municipality);
+				address.setUrbanization(urbanization);
+				address.setStreet(street);
+				address.setPropertyName(propertyName);
+				
+				int propertyTypeId  = Integer.valueOf(request.getParameter("txtPropertyTypeId"));
+				address.setPropertyTypeId(propertyTypeId);
+				
+				if (propertyTypeId == 1 || propertyTypeId == 3 || propertyTypeId == 5){
+					String tower = request.getParameter("txtTower"); 	
+					int floor = Integer.valueOf(request.getParameter("txtFloor")); 	
+					String apartment = request.getParameter("txtApartment"); 	
+					address.setTower(tower);
+					address.setFloor(floor);
+					address.setApartment(apartment);
 				}
-				 else {
+				
+				if(rowsUpdated == 1){
+					rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientAddress(clientId, address));
+					if (rowsUpdated == 1){
+						request.setAttribute("clientId",clientId);
+						request.setAttribute("type", type);
+						rd = getServletContext().getRequestDispatcher("/editClientJustification.jsp");			
+						rd.forward(request, response);
+					}
+					 else {
+						request.setAttribute("info", "");
+						request.setAttribute("error", "Ocurrió un error durante la edición del cliente. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
+						rd = getServletContext().getRequestDispatcher("/search.jsp");			
+						rd.forward(request, response);
+					 }
+					
+				} else {
 					request.setAttribute("info", "");
 					request.setAttribute("error", "Ocurrió un error durante la edición del cliente. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
 					rd = getServletContext().getRequestDispatcher("/search.jsp");			
 					rd.forward(request, response);
 				}
 				
-			} else {
-				request.setAttribute("info", "");
-				request.setAttribute("error", "Ocurrió un error durante la edición del cliente. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-				rd = getServletContext().getRequestDispatcher("/search.jsp");			
+			}else{
+				System.out.println("aqui llego a modificar justif43566 " +clientId);
+				request.setAttribute("clientId",clientId);
+				request.setAttribute("type", type);
+				rd = getServletContext().getRequestDispatcher("/editClientJustification.jsp");	
 				rd.forward(request, response);
 			}
-			
+		
 		} catch (Exception e) {
 			request.setAttribute("info", "");
 			request.setAttribute("error", "Ocurrió un error durante la edición del usuario. Por favor intente de nuevo y si el error persiste contacte a su administrador.");

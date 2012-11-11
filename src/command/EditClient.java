@@ -9,21 +9,36 @@ import domain.Client;
 public class EditClient implements DatabaseCommand {
 	
 	private Client client;
+	private String type;
 	
-	public EditClient(Client client){
+	public EditClient(Client client, String type){
 		this.client = client;
+		this.type = type;
 	}
 	
 	@Override
 	public Object executeDatabaseOperation(Connection conn) throws SQLException {
-		
-		PreparedStatement sta = conn.prepareStatement("UPDATE CLIENT SET FIRST_NAME = ?, LAST_NAME = ?, IDENTITY_CARD = ?, EMAIL = ? WHERE ID = ?");
-		sta.setString(1, client.getFirstName());
-		sta.setString(2, client.getLastName());
-		sta.setString(3, client.getIdentityCard());
-		sta.setString(4, client.getEmail());
-		sta.setLong(5, client.getClientId());
-		
+		PreparedStatement sta = null;
+		if (type.equalsIgnoreCase("titular")){
+			System.out.println("aqui modificando titular"  + client.getFirstName() + client.getLastName() + client.getSex());
+			sta = conn.prepareStatement("UPDATE CLIENT SET FIRST_NAME = ?, LAST_NAME = ?, IDENTITY_CARD = ?, EMAIL = ?, SEX = ? WHERE ID = ?");
+			sta.setString(1, client.getFirstName());
+			sta.setString(2, client.getLastName());
+			sta.setString(3, client.getIdentityCard());
+			sta.setString(4, client.getEmail());
+			sta.setString(5, client.getSex());
+			sta.setLong(6, client.getClientId());
+		}else{
+			System.out.println("aqui modificando beneficiario" + client.getFirstName() + client.getLastName() + client.getSex());
+			
+			sta = conn.prepareStatement("UPDATE CLIENT_BENEFICIARY SET FIRST_NAME = ?, LAST_NAME = ?, IDENTITY_CARD = ?, EMAIL = ?, SEX = ? WHERE ID = ?");
+			sta.setString(1, client.getFirstName());
+			sta.setString(2, client.getLastName());
+			sta.setString(3, client.getIdentityCard());
+			sta.setString(4, client.getEmail());
+			sta.setString(5, client.getSex());
+			sta.setLong(6, client.getClientId());
+		}
 		int rowsUpdated = sta.executeUpdate();
 		sta.close();
 		

@@ -52,8 +52,8 @@
             <div id="leftmenu_bottom"></div>
         </div>  
 		<div id="content">  
-				<jsp:useBean id="client" type="domain.Client" scope="request"/>  
-				<h2>Búsquedas de Clientes:</h2>
+				<jsp:useBean id="clients" type="java.util.ArrayList<domain.Client>" scope="request"/>  	
+        		<h2>Búsquedas de Clientes:</h2>
      			<br>
 				<div style="float:right;">  
 					<form action="/segaDental/SearchClientServlet" method="post">
@@ -82,7 +82,7 @@
 					<p class="error-msg"><%= error %></p>      
            			<%	
 					}
-					if (client.getClientId() == 0) {
+					if (clients.size() == 0) {
 					%>	
 						<p>&nbsp;</p><br><br><br>
 						<p style="font-weight: bold; text-align:center; font-size: 14px; color:red;"> No hubo resultados que coincidan con su búsqueda.</p>  
@@ -99,16 +99,20 @@
 								<th>Nombre Cliente</th>
 								<th>Cédula</th>
 								<th>Correo</th>
+								<th>Tipo</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="gradeA" >
+						<%
+							for(domain.Client client : clients) { 											
+						%>	<tr class="gradeA" >
 								<td ><p><%= client.getFirstName() + " " + client.getLastName() %></p></td>
 								<td><p><%= client.getIdentityCard() %></p></td>
-								<td><p><%= client.getEmail() %></p></td>
+								<td><p><%= (client.getEmail()!=null)?client.getEmail():"No posee"  %></p></td>
+								<td><p><%= client.getType() %></p></td>
 								<td><p>
-								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>" style="color: transparent" >
+								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>&type=<%=client.getType() %>" style="color: transparent" >
 									<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
 								</a> 
 								<a href="#" name="" class="ask">
@@ -117,6 +121,9 @@
 								</p>
 								</td>
 							</tr>
+						<% 
+							}
+						%>
 						</tbody>
 						</table>
 						</div>

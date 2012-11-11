@@ -205,7 +205,6 @@
 				<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value=""/>
 				  <div class="txt-fld">
    			  	<%
-				System.out.println("mostrando ventana emergente");
 				for(domain.StatusJustification sj : statusJustification) { 	
 					if (sj.getId() != 5){
 				%>
@@ -215,7 +214,7 @@
 				}
 				%>
 				<input type="radio" name="justif" value="5" checked> 
-					Otro: <input name="otherJustif" />
+					Otro: <input name="otherJustif" id="otherJustif" />
 			  </div><br>
 			  <div class="btn-fld">
 				  <input type="submit"  class="buttonPopUp"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />

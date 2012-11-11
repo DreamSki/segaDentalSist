@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,22 +51,20 @@ public class SearchClientServlet extends HttpServlet {
 			String identityCardId = request.getParameter("txtCedId");
 			String identityCard = identityCardId + identityCardNum;
 			
-			System.out.println("--Cedula a buscar " + identityCard);
-			
 			String info = (String)request.getAttribute("info")!=null?(String)request.getAttribute("info"):"";
 			String error = (String)request.getAttribute("error")!=null?(String)request.getAttribute("error"):"";
 		
-			Client client = (Client) CommandExecutor.getInstance().executeDatabaseCommand(new command.SearchClient(identityCard));
-			request.setAttribute("client", client);
-				
+			@SuppressWarnings("unchecked")
+			ArrayList<Client> list = (ArrayList<Client>) CommandExecutor.getInstance().executeDatabaseCommand(new command.SearchClient(identityCard));
+			
+			request.setAttribute("clients", list);
 			request.setAttribute("info", info);
 			request.setAttribute("error", error);
-			System.out.println("el cliente "+ client);
 			
 			rd = getServletContext().getRequestDispatcher("/searchResult.jsp");			
 			rd.forward(request, response);
 		} catch (Exception e) {
-			request.setAttribute("client", null);
+			request.setAttribute("clients", null);
 			request.setAttribute("info", "");
 			request.setAttribute("error", "Ocurrió un error durante la búsqueda de clientes. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
 			rd = getServletContext().getRequestDispatcher("/searchResult.jsp");			
