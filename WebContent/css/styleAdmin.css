@@ -413,10 +413,10 @@ color:#7198E1;
 }
 
 .address{
-  padding: 1em;
   font:12px Arial, Helvetica, sans-serif;
   font-weight: bold;
   border: 0;
+  padding-bottom: 1em;
 }
 
 #content .formClient #txtCityLabel{

@@ -47,7 +47,7 @@ public class ListSearchsServlet extends HttpServlet {
 			if(user != null){
 				int roleId = user.getRoleId();
 				// Administradores
-				if(roleId == 3 || roleId == 8){
+				if(roleId == 3 || roleId == 7 || roleId == 8){
 					// perform list user operations
 					String info = (String)request.getAttribute("info")!=null?(String)request.getAttribute("info"):"";
 					String error = (String)request.getAttribute("error")!=null?(String)request.getAttribute("error"):"";

@@ -29,7 +29,12 @@
 			case 3:
 %>
     <li><a href="/segaDental/ListRequestsServlet">Solicitudes</a></li>
-	<li><a href="/segaDental/ListSearchsServlet">Busquedas</a></li>
+	<li><a href="/segaDental/ListSearchsServlet">Búsquedas</a></li>
+<%		
+			break;
+			case 7:
+%>
+	<li><a href="/segaDental/ListSearchsServlet">Búsquedas</a></li>
 <%		
 			break;
 			case 8:
@@ -37,8 +42,6 @@
     <li><a href="/segaDental/ListUsersServlet">Usuarios</a></li>
     <li><a href="/segaDental/ListProductsServlet">Productos</a></li>
 	<li><a href="/segaDental/ListReportsServlet">Reportes</a></li>
-	<li><a href="#">Llamadas</a></li>
-    <li><a href="#">Clientes</a></li>
     <li><a href="/segaDental/ListRequestsServlet">Solicitudes</a></li>
 	<li><a href="/segaDental/ListSearchsServlet">Búsquedas</a></li>
     
