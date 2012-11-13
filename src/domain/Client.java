@@ -1,6 +1,7 @@
 package domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 
 public class Client {
@@ -18,7 +19,7 @@ public class Client {
 	private ClientCreditCard card;
 	private Product product;
 	private String type;
-	
+	private ArrayList<String> phones;
 	
 	/**
 	 * 
@@ -142,6 +143,13 @@ public class Client {
 		return type;
 		
 	}
+	
+	public void setPhones(ArrayList<String> phones){
+		this.phones = phones;
+	}
 
+	public ArrayList<String> getPhones(){
+		return phones;
+	}
 
 }

@@ -416,15 +416,8 @@ color:#7198E1;
   font:12px Arial, Helvetica, sans-serif;
   font-weight: bold;
   border: 0;
-  padding-bottom: 1em;
-}
-
-#content .formClient #txtCityLabel{
-	padding-left: 18px;
-}
-
-#content .formClient #txtUrbanizationLabel{
-	padding-left: 18px;
+  padding: 1em;
+  
 }
 
 #content .formClient #txtGenLabel{
@@ -442,12 +435,14 @@ color:#7198E1;
 }
 
 #content .formClient #txtFloorLabel{
-	padding-left: 47px;
+	padding-left: 0px;
+	font-weight: bold;
 
 }
 
 #content .formClient #txtAPLabel{
-	padding-left: 20px;
+	padding-left: 70px;
+	font-weight: bold;
 
 }
 
@@ -461,29 +456,7 @@ color:#7198E1;
 
 }
 
-#content .formClient #txtCity{
-	margin-left: 76px;
-}
 
-#content .formClient #txtTower{
-	margin-left: 22px;
-}
-
-#content .formClient #txtState{
-	margin-left: 14px;
-}
-
-#content .formClient #txtUrbanization{
-	margin-left: 40px;
-}
-
-#content .formClient #txtStreet{
-	margin-left: 25px;
-}
-
-#content .formClient #txtPropetyName{
-	margin-left: 10px;
-}
 
 #contentLogin label{
   float:left;
@@ -1329,6 +1302,61 @@ div.box {
 	
 	}
 	
+#pestanas {
+   float:left;
+   width:100%;
+   line-height:normal;
+   font-size: 16px;
+   font-weight: bold;
+   z-index: 1000;
+   margin-top: 6px;
+   
+}
+
+#pestanas ul {
+   margin:0;
+   padding:0;
+   list-style:none;
+}
+
+#pestanas li {
+   float:left;
+   margin:0 0 0 3px;
+   padding:0;
+   background: #BDBDBD;
+   -moz-border-radius: 10px;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+}
+
+#pestanas a {
+   padding:3px 10px 3px 10px;
+   display:block;
+   background:#BDBDBD;
+   color: #fff;
+   text-decoration: none;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+}
+
+#pestanas .activa a{
+   background: gray;
+}
+#pestanas .activa{
+    background: gray;
+}
+
+.buttonModif{
+	position:absolute;
+	top:600px;
+	left: 550px;
+	background-color: #1EB1DD;
+	color:#FAFAFA;
+	font-family: Verdana, Arial;
+	cursor: pointer;
+	
+
+}
 	
 	
     

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import command.CommandExecutor;
 
 import domain.Client;
+import domain.PhoneType;
 
 /**
  * Servlet implementation class SearchClientServlet

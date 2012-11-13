@@ -33,7 +33,6 @@ public class SearchClient implements DatabaseCommand {
 		ResultSet rs = sta.executeQuery();
 		Client  client = new Client();
 		while(rs.next()) {
-			System.out.println("La busqueda tuvo resultados");
 			client.setClientId(rs.getInt(1));
 			client.setFirstName(rs.getString(2));
 			client.setLastName(rs.getString(3));

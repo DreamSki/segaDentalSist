@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import command.CommandExecutor;
 
 import domain.Client;
 import domain.ClientAddress;
+import domain.PhoneType;
 import domain.User;
 
 /**
@@ -51,7 +53,13 @@ public class EditClientServlet extends HttpServlet {
 					String  type = request.getParameter("type");
 					
 					Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type));
+				
+					@SuppressWarnings("unchecked")
+					ArrayList<PhoneType> phoneType = (ArrayList<PhoneType>) CommandExecutor.getInstance().executeDatabaseCommand(new command.ListPhoneType());
+					
+					
 					request.setAttribute("clientId", clientId);
+					request.setAttribute("phoneType", phoneType);
 					request.setAttribute("type", type);
 					request.setAttribute("clientInfo",clientInfo);
 					

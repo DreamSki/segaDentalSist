@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import domain.Client;
 import domain.ClientAddress;
@@ -38,7 +39,6 @@ public class SelectClient implements DatabaseCommand {
 			
 			client = new Client();
 			while(rs.next()) {
-				System.out.println("La busqueda tuvo resultados");
 				client.setClientId(rs.getInt(1));
 				client.setFirstName(rs.getString(2));
 				client.setLastName(rs.getString(3));
@@ -64,10 +64,26 @@ public class SelectClient implements DatabaseCommand {
 				
 				client.setAddress(address);
 				client.setType("Titular");
+				
+				sta = conn.prepareStatement("SELECT CP.PHONE_NUMBER , CP.PHONE_TYPE_ID" +
+						" FROM CLIENT_PHONE CP" +
+						" WHERE CP.CLIENT_ID = ?");
+				sta.setInt(1, this.id);
+				rs = sta.executeQuery();
+				
+				ArrayList<String> phones = new ArrayList<String>(); ;
+				while(rs.next()) {
+					String number = rs.getString(1);
+					String type = rs.getString(2);
+					String phone = type + "-" + number;
+					System.out.println("telefono " + phone);
+					phones.add(phone);
+				}
+				client.setPhones(phones);
+				
 			}
 			
 		}else{
-			System.out.println("aqui llego a buscar beneficiario");
 			sta = conn.prepareStatement("SELECT B.ID, B.FIRST_NAME, B.LAST_NAME, B.IDENTITY_CARD," +
 					" B.BIRTHDATE, B.EMAIL, B.SEX FROM CLIENT_BENEFICIARY B" +
 					" WHERE B.ID = ?");

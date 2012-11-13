@@ -1,4 +1,6 @@
+<%@page import="domain.PhoneType"%>
 <%@page import="domain.Product"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -33,6 +35,33 @@
 		});
 	} );
 </script>
+<script type="text/javascript">
+function mostrardiv(div1, div2) {
+	div = document.getElementById(div1);
+	div.style.display = "block";
+	
+	div2 = document.getElementById(div2);
+	div2.style.display="none";
+	
+};
+
+</script>
+<script type="text/javascript">
+<!--
+function printPageContent(printContainer) {
+	var DocumentContainer = document.getElementById(printContainer);
+	document.getElementById('no_print').style.visibility='hidden';
+	document.getElementById('title').style.visibility='visible';
+	var WindowObject = window.open('', "PrintWindow", "");
+    WindowObject.document.writeln(DocumentContainer.innerHTML);
+	WindowObject.print();
+    WindowObject.close();
+	document.getElementById('no_print').style.visibility='visible';
+	document.getElementById('title').style.visibility='hidden';
+
+}
+//-->
+</script>
 </head>
 <body>
 	<div id="container">
@@ -55,11 +84,29 @@
 		<div id="content">
         		<h2>Editar Cliente:</h2>
       				<jsp:useBean id="clientInfo" type="domain.Client" scope="request"/> 
-					<% if (clientInfo.getType().equalsIgnoreCase("titular")){ %>
+					<jsp:useBean id="phoneType" type="java.util.ArrayList<domain.PhoneType>" scope="request"/>  	
+        	
+					<% if (clientInfo.getType().equalsIgnoreCase("titular")){
+					%>
+						<a href="#null" onclick="printPageContent('print_div2')" style="position: absolute; left: 800px; top: 200px;"> 
+							<img alt="logo" src="/segaDental/images/print.png" height="20" width="20" style="padding-right:5px;"/> 
+							<span style="font-weight: bold; color:#00668c; ">Imprimir </span>
+						</a>
+						<div id="print_div2">	
+						<div id="title" STYLE="visibility:hidden;"> Informacion del cliente <%= clientInfo.getFirstName() %> <%= clientInfo.getLastName() %> </div>
 					 	<form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateClient(this)" method="post">
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
 							<input type="hidden" name="type" value="<%= request.getParameter("type") %>" />
 							<input type="hidden" name="txtPropertyTypeId" value="<%= clientInfo.getAddress().getPropertyTypeId() %>" />
+							<div id="personales">
+									<div id="pestanas">
+									   <ul>
+										  <li class="activa"><a href="#null" onclick="mostrardiv('personales', 'direccion')">Datos Personales</a></li>
+										  <li ><a href="#" onclick="mostrardiv('direccion', 'personales')">Datos Dirección</a></li>
+									   </ul>
+									</div>
+								<BR><BR>	
+							<div style="border: 1px solid #E6E6E6;">
 							<fieldset>
 								<label for="name">Nombres:</label>
 								<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= clientInfo.getFirstName() %>" /> <br><br>
@@ -106,26 +153,50 @@
 									%>
 								</select><br><br> 
 								<label for="email">Correo Electrónico:</label>
-								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> 
-								
-							</fieldset>
-							<span style="margin-left: 200px; color:gray;">----------- Dirección -----------</span><br>
+								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
+								<%
+									ArrayList<String> phones = clientInfo.getPhones();	
+									for( int i = 0; i<phones.size(); i++){
+										String [] phone = phones.get(i).split("-");
+										String type = phone[0];
+										String number = phone[1];
+										for (domain.PhoneType p: phoneType){
+											if (p.getId() == Integer.valueOf(type)){
+												String typeName = p.getName();
+								%>		
+											<label for="phone"><%= typeName %>:</label>
+											<input type="text" name="txtPhone<%=i%>>" id="txtPhone<%=i %>" maxlength="50" size="40" value="<%= number %>" /> <br><br>
+								<%
+											}
+										}
+									}
+								%>
+									</fieldset>
+								</div>
+							</div>
+							
 						
-							<div class="address">	
-								Estado:
-							    <input id="txtState" class="good_input" name="txtState" type="text"  value="<%= clientInfo.getAddress().getState() %>"/>
-								<span id="txtCityLabel">Ciudad: </span>
-							    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= clientInfo.getAddress().getCity() %>"/>
-							  
-								 <br><br>
-								Municipio:
-							    <input id="txtMunicipality" class="good_input" name="txtMunicipality" type="text"  value="<%= clientInfo.getAddress().getMunicipality() %>"/>
-								<span id="txtUrbanizationLabel">Urbanizacion:</span>
-							    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text"  value="<%= clientInfo.getAddress().getUrbanization() %>"/>
-								 <br><br>
-								Calle:
-							    <input id="txtStreet" class="good_input" name="txtStreet" type="text"  value="<%= clientInfo.getAddress().getStreet() %>"/>
-							    <span id="txtPropertyLabel">Nombre Propiedad:</span>
+							<div id="direccion" style="display:none">
+							<div id="pestanas">
+									   <ul>
+										  <li ><a href="#null" onclick="mostrardiv('personales', 'direccion')">Datos Personales</a></li>
+										  <li class="activa"><a href="#" onclick="mostrardiv('direccion', 'personales')">Datos Dirección</a></li>
+									   </ul>
+							</div><BR><BR>
+							<div style="border: 1px solid #E6E6E6;;">
+							<fieldset>	
+							<label for="email">	Estado: </label>
+							    <input id="txtState" class="good_input" name="txtState" type="text"  value="<%= clientInfo.getAddress().getState() %>"/><br><br>
+								
+								<label for="email">Ciudad: </label>
+							    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= clientInfo.getAddress().getCity() %>"/><br><br>
+								<label for="email">Municipio:</label>
+							    <input id="txtMunicipality" class="good_input" name="txtMunicipality" type="text"  value="<%= clientInfo.getAddress().getMunicipality() %>"/><br><br>
+								<label for="email">Urbanizacion:</label>
+							    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text"  value="<%= clientInfo.getAddress().getUrbanization() %>"/><br><br>
+								<label for="email">Calle:</label>
+							    <input id="txtStreet" class="good_input" name="txtStreet" type="text"  value="<%= clientInfo.getAddress().getStreet() %>"/><br><br>
+							    <label for="email">Nombre Propiedad:</label>
 							    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= clientInfo.getAddress().getPropertyName() %>"/>
 								 <br><br>
 							    <%
@@ -134,9 +205,9 @@
 							    	{
 							    
 							    %>
-								   	Torre:
-								    <input id="txtTower" class="good_input" name="txtTower" type="text" size="15" value="<%= clientInfo.getAddress().getTower() %>"/>
-								    <span id="txtFloorLabel">Piso:</span>
+								 <label for="email">Torre:</label>
+								    <input id="txtTower" class="good_input" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower() %>"/><br><br>
+								    <span id="txtFloorLabel" >Piso:</span>
 								    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor() %>"/>
 								    <span id="txtAPLabel">Apartamento:</span>
 								    <input id="txtApartment" class="good_input" name="txtApartment" type="text" size="5"  value="<%= clientInfo.getAddress().getApartment() %>"/>
@@ -145,15 +216,23 @@
 						    		}
 						    
 						   		 %>
+							</fieldset>	
+								
+							</div>
 							</div>
 							<div style="text-align:center">
-								<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
-								<input type="submit"  class="button"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
+								<input type="submit"  class="buttonModif"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
 							</div>	
 					</form>      
+					</div>	
         			<%
 					}else{
 					%>	
+					<a href="#null" onclick="printPageContent('print_div2')" style="position: absolute; left: 800px; top: 200px;"> 
+						<img alt="logo" src="/segaDental/images/print.png" height="20" width="20" style="padding-right:5px;"/> 
+						<span style="font-weight: bold; color:#00668c; ">Imprimir </span>
+					</a>
+					<DIV id="print_div2">	<br>
 					 <form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateBenef(this)" method="post">
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
 							<input type="hidden" name="type" value="<%= request.getParameter("type") %>" />
@@ -207,10 +286,10 @@
 								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> 
 							</fieldset>
 							<div style="text-align:center">
-								<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 								<input type="submit"  class="button"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
 							</div>	
 					</form>      
+					</div>	
         			<%	
 					}
 					%>	
