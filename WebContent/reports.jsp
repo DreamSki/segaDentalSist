@@ -85,30 +85,30 @@
 						<label for="state">Estado:</label>
 						<select name="txtState">
 						  <option value="-1">Seleccionar</option>
-						  <option value="AMZ">Amazonas</option>
-						  <option value="ANZ">Anzoátegui</option>
-						  <option value="APR">Apure</option>
-						  <option value="ARG">Aragua</option>
-						  <option value="BAR">Barinas</option>
-						  <option value="BOL">Bolivar</option>
-						  <option value="CAR">Carabobo</option>
-						  <option value="COJ">Cojedes</option>
-						  <option value="DAM">Delta Amacuro</option>
-						  <option value="DTC">Distrito Capital</option>
-						  <option value="FLC"> Falcón</option>
-						  <option value="GCO">Guarico</option>
-						  <option value="LAR">Lara</option>
-						  <option value="MER">Mérida</option>
-						  <option value="MIR">Miranda</option>
-						  <option value="MON">Monagas</option>
-						  <option value="NES">Nueva Esparta</option>
-						  <option value="POR">Portuguesa</option>
-						  <option value="SUC">Sucre</option>
-						  <option value="TAC">Táchira</option>
-						  <option value="TRJ">Trujillo</option>
-						  <option value="YAR">Yaracuy</option>
-						  <option value="ZUL">Zulia</option>
-						  <option value="VRG">Vargas</option>
+						  <option value="Amazonas">Amazonas</option>
+						  <option value="Anzoátegui">Anzoátegui</option>
+						  <option value="Apure">Apure</option>
+						  <option value="Aragua">Aragua</option>
+						  <option value="Barinas">Barinas</option>
+						  <option value="Bolivar">Bolivar</option>
+						  <option value="Carabobo">Carabobo</option>
+						  <option value="Cojedes">Cojedes</option>
+						  <option value="Delta Amacuro">Delta Amacuro</option>
+						  <option value="Distrito Capital">Distrito Capital</option>
+						  <option value="Falcón">Falcón</option>
+						  <option value="Guarico">Guarico</option>
+						  <option value="Lara">Lara</option>
+						  <option value="Mérida">Mérida</option>
+						  <option value="Miranda">Miranda</option>
+						  <option value="Monagas">Monagas</option>
+						  <option value="Nueva Esparta">Nueva Esparta</option>
+						  <option value="Portuguesa">Portuguesa</option>
+						  <option value="Sucre">Sucre</option>
+						  <option value="Táchira">Táchira</option>
+						  <option value="Trujillo">Trujillo</option>
+						  <option value="Yaracuy">Yaracuy</option>
+						  <option value="Zulia">Zulia</option>
+						  <option value="Vargas">Vargas</option>
 						</select><br><br>
 						<label for="product">Producto:</label>
 						<select name="txtProduct">
@@ -134,7 +134,8 @@
 						</select>
 						<br><br>
 					<div style="text-align:center">
-							<input type="submit"  class="button"  name="sbmtButton" value="Generar" style="margin-left:20px;" />
+							<input type="submit"  class="button"  name="sbmtButton" value="Generar PDF" style="margin-left:20px;" />
+							<input type="submit"  class="button"  name="sbmtButton" value="Generar Excel" style="margin-left:20px;" formaction="/segaDental/CreateExcelReportServlet" />
 					</div>	
 					</fieldset>
 				</form>

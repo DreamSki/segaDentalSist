@@ -31,7 +31,7 @@
 			buttonText: "Seleccione una fecha",
 			dateFormat:'dd/mm/yy',
 			changeMonth: true,
-		    changeYear: true,
+		    changeYear: true
 		});
 	} );
 </script>
