@@ -51,6 +51,7 @@ public class EditClientServlet extends HttpServlet {
 					
 					int clientId = Integer.valueOf(request.getParameter("clientId"));
 					String  type = request.getParameter("type");
+					String print = request.getParameter("print");
 					
 					Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type));
 				
@@ -61,6 +62,7 @@ public class EditClientServlet extends HttpServlet {
 					request.setAttribute("clientId", clientId);
 					request.setAttribute("phoneType", phoneType);
 					request.setAttribute("type", type);
+					request.setAttribute("print", print);
 					request.setAttribute("clientInfo",clientInfo);
 					
 					rd = getServletContext().getRequestDispatcher("/editClient.jsp");			
@@ -99,19 +101,8 @@ public class EditClientServlet extends HttpServlet {
 			String email = request.getParameter("txtEmail"); 
 			String sex = request.getParameter("txtGen"); 
 		
-			//String birthdate = request.getParameter("txtDateIni");
-				
-//			DateFormat formatter ; 
-//			Date date = null ; 
-//			formatter = new SimpleDateFormat("dd/mm/yyyy");
-//			try {
-//				date = (Date) formatter.parse(birthdate);
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}  
-//			System.out.println("+++ bd:"+ date);
-//			
+			String birthdate = request.getParameter("txtDateIni");
+			System.out.println("bird " + birthdate);
 			
 			Client c = new Client();
 			c.setClientId(clientId);
@@ -119,6 +110,7 @@ public class EditClientServlet extends HttpServlet {
 			c.setLastName(lastName);
 			c.setIdentityCard(identityCardId + identityCardNum);
 			c.setEmail(email);
+			c.setBirthdate(birthdate);
 			c.setSex(sex);
 			
 
@@ -180,7 +172,6 @@ public class EditClientServlet extends HttpServlet {
 				}
 				
 			}else{
-				System.out.println("aqui llego a modificar justif43566 " +clientId);
 				request.setAttribute("clientId",clientId);
 				request.setAttribute("type", type);
 				rd = getServletContext().getRequestDispatcher("/editClientJustification.jsp");	

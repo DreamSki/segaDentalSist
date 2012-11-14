@@ -14,7 +14,7 @@
 	<script src="/segaDental/js/jquery.multiSelect.js" type="text/javascript"></script>
 	<link href="/segaDental/css/jquery.multiSelect.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="/segaDental/css/styleAdmin.css" />
-		
+	<link rel="stylesheet" type="text/css" href="/segaDental/css/jquery-ui-1.8.24.custom.css" />	
 	<script type="text/javascript" src="/segaDental/js/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="/segaDental/js/jquery-ui-1.8.24.custom.min.js"></script>
 	<script type="text/javascript" src="/segaDental/js/jquery.ui.datepicker-es.js"></script>
@@ -40,30 +40,69 @@ function mostrardiv(div1, div2) {
 	div = document.getElementById(div1);
 	div.style.display = "block";
 	
-	div2 = document.getElementById(div2);
-	div2.style.display="none";
+	divAux = document.getElementById(div2);
+	divAux.style.display="none";
 	
 };
 
 </script>
 <script type="text/javascript">
-<!--
-function printPageContent(printContainer) {
-	var DocumentContainer = document.getElementById(printContainer);
-	document.getElementById('no_print').style.visibility='hidden';
-	document.getElementById('title').style.visibility='visible';
-	var WindowObject = window.open('', "PrintWindow", "");
-    WindowObject.document.writeln(DocumentContainer.innerHTML);
+var print = false;
+function printPageContentT() {
+	var DocumentContainer = document.getElementById('print_div2');
+	var WindowObject = window.open('', "PrintWindow", '');
+	div = document.getElementById('direccion');
+	div2 = document.getElementById('pestanas');
+	div3 = document.getElementById('pestanasDir');
+	div4 = document.getElementById('title');
+	div7 = document.getElementById('titleDir');
+	div5 = document.getElementById('border');
+	div6 = document.getElementById('border2');
+	div8 = document.getElementById('botones');
+	div.style.display = "block";
+	div2.style.display = "none";
+	div3.style.display = "none";
+	div4.style.display = "block";
+	div7.style.display = "block";
+	div5.style.border = "none";
+	div6.style.border = "none";
+	div8.style.display = "none";
+	WindowObject.document.writeln(DocumentContainer.innerHTML);
 	WindowObject.print();
     WindowObject.close();
-	document.getElementById('no_print').style.visibility='visible';
-	document.getElementById('title').style.visibility='hidden';
+	div.style.display = "none";
+	div2.style.display = "block";
+	div3.style.display = "block";
+	div4.style.display = "none";
+	div7.style.display = "none";
+	div5.style.border = "1px solid #E6E6E6";
+	div6.style.border = "1px solid #E6E6E6";
+	div8.style.display = "block";
+	if (print){
+		print = false;
+		history.go(-2);
+		
+	}
+};
 
-}
-//-->
+function printPageContentB() {
+	var DocumentContainer = document.getElementById('print_div2');
+	var WindowObject = window.open('', "PrintWindow", '');
+	div = document.getElementById('botonesB');
+	div.style.display = "none";
+	WindowObject.document.writeln(DocumentContainer.innerHTML);
+	WindowObject.print();
+    WindowObject.close();
+	div.style.display = "block";
+	if (print){
+		print = false;
+		history.go(-2);
+	}
+};
+
 </script>
 </head>
-<body>
+<body >
 	<div id="container">
 		<div id="header">
         	<img alt="logo" src="/segaDental/images/loguito.png"/>
@@ -85,15 +124,15 @@ function printPageContent(printContainer) {
         		<h2>Editar Cliente:</h2>
       				<jsp:useBean id="clientInfo" type="domain.Client" scope="request"/> 
 					<jsp:useBean id="phoneType" type="java.util.ArrayList<domain.PhoneType>" scope="request"/>  	
-        	
+					<br>
 					<% if (clientInfo.getType().equalsIgnoreCase("titular")){
 					%>
-						<a href="#null" onclick="printPageContent('print_div2')" style="position: absolute; left: 800px; top: 200px;"> 
+						<a href="#null" id="printT" onclick="printPageContentT()" style="position: absolute; left: 800px; top: 200px;"> 
 							<img alt="logo" src="/segaDental/images/print.png" height="20" width="20" style="padding-right:5px;"/> 
 							<span style="font-weight: bold; color:#00668c; ">Imprimir </span>
 						</a>
 						<div id="print_div2">	
-						<div id="title" STYLE="visibility:hidden;"> Informacion del cliente <%= clientInfo.getFirstName() %> <%= clientInfo.getLastName() %> </div>
+						<div id="title" STYLE="display:none;"> Informacion del cliente <%= clientInfo.getFirstName() %> <%= clientInfo.getLastName() %> </div>
 					 	<form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateClient(this)" method="post">
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
 							<input type="hidden" name="type" value="<%= request.getParameter("type") %>" />
@@ -106,8 +145,8 @@ function printPageContent(printContainer) {
 									   </ul>
 									</div>
 								<BR><BR>	
-							<div style="border: 1px solid #E6E6E6;">
-							<fieldset>
+							<div id="border" style="border: 1px solid #E6E6E6;">
+							<fieldset style="border:none;">
 								<label for="name">Nombres:</label>
 								<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= clientInfo.getFirstName() %>" /> <br><br>
 								<label for="LastName">Apellidos:</label>
@@ -135,7 +174,7 @@ function printPageContent(printContainer) {
 								</select>
 								<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
 								<label for="date">Fecha de Nacimiento:</label>
-								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthday() %>" />
+								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate() %>" />
 								<span id="txtGenLabel"> Sexo: </span>
 								<select name="txtGen" id="txtGen">
 									<%	
@@ -165,7 +204,7 @@ function printPageContent(printContainer) {
 												String typeName = p.getName();
 								%>		
 											<label for="phone"><%= typeName %>:</label>
-											<input type="text" name="txtPhone<%=i%>>" id="txtPhone<%=i %>" maxlength="50" size="40" value="<%= number %>" /> <br><br>
+											<input type="text" name="txtPhone<%=i%>" id="txtPhone<%=i %>" maxlength="50" size="40" value="<%= number %>" /> <br><br>
 								<%
 											}
 										}
@@ -175,16 +214,16 @@ function printPageContent(printContainer) {
 								</div>
 							</div>
 							
-						
+							<div id="titleDir" STYLE="display:none;"> Dirección del cliente: </div>
 							<div id="direccion" style="display:none">
-							<div id="pestanas">
+							<div id="pestanasDir">
 									   <ul>
 										  <li ><a href="#null" onclick="mostrardiv('personales', 'direccion')">Datos Personales</a></li>
 										  <li class="activa"><a href="#" onclick="mostrardiv('direccion', 'personales')">Datos Dirección</a></li>
 									   </ul>
 							</div><BR><BR>
-							<div style="border: 1px solid #E6E6E6;;">
-							<fieldset>	
+							<div id="border2" style="border: 1px solid #E6E6E6;;">
+							<fieldset style="border:none;">	
 							<label for="email">	Estado: </label>
 							    <input id="txtState" class="good_input" name="txtState" type="text"  value="<%= clientInfo.getAddress().getState() %>"/><br><br>
 								
@@ -220,7 +259,7 @@ function printPageContent(printContainer) {
 								
 							</div>
 							</div>
-							<div style="text-align:center">
+							<div id="botones" style="text-align:center">
 								<input type="submit"  class="buttonModif"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
 							</div>	
 					</form>      
@@ -228,7 +267,7 @@ function printPageContent(printContainer) {
         			<%
 					}else{
 					%>	
-					<a href="#null" onclick="printPageContent('print_div2')" style="position: absolute; left: 800px; top: 200px;"> 
+					<a  id="printB" href="#null" onclick="printPageContentB()" style="position: absolute; left: 800px; top: 200px;"> 
 						<img alt="logo" src="/segaDental/images/print.png" height="20" width="20" style="padding-right:5px;"/> 
 						<span style="font-weight: bold; color:#00668c; ">Imprimir </span>
 					</a>
@@ -237,7 +276,7 @@ function printPageContent(printContainer) {
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
 							<input type="hidden" name="type" value="<%= request.getParameter("type") %>" />
 					
-						<fieldset>
+						<fieldset style="border:none;">
 								<label for="name">Nombres:</label>
 								<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= clientInfo.getFirstName() %>" /> <br><br>
 								<label for="LastName">Apellidos:</label>
@@ -265,7 +304,7 @@ function printPageContent(printContainer) {
 								</select>
 								<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
 								<label for="date">Fecha de Nacimiento:</label>
-								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthday() %>" />
+								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate() %>" />
 								<span id="txtGenLabel"> Sexo: </span>
 								<select name="txtGen" id="txtGen">
 									<%	
@@ -285,7 +324,7 @@ function printPageContent(printContainer) {
 								<label for="email">Correo Electrónico:</label>
 								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> 
 							</fieldset>
-							<div style="text-align:center">
+							<div id="botonesB" style="text-align:center">
 								<input type="submit"  class="button"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
 							</div>	
 					</form>      
@@ -297,7 +336,29 @@ function printPageContent(printContainer) {
 		</div>
 	</div>
 	
-	
+	<% 
+	String print = request.getParameter("print");
+	String type = request.getParameter("type");
+	if(print.equals("1")){
+	 %>
+	 <script type="text/javascript">
+	   print= true;
+	<%
+		if (type.equalsIgnoreCase("titular")){
+	 %>
+			document.getElementById('printT').click();
+	<%
+		}else{
+	 %>	
+	 document.getElementById('printB').click();
+	 <%
+		}
+	 %>	
+	 </script>
+	 
+	<% 
+	}
+	 %>
 	
 </body>
 </html>

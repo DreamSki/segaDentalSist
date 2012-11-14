@@ -18,7 +18,7 @@
 			"sScrollY": "250px",
 			"bPaginate": false,
 			"aoColumns": [
-				{ "sType": "numeric" },
+				null,
 				null,
 				null,
 				null,
@@ -124,11 +124,11 @@
 							for(domain.Product p : products) { 											
 							%>
 								<tr class="gradeA">
-									<td><p><%= p.getId() %></p></td>
-									<td><p><%= p.getName() %></p></td>
-									<td><p><%= p.getDescription() %></p></td>
-									<td><p><%= p.getPrice() %></p></td>
-									<td><p><%= (p.getStatus()==1)?"Si":"No" %></p></td>
+									<td><%= p.getId() %></td>
+									<td><%= p.getName() %></td>
+									<td><%= p.getDescription() %></td>
+									<td><%= p.getPrice() %></td>
+									<td><%= (p.getStatus()==1)?"Si":"No" %></td>
 									<td><p>
 										<a href="/segaDental/EditProductServlet?productId=<%= p.getId() %>" style="color: transparent" >
 											<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />

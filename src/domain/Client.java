@@ -1,8 +1,7 @@
 package domain;
 
-import java.sql.Date;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 public class Client {
 
@@ -12,7 +11,7 @@ public class Client {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Date birthday;
+	private String birthdate;
 	private String sex;
 	private String identityCard;
 	private ClientAddress address;
@@ -126,12 +125,12 @@ public class Client {
 		return product;
 	}
 	
-	public void setBirthday(Date birthday){
-		this.birthday = birthday;
+	public void setBirthdate(String birthdate){
+		this.birthdate = birthdate;
 	}
 
-	public Date getBirthday(){
-		return birthday;
+	public String getBirthdate(){
+		return birthdate;
 		
 	}
 	

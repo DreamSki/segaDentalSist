@@ -112,6 +112,7 @@ public class CreateReportServlet extends HttpServlet {
 					+ " clienteEstado " + porStatusClient + " producto " + porProducto);
 		
 //			Integer rowsUpdated  = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateProduct(product));
+			@SuppressWarnings("unchecked")
 			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport());
 			request.setAttribute("reportItems", reportItems);
 			

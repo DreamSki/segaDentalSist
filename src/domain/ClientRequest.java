@@ -1,7 +1,5 @@
 package domain;
 
-import java.sql.Date;
-
 
 public class ClientRequest {
 
@@ -9,7 +7,7 @@ public class ClientRequest {
 	private long clientId;	
 	private String name;
 	private int statusUserProduct;
-	private Date expirationDate;
+	private String expirationDate;
 	private Product product;
 	private String typeName;
 	private int type;
@@ -61,11 +59,11 @@ public class ClientRequest {
 	}
 
 
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
-	public Date getExpirationDate() {
+	public String getExpirationDate() {
 		return expirationDate;
 	}
 

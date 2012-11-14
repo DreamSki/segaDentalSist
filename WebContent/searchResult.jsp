@@ -112,10 +112,10 @@
 								<td><p><%= (client.getEmail()!=null)?client.getEmail():"No posee"  %></p></td>
 								<td><p><%= client.getType() %></p></td>
 								<td><p>
-								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>&type=<%=client.getType() %>" style="color: transparent" >
+								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>&type=<%=client.getType() %>&print=0" style="color: transparent" >
 									<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
 								</a> 
-								<a href="#" name="" class="ask">
+								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>&type=<%=client.getType() %>&print=1">
 									<img alt="logo" src="/segaDental/images/print.png" height="16" width="16" style="padding-left: 15px;"/>
 								</a>
 								</p>

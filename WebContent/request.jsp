@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="domain.User"%> 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -78,7 +79,17 @@
 				f.elements['type'].value =tipo;
 				return true;
 			}
-	</script>
+			
+			function cambiarMensaje(){
+				$("#mensaje").text("Cargando el reporte de venta diaria. Por favor espere...");
+				div2 = document.getElementById('mensaje');
+				div2.style.fontSize="20px";
+				div2.style.color="gray";
+				div = document.getElementById('botonesInfo');
+				div.style.display = "none";
+			}
+			
+			</script>
 	
 </head>
 <body>
@@ -90,14 +101,12 @@
 			<div class="menuitemHome" ><a href="UserLoginServlet">Home</a></div>	
 	    	<ul>
             	<li class="menuitem">
-            		<a href="#">
+            		<a href="/segaDental/PrintReportServlet">
             			<img alt="imprimir" src="/segaDental/images/imprimir_reporte.png"/>
-            	
             		</a>
-            		<a href="#">
-            			<img alt="enviar" src="/segaDental/images/enviar_reporte.png"/>
-            	
-            		</a>
+            		<a id="go" rel="leanModal" href="#acceptSendEmail" style="color: #f7941e; font-weight: bold;" >
+        				<img alt="enviar" src="/segaDental/images/enviar_reporte.png"/>
+        			</a>
             	</li>
             </ul>
 			<div class="menuitemSalir"><a href="index.jsp">Salir</a></div>	
@@ -117,10 +126,14 @@
         			String info = (String)request.getAttribute("info");
         			String error = (String)request.getAttribute("error");
 					if(!info.equalsIgnoreCase("")){
+						System.out.println(info.equalsIgnoreCase("El correo fue envíado sastifactoriamente"));
+						if (!info.equalsIgnoreCase("El correo fue envíado sastifactoriamente")
+								|| !info.equalsIgnoreCase("Actualmente no hay ventas para mostrar. Intente más tarde")){
 				%>	
 				<p>&nbsp;</p> 
 				<p class="info-msg"><%= info %></p> 
 				<%	
+						}
 					}
 					if(!error.equalsIgnoreCase("")){
 				%>	
@@ -156,12 +169,12 @@
 		
 			<tr class="gradeA">
 			
-			<td><p><%= cr.getId() %></p></td>
-			<td><p><%= cr.getTypeName() %></p></td>
-			<td><p><%= cr.getName() %></p></td>
-			<td><p><%= cr.getProduct().getName() %></p></td>
-			<td><p><%= (cr.getExpirationDate()!=null)?cr.getExpirationDate(): "N/A" %></p></td>
-			<td><p>
+			<td><%= cr.getId() %></td>
+			<td><%= cr.getTypeName() %></td>
+			<td><%= cr.getName() %></td>
+			<td><%= cr.getProduct().getName() %></td>
+			<td><%= (cr.getExpirationDate()!=null)?cr.getExpirationDate(): "N/A" %></td>
+			<td>
 			<a href="/segaDental/EditRequestServlet?clientId=<%=cr.getClientId()%>&type=<%=cr.getTypeName()%>&id=<%=cr.getId()%>" style="color: transparent" >
 				<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
 			</a> 
@@ -192,6 +205,7 @@
         </div>
   		<div id="footer"></div>
 	</div>
+ 			
  			
 	<div id="signupCed">
 		<div id="signup-ct">
@@ -242,6 +256,21 @@
 		</div>
 	</div>
 	
+	<div id="acceptSendEmail">
+		<div id="signup-ct">
+			<h3 id="see_id" class="sprited" >Aceptar Envío de Reporte</h3>
+			<br><br><br>
+			<span id="mensaje" style="font-size:16px;">¿Está seguro que desea enviar por correo electrónico el reporte de ventas diario?</span> <br><br>
+			<div id="signup-header">
+				<a class="close_x" id="close_x"  href="#"></a>
+			</div>
+			<form action="/segaDental/SendReportRequestServlet" method="get"  onsubmit="cambiarMensaje()">
+				<div class="btn-fld" id="botonesInfo">
+					<input type="submit"  class="buttonPopUpDelete"  name="sbmtButton" value="Aceptar"  />
+				</div>
+			</form>
+		</div>
+	</div>
 	
 </body>
 </html>

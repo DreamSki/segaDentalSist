@@ -13,6 +13,7 @@ public class ReportItem {
 	private Double price;
 	private String seller;
 	private String room;
+	private String turn;
 	private String address;
 	private String city;
 	private String state;
@@ -21,6 +22,11 @@ public class ReportItem {
 	private String mobileNumber;
 	private String faxNumber;
 	private String email;
+	private String cardType;
+	private String voucher;
+	private String bank;
+	private String amount;
+	
 	
 	public void setIdentityCard(String identityCard) {
 		this.identityCard = identityCard;
@@ -102,7 +108,7 @@ public class ReportItem {
 		return city;
 	}
 	
-	public void setAddress(String street, String propertyType, String propertyName, String tower, String floor, String apartment, 
+		public void setAddress(String street, String propertyType, String propertyName, String tower, String floor, String apartment, 
 			String urbanization, String municipality, String postalCode) {
 		
 		if(street != null){
@@ -139,6 +145,8 @@ public class ReportItem {
 		
 		this.address += ".";
 	}
+	
+	
 	
 	public String getAddress() {
 		return address;
@@ -191,4 +199,46 @@ public class ReportItem {
 	public String getEmail() {
 		return email;
 	}
+	
+	public void setTurn(String turn) {
+		this.turn = turn;
+	}
+	
+	public String getTurn() {
+		return turn;
+	}
+	
+	public void setVoucher(String voucher) {
+		this.voucher = voucher;
+	}
+	
+	public String getVoucher() {
+		return voucher;
+	}
+	
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	
+	public String getBank() {
+		return bank;
+	}
+	
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
+	
+	public String getCardType() {
+		return cardType;
+	}
+	
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	
+	public String getAmount() {
+		return amount;
+	}
 }
+
+

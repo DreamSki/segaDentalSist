@@ -18,17 +18,16 @@ public class EditClientRequest implements DatabaseCommand {
 	@Override
 	public Object executeDatabaseOperation(Connection conn) throws SQLException {
 		PreparedStatement sta;
-		System.out.println("id " + cr.getJustificationId() + "texto " + cr.getJustification());
 		if (cr.getJustificationId() == 5){
 			System.out.println("id ");
-			sta = conn.prepareStatement("UPDATE CLIENT_PRODUCT SET STATUS_JUSTIFICATION_ID = ?, OTHER_JUSTIFICATION = ?, STATUS_ID = 4 WHERE ID = ?");
+			sta = conn.prepareStatement("UPDATE CLIENT_PRODUCT SET STATUS_JUSTIFICATION_ID = ?, OTHER_JUSTIFICATION = ? WHERE ID = ?");
 			sta.setInt(1, cr.getJustificationId());
 			sta.setString(2, cr.getJustification());
 			sta.setLong(3, cr.getId());
 
 		}
 		else{
-			sta = conn.prepareStatement("UPDATE CLIENT_PRODUCT SET STATUS_JUSTIFICATION_ID = ?, STATUS_ID = 4  WHERE ID = ?");
+			sta = conn.prepareStatement("UPDATE CLIENT_PRODUCT SET STATUS_JUSTIFICATION_ID = ? WHERE ID = ?");
 			sta.setInt(1, cr.getJustificationId());
 			sta.setLong(2, cr.getId());
 			

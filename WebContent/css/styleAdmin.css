@@ -1194,7 +1194,7 @@ div.box {
 
 
 
-	#send_back ,  #signupCed, #signupEmail, #signupCard, #noAgree {
+	#send_back ,  #signupCed, #signupEmail, #signupCard, #noAgree, #infoSendEmail, #acceptSendEmail {
 		text-align: center;
 		width: 335px;
 		height: 220px;
@@ -1302,7 +1302,7 @@ div.box {
 	
 	}
 	
-#pestanas {
+#pestanas, #pestanasDir {
    float:left;
    width:100%;
    line-height:normal;
@@ -1313,13 +1313,13 @@ div.box {
    
 }
 
-#pestanas ul {
+#pestanas ul, #pestanasDir ul {
    margin:0;
    padding:0;
    list-style:none;
 }
 
-#pestanas li {
+#pestanas li , #pestanasDir li{
    float:left;
    margin:0 0 0 3px;
    padding:0;
@@ -1329,7 +1329,7 @@ div.box {
    border-top-right-radius: 5px;
 }
 
-#pestanas a {
+#pestanas a,  #pestanasDir a{
    padding:3px 10px 3px 10px;
    display:block;
    background:#BDBDBD;
@@ -1339,10 +1339,10 @@ div.box {
    border-top-right-radius: 5px;
 }
 
-#pestanas .activa a{
+#pestanas .activa a, #pestanasDir .activa a{
    background: gray;
 }
-#pestanas .activa{
+#pestanas .activa, #pestanasDir .activa{
     background: gray;
 }
 

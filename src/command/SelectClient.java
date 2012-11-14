@@ -28,7 +28,7 @@ public class SelectClient implements DatabaseCommand {
 		Client client = null;
 		if (type.equalsIgnoreCase("titular")){
 			sta = conn.prepareStatement("SELECT C.ID, C.FIRST_NAME, C.LAST_NAME, C.IDENTITY_CARD," +
-						" C.BIRTHDATE, C.EMAIL, C.SEX, AT.NAME, CA.STATE, CA.CITY,  CA.MUNICIPALITY, CA.URBANIZATION, CA.STREET, CA.PROPERTY_TYPE_ID, PR.NAME," +
+						" DATE_FORMAT(C.BIRTHDATE, '%d/%m/%Y'), C.EMAIL, C.SEX, AT.NAME, CA.STATE, CA.CITY,  CA.MUNICIPALITY, CA.URBANIZATION, CA.STREET, CA.PROPERTY_TYPE_ID, PR.NAME," +
 						" CA.PROPERTY_NAME, CA.TOWER, CA.FLOOR, CA.APARTMENT " +
 						" FROM CLIENT C, CLIENT_ADDRESS CA, ADDRESS_TYPE AT, PROPERTY_TYPE PR" +
 						" WHERE C.ID= CA.CLIENT_ID AND CA.ADDRESS_TYPE_ID = AT.ID AND CA.PROPERTY_TYPE_ID = PR.ID" +
@@ -43,7 +43,7 @@ public class SelectClient implements DatabaseCommand {
 				client.setFirstName(rs.getString(2));
 				client.setLastName(rs.getString(3));
 				client.setIdentityCard(rs.getString(4));
-				client.setBirthday(rs.getDate(5));
+				client.setBirthdate(rs.getString(5));
 				client.setEmail(rs.getString(6));
 				client.setSex(rs.getString(7));
 				
@@ -76,7 +76,6 @@ public class SelectClient implements DatabaseCommand {
 					String number = rs.getString(1);
 					String type = rs.getString(2);
 					String phone = type + "-" + number;
-					System.out.println("telefono " + phone);
 					phones.add(phone);
 				}
 				client.setPhones(phones);
@@ -85,7 +84,7 @@ public class SelectClient implements DatabaseCommand {
 			
 		}else{
 			sta = conn.prepareStatement("SELECT B.ID, B.FIRST_NAME, B.LAST_NAME, B.IDENTITY_CARD," +
-					" B.BIRTHDATE, B.EMAIL, B.SEX FROM CLIENT_BENEFICIARY B" +
+					" DATE_FORMAT(B.BIRTHDATE, '%d/%m/%Y'), B.EMAIL, B.SEX FROM CLIENT_BENEFICIARY B" +
 					" WHERE B.ID = ?");
 			sta.setInt(1, this.id);
 			
@@ -93,12 +92,11 @@ public class SelectClient implements DatabaseCommand {
 			
 			client = new Client();
 			while(rs.next()) {
-				System.out.println("La busqueda tuvo resultados");
 				client.setClientId(rs.getInt(1));
 				client.setFirstName(rs.getString(2));
 				client.setLastName(rs.getString(3));
 				client.setIdentityCard(rs.getString(4));
-				client.setBirthday(rs.getDate(5));
+				client.setBirthdate(rs.getString(5));
 				client.setEmail(rs.getString(6));
 				client.setSex(rs.getString(7));
 				client.setType("Beneficiario");
