@@ -15,6 +15,7 @@ public class ReportItem {
 	private String room;
 	private String turn;
 	private String address;
+	private String referencePoint;
 	private String city;
 	private String state;
 	private String homeNumber;
@@ -238,6 +239,14 @@ public class ReportItem {
 	
 	public String getAmount() {
 		return amount;
+	}
+
+	public void setReferencePoint(String referencePoint) {
+		this.referencePoint = referencePoint;
+	}
+
+	public String getReferencePoint() {
+		return referencePoint;
 	}
 }
 

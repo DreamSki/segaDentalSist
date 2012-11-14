@@ -13,10 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -26,13 +30,11 @@ import command.CommandExecutor;
 
 //import domain.Product;
 import domain.ReportItem;
-import domain.User;
-import domain.UserProduct;
 
 /**
  * Servlet implementation class CreateReportServlet
  */
-@WebServlet(description = "servlet to create reports", urlPatterns = { "/CreateReportServlet" })
+@WebServlet(description = "servlet to create PDF reports", urlPatterns = { "/CreateReportServlet" })
 public class CreateReportServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -48,35 +50,13 @@ public class CreateReportServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		try{
-			HttpSession session = request.getSession(true);
-			User user = (User) session.getAttribute("user");
-			RequestDispatcher rd;
-			   
-			if(user != null){
-				int roleId = user.getRoleId();
-				
-				if(roleId == 1 || roleId == 8){
-					rd = getServletContext().getRequestDispatcher("/createProduct.jsp");			
-					rd.forward(request, response);
-				} else {
-					request.setAttribute("error", "Usted no posee permisos para realizar esta operación");
-					rd = getServletContext().getRequestDispatcher("/mainMenu.jsp");
-					rd.forward(request, response);
-				}			
-			} else {
-				rd = getServletContext().getRequestDispatcher("/index.jsp");			
-				rd.forward(request, response);
-			}
-		} catch (Exception e) {
-			throw new ServletException(e);
-		}		
+		doPost(request, response);	
 	}
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher rd;
@@ -89,72 +69,149 @@ public class CreateReportServlet extends HttpServlet {
 			String state = request.getParameter("txtState");
 			System.out.println("+++ state:"+ state);
 			String product = request.getParameter("txtProduct");
+			Integer productId;
 			System.out.println("+++ product:"+ product);
 			String  clientStatus = request.getParameter("txtClientStatus");
+			Integer statusId;
 			System.out.println("+++ clientStatus:"+ clientStatus);
 			
 			int porFechas = 0, porEstado = 0, porProducto = 0, porStatusClient = 0;
 			if (dateIni != "" && dateEnd != ""){
 				porFechas = 1;
 			}
-			if (!state.equals("-1")){
-				porEstado = 1;
+
+			if (state.equals("-1")){
+				state = null;
+			} else {
+				porEstado = 1;				
 			}
-			if (!clientStatus.equals("-1")){
+			
+			if (clientStatus.equals("-1")){
+				statusId = null;
+			}else{
 				porStatusClient = 1;
+				statusId = Integer.valueOf(clientStatus);
 			}
-			if (!product.equals("-1")){
-				porProducto = 1;
+			
+			if (product.equals("-1")){
+				productId = null;
+			}else{
+				porProducto = 1;	
+				productId = Integer.valueOf(product);
 			}
 			
 			System.out.println("El reporte a generar "+ 
 					" fechas " + porFechas +  " estado " + porEstado
 					+ " clienteEstado " + porStatusClient + " producto " + porProducto);
-		
-//			Integer rowsUpdated  = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateProduct(product));
-			@SuppressWarnings("unchecked")
-			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport());
+
+			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport(productId, statusId, state));
+
 			request.setAttribute("reportItems", reportItems);
 			
-			Document document=new Document(PageSize.A4.rotate());
-			String pdfFileName = "report.pdf";
+			Document document=new Document(PageSize.A3.rotate(), 1, 1, 20, 20);
+			String pdfFileName = "reporte.pdf";
 			String contextPath = getServletContext().getRealPath(File.separator);
 			FileOutputStream file = new FileOutputStream(contextPath + pdfFileName);
 			PdfWriter.getInstance(document,file);
+			
 			document.open();
-			PdfPTable table=new PdfPTable(10);
+			
+			Font font = FontFactory.getFont("tahoma", 6, Font.NORMAL, BaseColor.BLACK);
+			PdfPTable table=new PdfPTable(23);
+			
 			table.setKeepTogether(false);
-			table.addCell("Cédula");
-			table.addCell("Apellidos");
-			table.addCell("Nombres");
-			table.addCell("Fecha Venta");
-			table.addCell("Nombre Producto");
-			table.addCell("Precio");
-			table.addCell("Vendedor");
-			table.addCell("Sala");
-			//table.addCell("Dirección");
-			table.addCell("Ciudad");
-			table.addCell("Estado");
+			
+			PdfPCell cell = new PdfPCell(new Phrase("Cédula", font));
+			
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Apellidos", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Nombres", font));
+			table.addCell(cell);
+			//table.addCell("Contrato");
+			cell = new PdfPCell(new Phrase("Fecha Venta", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Nombre Producto", font));
+			table.addCell(cell);
+			//table.addCell("Cantidad");
+			cell = new PdfPCell(new Phrase("Precio", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Vendedor", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Turno", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Sala", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Dirección", font));
+			cell.setColspan(4);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Punto Referencia", font));
+			cell.setColspan(2);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Ciudad", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Estado", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Tel Res", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Tel Ofi", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Tel Cel", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Tel Fax", font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Email", font));
+			cell.setColspan(2);
+			table.addCell(cell);
 			
 			for(ReportItem item : reportItems){
-				table.addCell(item.getIdentityCard());
-				table.addCell(item.getLastName());
-				table.addCell(item.getFirstName());
-				table.addCell(item.getAffiliationDate().toString());
-				table.addCell(item.getProduct());
-				table.addCell(item.getPrice().toString());
-				table.addCell(item.getSeller());
-				table.addCell(item.getRoom());
-				//table.addCell(item.getAddress());
-				table.addCell(item.getCity());
-				table.addCell(item.getState());
-				
+								
+				cell = new PdfPCell(new Phrase(item.getIdentityCard(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getLastName(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getFirstName(), font));
+				table.addCell(cell);
+				//table.addCell("Contrato");
+				cell = new PdfPCell(new Phrase(item.getAffiliationDate().toString(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getProduct(), font));
+				table.addCell(cell);
+				//table.addCell("Cantidad");
+				cell = new PdfPCell(new Phrase(item.getPrice().toString(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getSeller(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase("AM", font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getRoom(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getAddress(), font));
+				cell.setColspan(4);
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getReferencePoint(), font));
+				cell.setColspan(2);
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getCity(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getState(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getHomeNumber(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getOfficeNumber(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getMobileNumber(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getFaxNumber(), font));
+				table.addCell(cell);
+				cell = new PdfPCell(new Phrase(item.getEmail(), font));
+				cell.setColspan(2);
+				table.addCell(cell);
 			}
 			
 			document.add(table);
 			document.close();
-			
-			
+
 			File pdfFile = new File(contextPath + pdfFileName);
 
 			response.setHeader("Expires", "0");
@@ -170,31 +227,13 @@ public class CreateReportServlet extends HttpServlet {
 			int bytes;
 			while ((bytes = fileInputStream.read()) != -1) {
 				responseOutputStream.write(bytes);
-			}
-			
-//			
-//			if(rowsUpdated == 1){
-//					request.setAttribute("info", "El producto fue creado exitosamente.");
-//					request.setAttribute("error", "");
-//					System.out.println("bien");
-//					rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
-//					rd.forward(request, response);
-//			}
-//			else{
-//				request.setAttribute("info", "");
-//				request.setAttribute("error", "Ocurrió un error durante la creación del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-//				System.out.println("error");
-//				rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
-//
-//				rd.forward(request, response);
-//			}
-//			
+			}	
 		}catch (Exception e) {
-//			request.setAttribute("info", "");
-//			request.setAttribute("error", "Ocurrió un error durante la creación del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-//			rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
-//
-//			rd.forward(request, response);
+ 			request.setAttribute("info", "");
+			request.setAttribute("error", "Ocurrió un error durante la generación del reporte en formato PDF. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
+			rd = getServletContext().getRequestDispatcher("/ListReportsServlet");			
+
+			rd.forward(request, response);
 		}
 			
 	}
