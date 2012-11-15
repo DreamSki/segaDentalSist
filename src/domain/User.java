@@ -14,6 +14,7 @@ public class User {
 	private Integer roomId;
 	private String roomName; 
 	private String productName;
+	private String turn;
 	
 	/**
 	 * 
@@ -182,6 +183,14 @@ public class User {
 
 	public String getIdentityCard() {
 		return identityCard;
+	}
+
+	public void setTurn(String turn) {
+		this.turn = turn;
+	}
+
+	public String getTurn() {
+		return turn;
 	}
 	
 }

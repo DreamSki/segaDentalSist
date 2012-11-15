@@ -17,7 +17,7 @@ public class EditUser implements DatabaseCommand {
 	@Override
 	public Object executeDatabaseOperation(Connection conn) throws SQLException {
 		
-		PreparedStatement sta = conn.prepareStatement("UPDATE USER SET FIRST_NAME = ?, LAST_NAME = ?, IDENTITY_CARD = ?, USER_NAME = ?, ROLE_ID = ?, ROOM_ID = ? WHERE ID = ?");
+		PreparedStatement sta = conn.prepareStatement("UPDATE USER SET FIRST_NAME = ?, LAST_NAME = ?, IDENTITY_CARD = ?, USER_NAME = ?, ROLE_ID = ?, ROOM_ID = ?, TURN = ? WHERE ID = ?");
 		sta.setString(1, user.getFirstName());
 		sta.setString(2, user.getLastName());
 		sta.setString(3, user.getIdentityCard());
@@ -30,7 +30,13 @@ public class EditUser implements DatabaseCommand {
 			sta.setInt(6, user.getRoomId());			
 		}
 		
-		sta.setInt(7, user.getId());
+		if(user.getTurn()==null){
+			sta.setNull(7, java.sql.Types.VARCHAR);
+		} else {
+			sta.setString(7, user.getTurn());
+		}
+		
+		sta.setInt(8, user.getId());
 		int rowsUpdated = sta.executeUpdate();
 		sta.close();
 		

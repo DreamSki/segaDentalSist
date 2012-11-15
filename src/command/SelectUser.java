@@ -21,8 +21,8 @@ public class SelectUser implements DatabaseCommand {
 
 		User user = new User();
 		PreparedStatement sta = conn.prepareStatement("SELECT A.ID, A.FIRST_NAME, A.LAST_NAME, A.IDENTITY_CARD, A.USER_NAME, A.PASSWORD, " +
-				"A.ROLE_ID, A.ROLE_NAME, URM.ID AS ROOM_ID, URM.NAME AS ROOM_NAME " +
-				"FROM (SELECT U.ID, U.FIRST_NAME, U.LAST_NAME, U.IDENTITY_CARD, U.USER_NAME, U.PASSWORD, U.ROLE_ID, U.ROOM_ID, UR.NAME AS ROLE_NAME " +
+				"A.ROLE_ID, A.ROLE_NAME, URM.ID AS ROOM_ID, URM.NAME AS ROOM_NAME, A.TURN " +
+				"FROM (SELECT U.ID, U.FIRST_NAME, U.LAST_NAME, U.IDENTITY_CARD, U.USER_NAME, U.PASSWORD, U.ROLE_ID, U.ROOM_ID, UR.NAME AS ROLE_NAME, U.TURN " +
 				"FROM USER U, USER_ROLE UR WHERE U.ROLE_ID = UR.ID AND U.ID = ?) AS A " +
 				"LEFT JOIN USER_ROOM URM ON A.ROOM_ID = URM.ID " +
 				"ORDER BY A.ID ASC");
@@ -41,6 +41,7 @@ public class SelectUser implements DatabaseCommand {
 			user.setRoleName(rs.getString(8));
 			user.setRoomId(rs.getInt(9));
 			user.setRoomName(rs.getString(10));
+			user.setTurn(rs.getString(11));
 		}
 		
 		rs.close();
