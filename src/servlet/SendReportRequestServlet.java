@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import Util.SendEmail;
 
 
@@ -59,7 +60,9 @@ public class SendReportRequestServlet extends HttpServlet {
 					if (reportItems.size() > 0){
 						Properties propertiesFile = new Properties();
 						String context = getServletContext().getInitParameter("properties");
+						
 						propertiesFile.load(new FileInputStream(context));
+						
 						SendEmail.sendEmailWithPdf(propertiesFile, "report", reportItems );
 						
 						request.setAttribute("info", "El correo fue envíado sastifactoriamente");

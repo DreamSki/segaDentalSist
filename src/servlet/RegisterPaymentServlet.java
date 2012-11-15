@@ -76,15 +76,16 @@ public class RegisterPaymentServlet extends HttpServlet {
 			User user = (User) session.getAttribute("user");
 			
 			String email = request.getParameter("clientEmail");
-			String cardType = request.getParameter("txtCardType");
-			String numCard = request.getParameter("txtNumCard");
-			String bank = request.getParameter("txtBank");
-			String cedNumber = request.getParameter("txtCedNumClient");
+//			String cardType = request.getParameter("txtCardType");
+//			String numCard = request.getParameter("txtNumCard");
+//			String bank = request.getParameter("txtBank");
+//			String cedNumber = request.getParameter("txtCedNumClient");
 			String voucher = request.getParameter("txtVoucher");
 			String clientProductId = request.getParameter("clientProductId"); 
 			String amount = request.getParameter("txtAmount"); 
 			String cardId = request.getParameter("txtCardId"); 
 			String name = request.getParameter("txtName");
+			String type = request.getParameter("type");
 			
 			Payment payment = new Payment();
 			payment.setClientProductId(Integer.valueOf(clientProductId));
@@ -92,8 +93,9 @@ public class RegisterPaymentServlet extends HttpServlet {
 			payment.setAmount(amount);
 			payment.setVoucher(voucher);
 			payment.setCheckerId(user.getId());
-			System.out.println("aqui toy " + cardType + "  " + numCard + " " + bank + " " + cedNumber + " " + voucher + " " + clientProductId + " " + amount + " " + cardId +
-					" " + user.getId());
+			payment.setType(type);
+//			System.out.println("aqui toy " + cardType + "  " + numCard + " " + bank + " " + cedNumber + " " + voucher + " " + clientProductId + " " + amount + " " + cardId +
+//					" " + user.getId());
 
 			Integer rowsUpdated  = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreatePayment(payment));
 			

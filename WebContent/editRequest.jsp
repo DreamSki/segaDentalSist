@@ -208,9 +208,9 @@
 					<input type="hidden" id="txtName" class="good_input" name="txtName"  value="<%= client.getFirstName() + " " + client.getLastName() %>"/>
 					<input type="hidden" id="clientEmail" class="good_input" name="clientEmail"  value="<%= client.getEmail() %>"/>
 					<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value="<%= client.getClientProductId() %>"/>
-					<input type="hidden" id="txtNumCard" class="good_input" name="txtNumCard"  value="<%= card.getCardNumber() %>"/>
 					<input type="hidden" id="txtAmount" class="good_input" name="txtAmount"  value="<%= client.getProduct().getPrice() %>"/>
 					<input type="hidden" id="txtCardId" class="good_input" name="txtCardId"  value="<%= client.getCard().getId() %>"/>
+					<input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type") %>"/>
 				
 					<fieldset>
 						<label for="nameCard">Tipo de Tarjeta:</label>

@@ -11,6 +11,7 @@ public class Payment {
 	private String amount;
 	private String voucher;
 	private int checkerId;
+	private String type;
 	
 	/**
 	 * 
@@ -84,6 +85,14 @@ public class Payment {
 
 	public int getCheckerId(){
 		return checkerId;
+	}
+	
+	public void setType(String type){
+		this.type = type;
+	}
+
+	public String getType(){
+		return type;
 	}
 	
 	

@@ -27,6 +27,7 @@ public class ReportItem {
 	private String voucher;
 	private String bank;
 	private String amount;
+	private int type;
 	
 	
 	public void setIdentityCard(String identityCard) {
@@ -247,6 +248,14 @@ public class ReportItem {
 
 	public String getReferencePoint() {
 		return referencePoint;
+	}
+	
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getType() {
+		return type;
 	}
 }
 
