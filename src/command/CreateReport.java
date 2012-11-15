@@ -1,6 +1,7 @@
 package command;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ import domain.ReportItem;
 public class CreateReport implements DatabaseCommand {
 	
 	private String baseQuery = "SELECT C.IDENTITY_CARD, C.LAST_NAME, C.FIRST_NAME, CP.AFFILIATION_DATE, P.NAME AS PRODUCT_NAME, P.PRICE, " +
-			"U.FIRST_NAME AS SELLER_FIRST_NAME, U.LAST_NAME AS SELLER_LAST_NAME, UR.NAME AS ROOM, CA.STREET, PT.NAME AS PROPERTY_TYPE, " +
+			"U.FIRST_NAME AS SELLER_FIRST_NAME, U.LAST_NAME AS SELLER_LAST_NAME, U.TURN, UR.NAME AS ROOM, CA.STREET, PT.NAME AS PROPERTY_TYPE, " +
 			"CA.PROPERTY_NAME, CA.TOWER, CA.FLOOR, CA.APARTMENT, CA.URBANIZATION, CA.MUNICIPALITY, CA.POSTAL_CODE, CA.REFERENCE_POINT, CA.CITY, CA.STATE, " +
 			"PHONE.HOME_NUMBER, PHONE.OFFICE_NUMBER, PHONE.MOBILE_NUMBER, PHONE.FAX_NUMBER, C.EMAIL FROM CLIENT C, CLIENT_PRODUCT " +
 			"CP, PRODUCT P, USER U, USER_ROOM UR, CLIENT_ADDRESS CA, PROPERTY_TYPE PT, (SELECT OPH.ID, OPH.HOME_NUMBER, OPH.OFFICE_NUMBER, " +
@@ -27,8 +28,13 @@ public class CreateReport implements DatabaseCommand {
 	private Integer productId = null;
 	private Integer statusId = null;
 	private String state = null;
+	private Date startAffiliationDate = null;
+	private Date endAffiliationDate = null;
+	private Date startExpirationDate = null;
+	private Date endExpirationDate = null;
 	
-	public CreateReport(Integer productId, Integer statusId, String state){
+	public CreateReport(Integer productId, Integer statusId, String state, Date startAffiliationDate, Date endAffiliationDate, 
+			Date startExpirationDate, Date endExpirationDate){
 		
 		if(productId!=null){			
 			baseQuery += " AND CP.PRODUCT_ID = ?";
@@ -43,6 +49,18 @@ public class CreateReport implements DatabaseCommand {
 		if(state!=null){
 			baseQuery += " AND CA.STATE = ?";
 			setState(state);
+		}
+		
+		if(startAffiliationDate!=null && endAffiliationDate!=null){
+			baseQuery += " AND CP.AFFILIATION_DATE BETWEEN ? AND ?";
+			setStartAffiliationDate(startAffiliationDate);
+			setEndAffiliationDate(endAffiliationDate);
+		}
+		
+		if(startExpirationDate!=null && endExpirationDate!=null){
+			baseQuery += " AND CP.EXPIRATION_DATE BETWEEN ? AND ?";
+			setStartExpirationDate(startExpirationDate);
+			setEndExpirationDate(endExpirationDate);
 		}
 	}
 	
@@ -65,7 +83,21 @@ public class CreateReport implements DatabaseCommand {
 		
 		if(state!=null){
 			sta.setString(i, state);
-		}		
+			i++;
+		}	
+		
+		if(startAffiliationDate!=null && endAffiliationDate!=null){
+			sta.setDate(i, startAffiliationDate);
+			i++;
+			sta.setDate(i, endAffiliationDate);
+			i++;
+		}
+		
+		if(startExpirationDate!=null && endExpirationDate!=null){
+			sta.setDate(i, startExpirationDate);
+			i++;
+			sta.setDate(i, endExpirationDate);
+		}
 				
 		ResultSet rs = sta.executeQuery();
 		
@@ -78,17 +110,18 @@ public class CreateReport implements DatabaseCommand {
 			reportItem.setProduct(rs.getString(5));
 			reportItem.setPrice(rs.getDouble(6));
 			reportItem.setSeller(rs.getString(7), rs.getString(8));
-			reportItem.setRoom(rs.getString(9));
-			reportItem.setAddress(rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), 
-					rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18));
-			reportItem.setReferencePoint(rs.getString(19));
-			reportItem.setCity(rs.getString(20));
-			reportItem.setState(rs.getString(21));
-			reportItem.setHomeNumber(rs.getString(22));
-			reportItem.setOfficeNumber(rs.getString(23));
-			reportItem.setMobileNumber(rs.getString(24));
-			reportItem.setFaxNumber(rs.getString(25));
-			reportItem.setEmail(rs.getString(26));
+			reportItem.setTurn(rs.getString(9));
+			reportItem.setRoom(rs.getString(10));
+			reportItem.setAddress(rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), 
+					rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19));
+			reportItem.setReferencePoint(rs.getString(20));
+			reportItem.setCity(rs.getString(21));
+			reportItem.setState(rs.getString(22));
+			reportItem.setHomeNumber(rs.getString(23));
+			reportItem.setOfficeNumber(rs.getString(24));
+			reportItem.setMobileNumber(rs.getString(25));
+			reportItem.setFaxNumber(rs.getString(26));
+			reportItem.setEmail(rs.getString(27));
 			
 			list.add(reportItem);
 		}
@@ -121,6 +154,38 @@ public class CreateReport implements DatabaseCommand {
 
 	public String getState() {
 		return state;
+	}
+
+	public void setStartAffiliationDate(Date startAffiliationDate) {
+		this.startAffiliationDate = startAffiliationDate;
+	}
+
+	public Date getStartAffiliationDate() {
+		return startAffiliationDate;
+	}
+
+	public void setEndAffiliationDate(Date endAffiliationDate) {
+		this.endAffiliationDate = endAffiliationDate;
+	}
+
+	public Date getEndAffiliationDate() {
+		return endAffiliationDate;
+	}
+	
+	public void setStartExpirationDate(Date startExpirationDate) {
+		this.startExpirationDate = startExpirationDate;
+	}
+
+	public Date getStartExpirationDate() {
+		return startExpirationDate;
+	}
+
+	public void setEndExpirationDate(Date endExpirationDate) {
+		this.endExpirationDate = endExpirationDate;
+	}
+
+	public Date getEndExpirationDate() {
+		return endExpirationDate;
 	}
 
 }

@@ -159,6 +159,31 @@
 										}
 									%>
 								</select><br><br>	
+							<label for="turno">Turno:</label>
+								<select name="txtTurn" id="txtTurn">
+									<option value="0">Seleccionar</option>
+									<%
+										if(userInfo.getTurn().equalsIgnoreCase("A.M.")){
+									%>
+									<option value="A.M." selected="selected">A.M.</option>
+									<%
+										} else {
+									%>
+									<option value="A.M.">A.M.</option>
+									<%		
+										}
+									
+										if(userInfo.getTurn().equalsIgnoreCase("P.M.")){
+									%>
+									<option value="P.M." selected="selected">P.M.</option>
+									<%
+										} else {
+									%>
+									<option value="P.M.">P.M.</option>
+									<%		
+										}
+									%>
+								</select><br><br>
 							</div>
 							</fieldset>
 						</div>

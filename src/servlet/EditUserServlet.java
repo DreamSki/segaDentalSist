@@ -110,6 +110,12 @@ public class EditUserServlet extends HttpServlet {
 				roomId = null;
 			}
 			
+			String turn = request.getParameter("txtTurn");
+			
+			if(turn=="0"){
+				turn = null;
+			}
+			
 			String[] productIds = request.getParameterValues("txtProductoId[]");
 			
 			User user = new User();
@@ -120,6 +126,7 @@ public class EditUserServlet extends HttpServlet {
 			user.setUserName(userName);
 			user.setRoleId(roleId);
 			user.setRoomId(roomId);
+			user.setTurn(turn);
 			
 			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditUser(user));
 			

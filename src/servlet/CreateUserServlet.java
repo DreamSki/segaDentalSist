@@ -101,6 +101,12 @@ public class CreateUserServlet extends HttpServlet {
 				roomId = null;
 			}
 			
+			String turn = request.getParameter("txtTurn");
+			
+			if(turn=="0"){
+				turn = null;
+			}
+			
 			String[] productIds = request.getParameterValues("txtProductoId[]");
 			User user = new User();
 			user.setFirstName(firstName);
@@ -110,6 +116,7 @@ public class CreateUserServlet extends HttpServlet {
 			user.setPassword(encryptPassword);
 			user.setRoleId(roleId);
 			user.setRoomId(roomId);
+			user.setTurn(turn);
 
 			Integer userId = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateUser(user));
 

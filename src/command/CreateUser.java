@@ -19,7 +19,7 @@ public class CreateUser implements DatabaseCommand {
 	public Object executeDatabaseOperation(Connection conn) throws SQLException {
 
 		int lastIdInserted = -1;
-		PreparedStatement sta = conn.prepareStatement("INSERT INTO USER (FIRST_NAME, LAST_NAME, IDENTITY_CARD, USER_NAME, PASSWORD, ROLE_ID, ROOM_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		PreparedStatement sta = conn.prepareStatement("INSERT INTO USER (FIRST_NAME, LAST_NAME, IDENTITY_CARD, USER_NAME, PASSWORD, ROLE_ID, ROOM_ID, TURN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		
 		sta.setString(1, user.getFirstName());
 		sta.setString(2, user.getLastName());
@@ -34,6 +34,12 @@ public class CreateUser implements DatabaseCommand {
 			sta.setInt(7, user.getRoomId());			
 		}
 		
+		if(user.getTurn()==null){
+			sta.setNull(8, java.sql.Types.VARCHAR);
+		} else {
+			sta.setString(8, user.getTurn());
+		}
+				
 		int rowsUpdated = sta.executeUpdate();
 		
 		if (rowsUpdated == 1){

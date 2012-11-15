@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -26,9 +28,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import command.CommandExecutor;
 
-//import command.CommandExecutor;
-
-//import domain.Product;
 import domain.ReportItem;
 
 /**
@@ -38,6 +37,8 @@ import domain.ReportItem;
 public class CreateReportServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -63,48 +64,58 @@ public class CreateReportServlet extends HttpServlet {
 		
 		try{
 			String dateIni = request.getParameter("txtDateIni");
-			System.out.println("+++ dateIni:"+ dateIni);
 			String dateEnd = request.getParameter("txtDateEnd");
-			System.out.println("+++ dateEnd:"+ dateEnd);
+			String dateIniExp = request.getParameter("txtDateIniExp");
+			String dateEndExp = request.getParameter("txtDateEndExp");
 			String state = request.getParameter("txtState");
-			System.out.println("+++ state:"+ state);
 			String product = request.getParameter("txtProduct");
 			Integer productId;
-			System.out.println("+++ product:"+ product);
-			String  clientStatus = request.getParameter("txtClientStatus");
+			String clientStatus = request.getParameter("txtClientStatus");
 			Integer statusId;
-			System.out.println("+++ clientStatus:"+ clientStatus);
+			Date startAffiliationDate;
+			Date endAffiliationDate;
+			Date startExpirationDate;
+			Date endExpirationDate;
 			
-			int porFechas = 0, porEstado = 0, porProducto = 0, porStatusClient = 0;
-			if (dateIni != "" && dateEnd != ""){
-				porFechas = 1;
+			if (dateIni == "" && dateEnd == ""){
+				startAffiliationDate = null;
+				endAffiliationDate = null;
+			} else {
+				java.util.Date utilDate = format.parse(dateIni);
+				startAffiliationDate = new Date(utilDate.getTime());
+				utilDate = format.parse(dateEnd);
+				endAffiliationDate = new Date(utilDate.getTime());
+			}
+			
+			if (dateIniExp == "" && dateEndExp == ""){
+				startExpirationDate = null;
+				endExpirationDate = null;
+			} else {
+				
+				java.util.Date utilDate = format.parse(dateIniExp);
+				startExpirationDate = new Date(utilDate.getTime());
+				utilDate = format.parse(dateEndExp);
+				endExpirationDate = new Date(utilDate.getTime());
 			}
 
 			if (state.equals("-1")){
 				state = null;
-			} else {
-				porEstado = 1;				
 			}
 			
 			if (clientStatus.equals("-1")){
 				statusId = null;
 			}else{
-				porStatusClient = 1;
 				statusId = Integer.valueOf(clientStatus);
 			}
 			
 			if (product.equals("-1")){
 				productId = null;
 			}else{
-				porProducto = 1;	
 				productId = Integer.valueOf(product);
-			}
+			}			
 			
-			System.out.println("El reporte a generar "+ 
-					" fechas " + porFechas +  " estado " + porEstado
-					+ " clienteEstado " + porStatusClient + " producto " + porProducto);
-
-			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport(productId, statusId, state));
+			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport(productId, statusId, state, 
+					startAffiliationDate, endAffiliationDate, startExpirationDate, endExpirationDate));
 
 			request.setAttribute("reportItems", reportItems);
 			
@@ -182,7 +193,7 @@ public class CreateReportServlet extends HttpServlet {
 				table.addCell(cell);
 				cell = new PdfPCell(new Phrase(item.getSeller(), font));
 				table.addCell(cell);
-				cell = new PdfPCell(new Phrase("AM", font));
+				cell = new PdfPCell(new Phrase(item.getTurn(), font));
 				table.addCell(cell);
 				cell = new PdfPCell(new Phrase(item.getRoom(), font));
 				table.addCell(cell);

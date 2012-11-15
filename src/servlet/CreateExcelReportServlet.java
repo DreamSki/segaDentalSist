@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -38,6 +40,8 @@ import domain.ReportItem;
 public class CreateExcelReportServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -66,6 +70,10 @@ public class CreateExcelReportServlet extends HttpServlet {
 			System.out.println("+++ dateIni:"+ dateIni);
 			String dateEnd = request.getParameter("txtDateEnd");
 			System.out.println("+++ dateEnd:"+ dateEnd);
+			String dateIniExp = request.getParameter("txtDateIniExp");
+			System.out.println("+++ dateIniExp:"+ dateIniExp);
+			String dateEndExp = request.getParameter("txtDateEndExp");
+			System.out.println("+++ dateEndExp:"+ dateEndExp);
 			String state = request.getParameter("txtState");
 			System.out.println("+++ state:"+ state);
 			String product = request.getParameter("txtProduct");
@@ -74,13 +82,36 @@ public class CreateExcelReportServlet extends HttpServlet {
 			String clientStatus = request.getParameter("txtClientStatus");
 			Integer statusId;
 			System.out.println("+++ clientStatus:"+ clientStatus);
+			Date startAffiliationDate;
+			Date endAffiliationDate;
+			Date startExpirationDate;
+			Date endExpirationDate;
 			
-			int porFechas = 0, porEstado = 0, porProducto = 0, porStatusClient = 0;
+			int porFechas = 0, porFechasExp = 0, porEstado = 0, porProducto = 0, porStatusClient = 0;
 			
-			if (dateIni != "" && dateEnd != ""){
+			if (dateIni == "" && dateEnd == ""){
+				startAffiliationDate = null;
+				endAffiliationDate = null;
+			} else {
+				java.util.Date utilDate = format.parse(dateIni);
+				startAffiliationDate = new Date(utilDate.getTime());
+				utilDate = format.parse(dateEnd);
+				endAffiliationDate = new Date(utilDate.getTime());
 				porFechas = 1;
 			}
 			
+			if (dateIniExp == "" && dateEndExp == ""){
+				startExpirationDate = null;
+				endExpirationDate = null;
+			} else {
+				
+				java.util.Date utilDate = format.parse(dateIniExp);
+				startExpirationDate = new Date(utilDate.getTime());
+				utilDate = format.parse(dateEndExp);
+				endExpirationDate = new Date(utilDate.getTime());
+				porFechasExp = 1;
+			}
+
 			if (state.equals("-1")){
 				state = null;
 			} else {
@@ -102,10 +133,12 @@ public class CreateExcelReportServlet extends HttpServlet {
 			}
 			
 			System.out.println("El reporte a generar "+ 
-					" fechas " + porFechas +  " estado " + porEstado
+					" fechas afiliacion " + porFechas + " fechas expiracion " + porFechasExp + " estado " + porEstado
 					+ " clienteEstado " + porStatusClient + " producto " + porProducto);
 
-			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport(productId, statusId, state));
+			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport(productId, statusId, state, 
+					startAffiliationDate, endAffiliationDate, startExpirationDate, endExpirationDate));
+
 			request.setAttribute("reportItems", reportItems);
 			
 			String excelFileName = "reporte.xls";
@@ -157,7 +190,7 @@ public class CreateExcelReportServlet extends HttpServlet {
 				sheet.addCell(new Label(4,i,item.getProduct(), borderFormat));
 				sheet.addCell(new Number(5,i,item.getPrice(), borderFormat));
 				sheet.addCell(new Label(6,i,item.getSeller(), borderFormat));
-				sheet.addCell(new Label(7,i,"AM", borderFormat));
+				sheet.addCell(new Label(7,i,item.getTurn(), borderFormat));
 				sheet.addCell(new Label(8,i,item.getRoom(), borderFormat));
 				sheet.addCell(new Label(9,i,item.getAddress(), borderFormat));
 				sheet.addCell(new Label(10,i,item.getReferencePoint(), borderFormat));

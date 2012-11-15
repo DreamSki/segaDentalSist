@@ -67,7 +67,6 @@
 		<div id="contentP">
 				<h2>Agregar Usuario:</h2>
 	        	<p>&nbsp;</p>
-           		<p>&nbsp;</p>
 				<form name="form" action="/segaDental/CreateUserServlet" onsubmit="return validate(this)" method="post">
 					<jsp:useBean id="userRoles"
 						type="java.util.ArrayList<domain.UserRole>" scope="request" />
@@ -115,7 +114,13 @@
 									<%
 										}
 									%>
-								</select>
+								</select><br><br>
+							<label for="turno">Turno:</label>
+								<select name="txtTurn" id="txtTurn">
+									<option value="0">Seleccionar</option>
+									<option value="A.M.">A.M.</option>
+									<option value="P.M.">P.M.</option>
+								</select><br><br>
 							</div>
 						</fieldset>
 					</div>
@@ -144,7 +149,6 @@
 						<%
 					}
 					%>	
-					<br>
 					<div style="text-align:center">
 							<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 							<input type="submit"  class="button"  name="sbmtButton" value="Agregar" style="margin-left:20px;" />
