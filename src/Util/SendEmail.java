@@ -23,8 +23,13 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -177,41 +182,82 @@ public class SendEmail {
 	
 	public static void writePdf(ByteArrayOutputStream outputStream, ArrayList<ReportItem> reportItems) throws Exception {
 		
-		Document document=new Document(PageSize.A4.rotate());
 		
+		Document document=new Document(PageSize.A3.rotate(), 1, 1, 20, 20);
 		PdfWriter.getInstance(document, outputStream);
-		document.open();
 		
+		document.open();
 		document.addTitle("Reporte");
 		document.addSubject("Reporte de Venta Diaria");
 		
-		PdfPTable table=new PdfPTable(10);
+	
+		Font font = FontFactory.getFont("tahoma", 6, Font.NORMAL, BaseColor.BLACK);
+		PdfPTable table=new PdfPTable(15);
+		
 		table.setKeepTogether(false);
-		table.addCell("Cédula");
-		table.addCell("Apellidos");
-		table.addCell("Nombres");
-		table.addCell("Fecha Venta");
-		table.addCell("Nombre Producto");
-		table.addCell("Precio");
-		table.addCell("Vendedor");
-		table.addCell("Sala");
-		//table.addCell("Dirección");
-		table.addCell("Ciudad");
-		table.addCell("Estado");
+		
+		PdfPCell cell = new PdfPCell(new Phrase("Nombre Cliente", font));
+		
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("C.I", font));
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Cant", font));
+		table.addCell(cell);
+		//table.addCell("Contrato");
+		cell = new PdfPCell(new Phrase("Monto", font));
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Sala", font));
+		table.addCell(cell);
+		//table.addCell("Cantidad");
+		cell = new PdfPCell(new Phrase("Nombre Ejecutivo", font));
+		cell.setColspan(2);
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Turno", font));
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Tipo de TDC", font));
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Número trans", font));
+		cell.setColspan(2);
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Tipo Banco", font));
+		cell.setColspan(2);
+		table.addCell(cell);
+		cell = new PdfPCell(new Phrase("Dirección", font));
+		cell.setColspan(2);
+		table.addCell(cell);
+			
 		
 		for(ReportItem item : reportItems){
-			table.addCell(item.getIdentityCard());
-			table.addCell(item.getLastName());
-			table.addCell(item.getFirstName());
-			table.addCell(item.getAffiliationDate().toString());
-			table.addCell(item.getProduct());
-			table.addCell(item.getPrice().toString());
-			table.addCell(item.getSeller());
-			table.addCell(item.getRoom());
-			//table.addCell(item.getAddress());
-			table.addCell(item.getCity());
-			table.addCell(item.getState());
 			
+			cell = new PdfPCell(new Phrase(item.getFirstName() + " " + item.getLastName(), font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(item.getIdentityCard(), font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("a", font));
+			table.addCell(cell);
+			//table.addCell("Contrato");
+			cell = new PdfPCell(new Phrase(item.getAmount().toString(), font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(item.getRoom().toString(), font));
+			table.addCell(cell);
+			//table.addCell("Cantidad");
+			cell = new PdfPCell(new Phrase(item.getSeller(), font));
+			cell.setColspan(2);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(item.getTurn(), font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(item.getCardType(), font));
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(item.getVoucher(), font));
+			cell.setColspan(2);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(item.getBank(), font));
+			cell.setColspan(2);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase(item.getCity() + "-" + item.getState(), font));
+			cell.setColspan(2);
+			table.addCell(cell);
+		
 		}
 		
 		document.add(table);
@@ -219,32 +265,4 @@ public class SendEmail {
 		
 	}
 	
-	public static void writePdf(ByteArrayOutputStream outputStream) throws Exception {
-		
-		Document document=new Document(PageSize.A4.rotate());
-		
-		PdfWriter.getInstance(document, outputStream);
-		document.open();
-		
-		document.addTitle("Reporte");
-		document.addSubject("Reporte de Venta Diaria");
-		
-		PdfPTable table=new PdfPTable(10);
-		table.setKeepTogether(false);
-		table.addCell("Cédula");
-		table.addCell("Apellidos");
-		table.addCell("Nombres");
-		table.addCell("Fecha Venta");
-		table.addCell("Nombre Producto");
-		table.addCell("Precio");
-		table.addCell("Vendedor");
-		table.addCell("Sala");
-		//table.addCell("Dirección");
-		table.addCell("Ciudad");
-		table.addCell("Estado");
-		
-		document.add(table);
-		document.close();
-		
-	}
 }

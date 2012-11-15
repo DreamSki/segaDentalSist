@@ -225,7 +225,33 @@ function printPageContentB() {
 							<div id="border2" style="border: 1px solid #E6E6E6;;">
 							<fieldset style="border:none;">	
 							<label for="email">	Estado: </label>
-							    <input id="txtState" class="good_input" name="txtState" type="text"  value="<%= clientInfo.getAddress().getState() %>"/><br><br>
+								<select name="txtState">
+								  <option value="Amazonas">Amazonas</option>
+								  <option value="Anzoátegui">Anzoátegui</option>
+								  <option value="Apure">Apure</option>
+								  <option value="Aragua">Aragua</option>
+								  <option value="Barinas">Barinas</option>
+								  <option value="Bolivar">Bolivar</option>
+								  <option value="Carabobo">Carabobo</option>
+								  <option value="Cojedes">Cojedes</option>
+								  <option value="Delta Amacuro">Delta Amacuro</option>
+								  <option value="Distrito Capital">Distrito Capital</option>
+								  <option value="Falcón">Falcón</option>
+								  <option value="Guarico">Guarico</option>
+								  <option value="Lara">Lara</option>
+								  <option value="Mérida">Mérida</option>
+								  <option value="Miranda">Miranda</option>
+								  <option value="Monagas">Monagas</option>
+								  <option value="Nueva Esparta">Nueva Esparta</option>
+								  <option value="Portuguesa">Portuguesa</option>
+								  <option value="Sucre">Sucre</option>
+								  <option value="Táchira">Táchira</option>
+								  <option value="Trujillo">Trujillo</option>
+								  <option value="Yaracuy">Yaracuy</option>
+								  <option value="Zulia">Zulia</option>
+								  <option value="Vargas">Vargas</option>
+								</select><br><br>
+							
 								
 								<label for="email">Ciudad: </label>
 							    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= clientInfo.getAddress().getCity() %>"/><br><br>
