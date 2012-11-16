@@ -72,7 +72,8 @@
         </div>  
 		<div id="content">  
         		<jsp:useBean id="products" type="java.util.ArrayList<domain.Product>" scope="request"/>  	
-        		<jsp:useBean id="clientStatus" type="java.util.ArrayList<domain.ClientStatus>" scope="request"/>  	
+        		<jsp:useBean id="clientStatus" type="java.util.ArrayList<domain.ClientStatus>" scope="request"/>  
+        		<jsp:useBean id="callStatus" type="java.util.ArrayList<domain.StatusJustification>" scope="request"/>  		
         		<h2>Escoja el reporte que desea generar:</h2><br><br>
 				<form name="form" action="/segaDental/CreateReportServlet"  method="post">
 					<fieldset>
@@ -126,6 +127,18 @@
 							<option value="-1">Seleccionar</option>
 							<%
 								for(domain.ClientStatus c : clientStatus) { 											
+							%>
+							  <option value="<%= c.getId() %>"><%= c.getName() %></option>
+							<%
+							}										
+							%>
+						</select>
+						<br><br>
+						<label for="statusCall">Status Llamada:</label>
+						<select name="txtCallStatus">
+							<option value="-1">Seleccionar</option>
+							<%
+								for(domain.StatusJustification c : callStatus) { 											
 							%>
 							  <option value="<%= c.getId() %>"><%= c.getName() %></option>
 							<%

@@ -32,9 +32,10 @@ public class CreateReport implements DatabaseCommand {
 	private Date endAffiliationDate = null;
 	private Date startExpirationDate = null;
 	private Date endExpirationDate = null;
+	private Integer callStatusId = null;
 	
 	public CreateReport(Integer productId, Integer statusId, String state, Date startAffiliationDate, Date endAffiliationDate, 
-			Date startExpirationDate, Date endExpirationDate){
+			Date startExpirationDate, Date endExpirationDate, Integer callStatusId){
 		
 		if(productId!=null){			
 			baseQuery += " AND CP.PRODUCT_ID = ?";
@@ -61,6 +62,11 @@ public class CreateReport implements DatabaseCommand {
 			baseQuery += " AND CP.EXPIRATION_DATE BETWEEN ? AND ?";
 			setStartExpirationDate(startExpirationDate);
 			setEndExpirationDate(endExpirationDate);
+		}
+		
+		if(callStatusId!=null){
+			baseQuery += " AND CP.STATUS_JUSTIFICATION_ID = ?";
+			setCallStatusId(callStatusId);
 		}
 	}
 	
@@ -97,6 +103,11 @@ public class CreateReport implements DatabaseCommand {
 			sta.setDate(i, startExpirationDate);
 			i++;
 			sta.setDate(i, endExpirationDate);
+			i++;
+		}
+		
+		if(callStatusId!=null){
+			sta.setInt(i, callStatusId);
 		}
 				
 		ResultSet rs = sta.executeQuery();
@@ -186,6 +197,14 @@ public class CreateReport implements DatabaseCommand {
 
 	public Date getEndExpirationDate() {
 		return endExpirationDate;
+	}
+
+	public void setCallStatusId(Integer callStatusId) {
+		this.callStatusId = callStatusId;
+	}
+
+	public Integer getCallStatusId() {
+		return callStatusId;
 	}
 
 }

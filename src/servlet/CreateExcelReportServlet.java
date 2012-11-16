@@ -67,27 +67,20 @@ public class CreateExcelReportServlet extends HttpServlet {
 		
 		try{
 			String dateIni = request.getParameter("txtDateIni");
-			System.out.println("+++ dateIni:"+ dateIni);
 			String dateEnd = request.getParameter("txtDateEnd");
-			System.out.println("+++ dateEnd:"+ dateEnd);
 			String dateIniExp = request.getParameter("txtDateIniExp");
-			System.out.println("+++ dateIniExp:"+ dateIniExp);
 			String dateEndExp = request.getParameter("txtDateEndExp");
-			System.out.println("+++ dateEndExp:"+ dateEndExp);
 			String state = request.getParameter("txtState");
-			System.out.println("+++ state:"+ state);
 			String product = request.getParameter("txtProduct");
 			Integer productId;
-			System.out.println("+++ product:"+ product);
 			String clientStatus = request.getParameter("txtClientStatus");
 			Integer statusId;
-			System.out.println("+++ clientStatus:"+ clientStatus);
 			Date startAffiliationDate;
 			Date endAffiliationDate;
 			Date startExpirationDate;
 			Date endExpirationDate;
-			
-			int porFechas = 0, porFechasExp = 0, porEstado = 0, porProducto = 0, porStatusClient = 0;
+			String callStatus = request.getParameter("txtCallStatus");
+			Integer callStatusId;
 			
 			if (dateIni == "" && dateEnd == ""){
 				startAffiliationDate = null;
@@ -97,7 +90,6 @@ public class CreateExcelReportServlet extends HttpServlet {
 				startAffiliationDate = new Date(utilDate.getTime());
 				utilDate = format.parse(dateEnd);
 				endAffiliationDate = new Date(utilDate.getTime());
-				porFechas = 1;
 			}
 			
 			if (dateIniExp == "" && dateEndExp == ""){
@@ -109,35 +101,32 @@ public class CreateExcelReportServlet extends HttpServlet {
 				startExpirationDate = new Date(utilDate.getTime());
 				utilDate = format.parse(dateEndExp);
 				endExpirationDate = new Date(utilDate.getTime());
-				porFechasExp = 1;
 			}
 
 			if (state.equals("-1")){
 				state = null;
-			} else {
-				porEstado = 1;				
 			}
 			
 			if (clientStatus.equals("-1")){
 				statusId = null;
 			}else{
-				porStatusClient = 1;
 				statusId = Integer.valueOf(clientStatus);
 			}
 			
 			if (product.equals("-1")){
 				productId = null;
 			}else{
-				porProducto = 1;	
 				productId = Integer.valueOf(product);
+			}		
+			
+			if (callStatus.equals("-1")){
+				callStatusId = null;
+			}else{
+				callStatusId = Integer.valueOf(callStatus);
 			}
 			
-			System.out.println("El reporte a generar "+ 
-					" fechas afiliacion " + porFechas + " fechas expiracion " + porFechasExp + " estado " + porEstado
-					+ " clienteEstado " + porStatusClient + " producto " + porProducto);
-
 			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport(productId, statusId, state, 
-					startAffiliationDate, endAffiliationDate, startExpirationDate, endExpirationDate));
+					startAffiliationDate, endAffiliationDate, startExpirationDate, endExpirationDate, callStatusId));
 
 			request.setAttribute("reportItems", reportItems);
 			

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import command.CommandExecutor;
 import domain.ClientStatus;
 import domain.Product;
+import domain.StatusJustification;
 import domain.User;
 
 /**
@@ -42,6 +43,7 @@ public class ListReportsServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession();
@@ -54,12 +56,12 @@ public class ListReportsServlet extends HttpServlet {
 					// perform list user operations
 					String info = (String)request.getAttribute("info")!=null?(String)request.getAttribute("info"):"";
 					String error = (String)request.getAttribute("error")!=null?(String)request.getAttribute("error"):"";
-					@SuppressWarnings("unchecked")
 					ArrayList<Product> listProducts = (ArrayList<Product>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListProducts());
 					request.setAttribute("products", listProducts);
-					@SuppressWarnings("unchecked")
 					ArrayList<ClientStatus> listStatus = (ArrayList<ClientStatus>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListClientStatus());
 					request.setAttribute("clientStatus", listStatus);
+					ArrayList<StatusJustification> listCallStatus = (ArrayList<StatusJustification>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListStatusJustification());
+					request.setAttribute("callStatus", listCallStatus);
 					request.setAttribute("info", info);
 					request.setAttribute("error", error);
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/reports.jsp");

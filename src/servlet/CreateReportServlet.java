@@ -76,6 +76,8 @@ public class CreateReportServlet extends HttpServlet {
 			Date endAffiliationDate;
 			Date startExpirationDate;
 			Date endExpirationDate;
+			String callStatus = request.getParameter("txtCallStatus");
+			Integer callStatusId;
 			
 			if (dateIni == "" && dateEnd == ""){
 				startAffiliationDate = null;
@@ -112,10 +114,16 @@ public class CreateReportServlet extends HttpServlet {
 				productId = null;
 			}else{
 				productId = Integer.valueOf(product);
-			}			
+			}		
+			
+			if (callStatus.equals("-1")){
+				callStatusId = null;
+			}else{
+				callStatusId = Integer.valueOf(callStatus);
+			}
 			
 			ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReport(productId, statusId, state, 
-					startAffiliationDate, endAffiliationDate, startExpirationDate, endExpirationDate));
+					startAffiliationDate, endAffiliationDate, startExpirationDate, endExpirationDate, callStatusId));
 
 			request.setAttribute("reportItems", reportItems);
 			
