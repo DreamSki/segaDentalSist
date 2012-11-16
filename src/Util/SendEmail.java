@@ -208,7 +208,7 @@ public class SendEmail {
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setBackgroundColor(color);
 		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Cant", fontLarge));
+		cell = new PdfPCell(new Phrase("Número de Beneficiarios", fontLarge));
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setBackgroundColor(color);
 		table.addCell(cell);
@@ -235,7 +235,7 @@ public class SendEmail {
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setBackgroundColor(color);
 		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Número trans", fontLarge));
+		cell = new PdfPCell(new Phrase("Número transacción", fontLarge));
 		cell.setColspan(2);
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		cell.setBackgroundColor(color);
@@ -254,16 +254,18 @@ public class SendEmail {
 	
 		color = new BaseColor(195,195,195);
 		
-		cell = new PdfPCell(new Phrase("Clientes Nuevos", fontLarge));
-		cell.setColspan(16);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-	
-		
 		boolean first = true;
+		boolean firstC = true;
 		for(ReportItem item : reportItems){
 			if (item.getType() == 5){
+				if (firstC){
+					cell = new PdfPCell(new Phrase("Clientes Nuevos", fontLarge));
+					cell.setColspan(16);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setBackgroundColor(color);
+					table.addCell(cell);
+					firstC = false;
+				}
 				cell = new PdfPCell(new Phrase(item.getFirstName() + " " + item.getLastName(), font));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setColspan(2);
@@ -322,7 +324,7 @@ public class SendEmail {
 				cell = new PdfPCell(new Phrase(item.getIdentityCard(), font));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
-				cell = new PdfPCell(new Phrase("a", font));
+				cell = new PdfPCell(new Phrase(String.valueOf(item.getNumBenef()), font));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
 				//table.addCell("Contrato");

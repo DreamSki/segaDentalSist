@@ -20,7 +20,7 @@ import domain.User;
 
 
 /**
- * Servlet implementation class EditUserServlet
+ * Servlet implementation class EditRequestServlet
  */
 @WebServlet(description = "servlet to edit requets", urlPatterns = { "/EditRequestServlet" })
 public class EditRequestServlet extends HttpServlet {

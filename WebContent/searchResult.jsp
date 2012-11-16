@@ -115,7 +115,7 @@
 								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>&type=<%=client.getType() %>&print=0" style="color: transparent" >
 									<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
 								</a> 
-								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>&type=<%=client.getType() %>&print=1">
+								<a href="/segaDental/PrintClientServlet??clientId=<%=client.getClientId() %>&type=<%=client.getType()%>">
 									<img alt="logo" src="/segaDental/images/print.png" height="16" width="16" style="padding-left: 15px;"/>
 								</a>
 								</p>

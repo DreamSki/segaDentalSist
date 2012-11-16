@@ -24,7 +24,7 @@ public class SelectClientRequest implements DatabaseCommand {
 	@Override
 	public Object executeDatabaseOperation(Connection conn) throws SQLException {
 		// List users in the database
-		
+		System.out.println("Buscando cliente");
 		Client clientRequest = new Client();
 		PreparedStatement sta = conn.prepareStatement("SELECT C.FIRST_NAME, C.LAST_NAME, C.IDENTITY_CARD," +
 						" C.EMAIL, C.SEX, AT.NAME, CA.STATE, CA.CITY,  CA.MUNICIPALITY, CA.URBANIZATION, CA.STREET, CA.PROPERTY_TYPE_ID, PR.NAME," +
@@ -40,7 +40,7 @@ public class SelectClientRequest implements DatabaseCommand {
 		ResultSet rs = sta.executeQuery();
 		
 		while(rs.next()) {
-			
+			System.out.println("encontro cliente");
 			clientRequest.setFirstName(rs.getString(1));
 			clientRequest.setLastName(rs.getString(2));
 			clientRequest.setIdentityCard(rs.getString(3));

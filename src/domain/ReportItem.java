@@ -28,6 +28,7 @@ public class ReportItem {
 	private String bank;
 	private String amount;
 	private int type;
+	private int num_benef;
 	
 	
 	public void setIdentityCard(String identityCard) {
@@ -256,6 +257,14 @@ public class ReportItem {
 
 	public int getType() {
 		return type;
+	}
+	
+	public void setNumBenef(int num_benef) {
+		this.num_benef = num_benef;
+	}
+
+	public int getNumBenef() {
+		return num_benef;
 	}
 }
 

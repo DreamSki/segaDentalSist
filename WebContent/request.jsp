@@ -122,6 +122,10 @@
 				<jsp:useBean id="listClientRequests" type="java.util.ArrayList<domain.ClientRequest>" scope="request"/>  	
         		<jsp:useBean id="statusJustification" type="java.util.ArrayList<domain.StatusJustification>" scope="request"/>  	
         		<h2>Solicitudes y Renovaciones por evaluar:</h2>
+				<form action="/segaDental/MoreRequestServlet" method="get">
+					<input type="hidden" id="howMany" class="good_input" name="howMany"  value="<%= listClientRequests.size() %>"/>
+					<input type="image" src="/segaDental/images/solicitar.png" name="askMore" style="position: absolute; top: 198px; left: 800px; height: auto;" />
+				</form>
         		<%
         			String info = (String)request.getAttribute("info");
         			String error = (String)request.getAttribute("error");
@@ -135,6 +139,7 @@
 				<%	
 						}
 					}
+					
 					if(!error.equalsIgnoreCase("")){
 				%>	
            		<p>&nbsp;</p>    
@@ -144,10 +149,10 @@
 					if (listClientRequests.size() == 0) {
 				%>	
 					<p>&nbsp;</p> 
-					<p class="noReg">En estos momentos no hay solicitudes ni renovaciones pendientes.</p>  
+					<p class="noReg">En estos momentos no tiene más renovaciones ni solicitudes pendientes. Haga click en solicitar para obtener unas nuevas.</p>  
 				<%
 				} else {
-				%>	
+				%>
     <div id="dt_example">
 	<div id="container">
 	<div id="demo">

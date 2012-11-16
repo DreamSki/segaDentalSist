@@ -14,7 +14,7 @@ import command.CommandExecutor;
 import domain.User;
 
 /**
- * Servlet implementation class DeleteProductServlet
+ * Servlet implementation class DeleteRequestServlet
  */
 @WebServlet(description = "servlet to delete requests", urlPatterns = { "/DeleteRequestServlet" })
 public class DeleteRequestServlet extends HttpServlet {
@@ -93,7 +93,7 @@ public class DeleteRequestServlet extends HttpServlet {
 		} catch (Exception e) {
 			request.setAttribute("info", "");
 			request.setAttribute("error", "Ocurrió un error durante la eliminación de la " + type + ". Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-			rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
+			rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
 			rd.forward(request, response);
 		}
 	}

@@ -16,7 +16,7 @@ import domain.ClientCreditCard;
 /**
  * Servlet implementation class EditClientCardServlet
  */
-@WebServlet(description = "servlet to edit email's client", urlPatterns = { "/EditClientCardServlet" })
+@WebServlet(description = "servlet to edit credit card's client info", urlPatterns = { "/EditClientCardServlet" })
 public class EditClientCardServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

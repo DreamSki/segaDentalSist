@@ -44,7 +44,7 @@ function printPageContentB() {
 						<tr>
 							<th style="border-left:1px solid black;">Nombre Cliente</th>
 							<th style="border-left:1px solid black;">C.I</th>
-							<th style="border-left:1px solid black;">Cantidad</th>
+							<th style="border-left:1px solid black;">Número de Beneficiarios</th>
 							<th style="border-left:1px solid black;">Monto</th>
 							<th style="border-left:1px solid black;">Sala</th>
 							<th style="border-left:1px solid black;">Nombre Ejecutivo</th>
@@ -56,18 +56,22 @@ function printPageContentB() {
 						</tr>
 					</thead>
 					<tbody>
-			<%
+				<%
+				boolean firstC = true;
 				boolean first = true;
-			%>
-				<tr><td colspan="11" style="border-top:1px solid black; border-bottom:1px solid black;">Clientes Nuevos </td></tr>
-			<%
 				for(domain.ReportItem ri : report) { 	
 					if (ri.getType() == 5){
+						if(firstC){
+				%>
+				<tr><td colspan="11" style="border-top:1px solid black; border-bottom:1px solid black;">Clientes Nuevos </td></tr>
+				<%
+					firstC = false;
+				}
 				%>
 					<tr>
 						<td><%= ri.getFirstName() + " " + ri.getLastName() %></td>
 						<td style="border-left:1px solid black;"><%= ri.getIdentityCard()%></td>
-						<td style="border-left:1px solid black;">a</td>
+						<td style="border-left:1px solid black;"><%= ri.getNumBenef() %></td>
 						<td style="border-left:1px solid black;"><%= ri.getAmount()%></td>
 						<td style="border-left:1px solid black;"><%= ri.getRoom()%></td>
 						<td style="border-left:1px solid black;"><%= ri.getSeller()%></td>
@@ -93,7 +97,7 @@ function printPageContentB() {
 					<tr>
 						<td><%= ri.getFirstName() + " " + ri.getLastName() %></td>
 						<td style="border-left:1px solid black;"><%= ri.getIdentityCard()%></td>
-						<td style="border-left:1px solid black;">a</td>
+						<td style="border-left:1px solid black;"><%= ri.getNumBenef() %></td>
 						<td style="border-left:1px solid black;"><%= ri.getAmount()%></td>
 						<td style="border-left:1px solid black;"><%= ri.getRoom()%></td>
 						<td style="border-left:1px solid black;"><%= ri.getSeller()%></td>
@@ -123,7 +127,7 @@ function printPageContentB() {
 				</div>	
 				</form>
 				<form action="/segaDental/ListRequestsServlet"  method="post">
-					<div id="botonV" style="position:absolute; margin-left: 420px; top: 238px;">
+					<div id="botonV" style="position:relative; margin-left: 500px; top: -20px;">
 						<input type="submit"  class="button"  name="sbmtButton" value="Volver" style="margin-left:20px;" />
 					</div>	
 				</form>

@@ -16,7 +16,7 @@ import domain.Product;
 import domain.User;
 
 /**
- * Servlet implementation class EditUserServlet
+ * Servlet implementation class EditProductServlet
  */
 @WebServlet(description = "servlet to edit products", urlPatterns = { "/EditProductServlet" })
 public class EditProductServlet extends HttpServlet {

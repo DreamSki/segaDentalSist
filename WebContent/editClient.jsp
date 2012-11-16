@@ -224,32 +224,27 @@ function printPageContentB() {
 							</div><BR><BR>
 							<div id="border2" style="border: 1px solid #E6E6E6;;">
 							<fieldset style="border:none;">	
+							<% String selected = "";
+							String [] states = {"Amazonas","Anzoátegui","Apure","Aragua","Barinas","Bolivar","Carabobo","Cojedes","Delta Amacuro",
+									"Distrito Capital","Falcón","Guarico","Lara","Mérida","Miranda","Monagas","Nueva Esparta","Portuguesa",
+									"Sucre","Táchira","Trujillo","Yaracuy","Zulia","Vargas"};
+							%>
 							<label for="email">	Estado: </label>
 								<select name="txtState">
-								  <option value="Amazonas">Amazonas</option>
-								  <option value="Anzoátegui">Anzoátegui</option>
-								  <option value="Apure">Apure</option>
-								  <option value="Aragua">Aragua</option>
-								  <option value="Barinas">Barinas</option>
-								  <option value="Bolivar">Bolivar</option>
-								  <option value="Carabobo">Carabobo</option>
-								  <option value="Cojedes">Cojedes</option>
-								  <option value="Delta Amacuro">Delta Amacuro</option>
-								  <option value="Distrito Capital">Distrito Capital</option>
-								  <option value="Falcón">Falcón</option>
-								  <option value="Guarico">Guarico</option>
-								  <option value="Lara">Lara</option>
-								  <option value="Mérida">Mérida</option>
-								  <option value="Miranda">Miranda</option>
-								  <option value="Monagas">Monagas</option>
-								  <option value="Nueva Esparta">Nueva Esparta</option>
-								  <option value="Portuguesa">Portuguesa</option>
-								  <option value="Sucre">Sucre</option>
-								  <option value="Táchira">Táchira</option>
-								  <option value="Trujillo">Trujillo</option>
-								  <option value="Yaracuy">Yaracuy</option>
-								  <option value="Zulia">Zulia</option>
-								  <option value="Vargas">Vargas</option>
+								<%
+									for(int i = 0; i< states.length ; i++){
+										if (clientInfo.getAddress().getState().equalsIgnoreCase(states[i])){
+											selected = "selected=\"selected\"";
+										}
+										else {
+											selected = "";
+											
+										}
+								%>		
+									 <option value="<%= states[i]%>" <%= selected %>><%= states[i]%></option>
+								<%		
+									}
+								%>
 								</select><br><br>
 							
 								

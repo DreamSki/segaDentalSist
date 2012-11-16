@@ -24,7 +24,7 @@ import domain.User;
 
 
 /**
- * Servlet implementation class SendBackRequestServlet
+ * Servlet implementation class SendReportRequestServlet
  */
 @WebServlet(description = "servlet to send report of today's requests", urlPatterns = { "/SendReportRequestServlet" })
 public class SendReportRequestServlet extends HttpServlet {
