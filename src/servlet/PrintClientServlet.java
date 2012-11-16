@@ -49,22 +49,34 @@ public class PrintClientServlet extends HttpServlet {
 				//Verificador y renovante.
 				if(roleId == 3 || roleId == 5 || roleId == 8){
 					
-					int clientId = Integer.valueOf(request.getParameter("clientId"));
-					String  type = request.getParameter("type");
+					String id = request.getParameter("clientId");
+					int clientId  = 0;
+					System.out.println("id" + (id == null));
+					if (id == null){
+						request.setAttribute("info", "");
+						request.setAttribute("error", "");
+						rd = getServletContext().getRequestDispatcher("/SearchClientServlet");			
+						rd.forward(request, response);
+						
+					}else{
+						clientId = Integer.valueOf(id);
+						String  type = request.getParameter("type");
+						
+						Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type));
 					
-					Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type));
-				
-					@SuppressWarnings("unchecked")
-					ArrayList<PhoneType> phoneType = (ArrayList<PhoneType>) CommandExecutor.getInstance().executeDatabaseCommand(new command.ListPhoneType());
+						@SuppressWarnings("unchecked")
+						ArrayList<PhoneType> phoneType = (ArrayList<PhoneType>) CommandExecutor.getInstance().executeDatabaseCommand(new command.ListPhoneType());
+						
+						
+						request.setAttribute("clientId", clientId);
+						request.setAttribute("phoneType", phoneType);
+						request.setAttribute("type", type);
+						request.setAttribute("clientInfo",clientInfo);
+						
+						rd = getServletContext().getRequestDispatcher("/printClient.jsp");			
+						rd.forward(request, response);
+					}
 					
-					
-					request.setAttribute("clientId", clientId);
-					request.setAttribute("phoneType", phoneType);
-					request.setAttribute("type", type);
-					request.setAttribute("clientInfo",clientInfo);
-					
-					rd = getServletContext().getRequestDispatcher("/printClient.jsp");			
-					rd.forward(request, response);
 				} else {
 					request.setAttribute("error", "Usted no posee permisos para realizar esta operación");
 					rd = getServletContext().getRequestDispatcher("/mainMenu.jsp");
