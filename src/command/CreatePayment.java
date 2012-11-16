@@ -23,10 +23,14 @@ public class CreatePayment implements DatabaseCommand {
 		sta.setString(4, payment.getVoucher());
 		int rowsUpdated = sta.executeUpdate();
 		if (rowsUpdated == 1){
-			sta = conn.prepareStatement("UPDATE CLIENT_PRODUCT SET STATUS_ID = 1, AFFILIATION_DATE = DATE(NOW()), EXPIRATION_DATE = DATE_ADD(DATE(CURDATE()),INTERVAL 365 DAY)," +
+			sta = conn.prepareStatement("UPDATE CLIENT_PRODUCT SET STATUS_ID = ?, AFFILIATION_DATE = DATE(CURDATE()), EXPIRATION_DATE = DATE_ADD(DATE(CURDATE()),INTERVAL 365 DAY)," +
 					" CHECKER_ID = ? WHERE ID = ?");
-			sta.setInt(1,payment.getCheckerId());
-			sta.setInt(2,payment.getClientProductId());
+			if (payment.getType().equalsIgnoreCase("Solicitud"))
+				sta.setInt(1,1);
+			else
+				sta.setInt(1, 6);
+			sta.setInt(2,payment.getCheckerId());
+			sta.setInt(3,payment.getClientProductId());
 			rowsUpdated = sta.executeUpdate();
 		}
 		sta.close();

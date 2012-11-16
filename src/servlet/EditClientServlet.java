@@ -152,6 +152,7 @@ public class EditClientServlet extends HttpServlet {
 				if(rowsUpdated == 1){
 					rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientAddress(clientId, address));
 					if (rowsUpdated == 1){
+						System.out.println("modifico");
 						request.setAttribute("clientId",clientId);
 						request.setAttribute("type", type);
 						rd = getServletContext().getRequestDispatcher("/editClientJustification.jsp");			

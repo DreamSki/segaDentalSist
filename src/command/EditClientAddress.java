@@ -24,7 +24,10 @@ public class EditClientAddress implements DatabaseCommand {
 		if (address.getPropertyTypeId() == 1 || address.getPropertyTypeId() == 3 || address.getPropertyTypeId() == 5){
 			sta = conn.prepareStatement("UPDATE CLIENT_ADDRESS SET STATE = ?, CITY = ?, MUNICIPALITY = ?, URBANIZATION = ?," +
 				" STREET = ?, PROPERTY_NAME = ?, TOWER = ?, FLOOR = ?,  APARTMENT = ? WHERE CLIENT_ID = ?");
-			System.out.println("aqui complto");
+			System.out.println("aqui complto" + address.getState() + "-" + address.getCity() + "-" + address.getMunicipality() 
+					+ "-" + address.getMunicipality() + address.getUrbanization() + address.getStreet()  + address.getPropertyName() +
+					address.getTower() +  address.getFloor() + address.getApartment() + " id " +id);
+			
 			sta.setString(1, address.getState());
 			sta.setString(2, address.getCity());
 			sta.setString(3, address.getMunicipality());

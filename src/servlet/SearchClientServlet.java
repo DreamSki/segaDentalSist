@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import command.CommandExecutor;
 
 import domain.Client;
-import domain.PhoneType;
 
 /**
  * Servlet implementation class SearchClientServlet
  */
-@WebServlet(description = "servlet to create users", urlPatterns = { "/SearchClientServlet" })
+@WebServlet(description = "servlet to search clients", urlPatterns = { "/SearchClientServlet" })
 public class SearchClientServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

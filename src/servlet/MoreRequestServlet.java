@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,16 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import command.CommandExecutor;
-import command.ListClientRequests;
-import domain.ClientRequest;
-import domain.StatusJustification;
+import command.MoreClientRequests;
 import domain.User;
 
 /**
- * Servlet implementation class ListRequestsServlet
+ * Servlet implementation class MoreRequestServlet
  */
-@WebServlet(description = "servlet to list requests", urlPatterns = { "/ListRequestsServlet" })
-public class ListRequestsServlet extends HttpServlet {
+@WebServlet(description = "servlet to ask more requests", urlPatterns = { "/MoreRequestServlet" })
+public class MoreRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void init() throws ServletException {
@@ -36,7 +33,7 @@ public class ListRequestsServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListRequestsServlet() {
+    public MoreRequestServlet() {
         super();
     }
 
@@ -47,43 +44,36 @@ public class ListRequestsServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession();
 			User user = (User)session.getAttribute("user");
+			int howMany = Integer.valueOf(request.getParameter("howMany"));
+			System.out.println("+++ limit " + howMany);
 			if(user != null){
 				int roleId = user.getRoleId();
 				int checkerId = user.getId();
-			
 				// root y verificadores
 				if(roleId == 3 || roleId == 8){
 					// perform list user operations
 					String info = (String)request.getAttribute("info")!=null?(String)request.getAttribute("info"):"";
 					String error = (String)request.getAttribute("error")!=null?(String)request.getAttribute("error"):"";
 
-					@SuppressWarnings("unchecked")
-					ArrayList<ClientRequest> listClient = (ArrayList<ClientRequest>)CommandExecutor.getInstance().executeDatabaseCommand(new ListClientRequests(checkerId));
-					request.setAttribute("clientRequest", listClient);
-
-					@SuppressWarnings("unchecked")
-					ArrayList<StatusJustification> list = (ArrayList<StatusJustification>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListStatusJustification());
-
-					request.setAttribute("listClientRequests", listClient);
-					request.setAttribute("statusJustification", list);
-
-					request.setAttribute("info", info);
-					request.setAttribute("error", error);
-					RequestDispatcher rd = getServletContext().getRequestDispatcher("/request.jsp");
-					rd.forward(request, response);
-				} else {
-					request.setAttribute("info", "");
-					request.setAttribute("error", "Usted no posee permisos para realizar esta operación");
-					RequestDispatcher rd = getServletContext().getRequestDispatcher("/mainMenu.jsp");
-					rd.forward(request, response);
+					int rowsUpdate= (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new MoreClientRequests(checkerId, howMany));
+					if (rowsUpdate > 0){
+						request.setAttribute("info", info);
+						request.setAttribute("error", error);
+						RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");
+						rd.forward(request, response);
+					}else{
+						request.setAttribute("info", "No hay mas solicitudes pendientes para mostrar. Intente mas tarde");
+						request.setAttribute("error", error);
+						RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");
+						rd.forward(request, response);
+					}
 				}
-			} else {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-				rd.forward(request, response);
 			}
-
 		} catch (Exception e) {
-			throw new ServletException(e);
+			request.setAttribute("info", "");
+			request.setAttribute("error", "Se presentó un problema tratando de obtener mas solicitudes. Por favor intente nuevamente y si el problema persiste contacte a su administrador. ");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");
+			rd.forward(request, response);
 		}
 	}
 

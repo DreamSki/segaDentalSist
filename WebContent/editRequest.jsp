@@ -81,11 +81,12 @@
 				<p >
 				<%
 					String adj = "el";
-						   String pers = "Sr.";
-						   if (client.getSex().equalsIgnoreCase("f"))	{
-							   adj ="la";
-						   	   pers = "Sra.";
-						   }
+					   String pers = "Sr.";
+					   System.out.println("sex" + client.getSex());
+					   if (client.getSex().equalsIgnoreCase("f"))	{
+						   adj ="la";
+						   pers = "Sra.";
+					   }
 						   
 						   String plan = "";
 						   if (client.getProduct().getId() == 1)
@@ -208,10 +209,10 @@
 					<input type="hidden" id="txtName" class="good_input" name="txtName"  value="<%= client.getFirstName() + " " + client.getLastName() %>"/>
 					<input type="hidden" id="clientEmail" class="good_input" name="clientEmail"  value="<%= client.getEmail() %>"/>
 					<input type="hidden" id="clientProductId" class="good_input" name="clientProductId"  value="<%= client.getClientProductId() %>"/>
-					<input type="hidden" id="txtNumCard" class="good_input" name="txtNumCard"  value="<%= card.getCardNumber() %>"/>
 					<input type="hidden" id="txtAmount" class="good_input" name="txtAmount"  value="<%= client.getProduct().getPrice() %>"/>
 					<input type="hidden" id="txtCardId" class="good_input" name="txtCardId"  value="<%= client.getCard().getId() %>"/>
-				
+					<input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type") %>"/>
+					<% System.out.println(client.getProduct().getPrice()); %>
 					<fieldset>
 						<label for="nameCard">Tipo de Tarjeta:</label>
 						<input type="text" name="txtCardType" id="txtCardType" maxlength="50" size="20" value="<%= card.getCardType() %>" readonly="readonly" style="border:none;"/> <br><br>
