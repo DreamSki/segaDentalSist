@@ -46,61 +46,7 @@ function mostrardiv(div1, div2) {
 };
 
 </script>
-<script type="text/javascript">
-var print = false;
-function printPageContentT() {
-	var DocumentContainer = document.getElementById('print_div2');
-	var WindowObject = window.open('', "PrintWindow", '');
-	div = document.getElementById('direccion');
-	div2 = document.getElementById('pestanas');
-	div3 = document.getElementById('pestanasDir');
-	div4 = document.getElementById('title');
-	div7 = document.getElementById('titleDir');
-	div5 = document.getElementById('border');
-	div6 = document.getElementById('border2');
-	div8 = document.getElementById('botones');
-	div.style.display = "block";
-	div2.style.display = "none";
-	div3.style.display = "none";
-	div4.style.display = "block";
-	div7.style.display = "block";
-	div5.style.border = "none";
-	div6.style.border = "none";
-	div8.style.display = "none";
-	WindowObject.document.writeln(DocumentContainer.innerHTML);
-	WindowObject.print();
-    WindowObject.close();
-	div.style.display = "none";
-	div2.style.display = "block";
-	div3.style.display = "block";
-	div4.style.display = "none";
-	div7.style.display = "none";
-	div5.style.border = "1px solid #E6E6E6";
-	div6.style.border = "1px solid #E6E6E6";
-	div8.style.display = "block";
-	if (print){
-		print = false;
-		history.go(-2);
-		
-	}
-};
 
-function printPageContentB() {
-	var DocumentContainer = document.getElementById('print_div2');
-	var WindowObject = window.open('', "PrintWindow", '');
-	div = document.getElementById('botonesB');
-	div.style.display = "none";
-	WindowObject.document.writeln(DocumentContainer.innerHTML);
-	WindowObject.print();
-    WindowObject.close();
-	div.style.display = "block";
-	if (print){
-		print = false;
-		history.go(-2);
-	}
-};
-
-</script>
 </head>
 <body >
 	<div id="container">
@@ -127,10 +73,6 @@ function printPageContentB() {
 					<br>
 					<% if (clientInfo.getType().equalsIgnoreCase("titular")){
 					%>
-						<a href="#null" id="printT" onclick="printPageContentT()" style="position: absolute; left: 800px; top: 200px;"> 
-							<img alt="logo" src="/segaDental/images/print.png" height="20" width="20" style="padding-right:5px;"/> 
-							<span style="font-weight: bold; color:#00668c; ">Imprimir </span>
-						</a>
 						<div id="print_div2">	
 						<div id="title" STYLE="display:none;"> Informacion del cliente <%= clientInfo.getFirstName() %> <%= clientInfo.getLastName() %> </div>
 					 	<form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateClient(this)" method="post">
@@ -281,6 +223,7 @@ function printPageContentB() {
 							</div>
 							</div>
 							<div id="botones" style="text-align:center">
+								<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 								<input type="submit"  class="buttonModif"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
 							</div>	
 					</form>      
@@ -288,10 +231,6 @@ function printPageContentB() {
         			<%
 					}else{
 					%>	
-					<a  id="printB" href="#null" onclick="printPageContentB()" style="position: absolute; left: 800px; top: 200px;"> 
-						<img alt="logo" src="/segaDental/images/print.png" height="20" width="20" style="padding-right:5px;"/> 
-						<span style="font-weight: bold; color:#00668c; ">Imprimir </span>
-					</a>
 					<DIV id="print_div2">	<br>
 					 <form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateBenef(this)" method="post">
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
@@ -346,6 +285,7 @@ function printPageContentB() {
 								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> 
 							</fieldset>
 							<div id="botonesB" style="text-align:center">
+								<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 								<input type="submit"  class="button"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
 							</div>	
 					</form>      
@@ -357,29 +297,6 @@ function printPageContentB() {
 		</div>
 	</div>
 	
-	<% 
-	String print = request.getParameter("print");
-	String type = request.getParameter("type");
-	if(print.equals("1")){
-	 %>
-	 <script type="text/javascript">
-	   print= true;
-	<%
-		if (type.equalsIgnoreCase("titular")){
-	 %>
-			document.getElementById('printT').click();
-	<%
-		}else{
-	 %>	
-	 document.getElementById('printB').click();
-	 <%
-		}
-	 %>	
-	 </script>
-	 
-	<% 
-	}
-	 %>
-	
+
 </body>
 </html>

@@ -53,8 +53,8 @@ public class PrintClientServlet extends HttpServlet {
 					int clientId  = 0;
 					System.out.println("id" + (id == null));
 					if (id == null){
-						request.setAttribute("info", "");
-						request.setAttribute("error", "");
+						request.setAttribute("info", " ");
+						request.setAttribute("error", " ");
 						rd = getServletContext().getRequestDispatcher("/SearchClientServlet");			
 						rd.forward(request, response);
 						
