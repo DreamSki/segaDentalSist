@@ -80,10 +80,7 @@
 					<jsp:useBean id="userId" type="java.lang.Integer" scope="request"/> 
 					<jsp:useBean id="userProducts"
 						type="java.util.ArrayList<domain.UserProduct>" scope="request" />	
-					<a href="/segaDental/EditUserPasswordServlet?userId=<%= request.getAttribute("userId") %>" style="color: transparent" >
-					<img alt="logo" src="/segaDental/images/editPasswordText.png" height="39" width="160" id="editIcon" style="padding-left: 15px;" />
-					</a> 
-					<div id="contentAux">
+				<div id="contentAux">
 						<fieldset>
 							<input type="hidden" name="txtUserId" value="<%= request.getAttribute("userId") %>" />
 							<label for="name">Nombres:</label>
@@ -115,7 +112,8 @@
 							<label for="name">Nombre de usuario:</label>
 							<input type="text" name="txtUserName" id="txtUserName" maxlength="50" value="<%= userInfo.getUserName() %>" /> <br><br>
 							<label for="name">Rol:</label>
-								<select name="txtRoleId" id="txtRoleId" onchange="roomField();">
+								<input type="hidden" name="roleId" value="<%= userInfo.getRoleId() %>" />
+								<select name="txtRoleId" id="txtRoleId" onchange="roomField();" disabled="disabled">
 									<option value="-1">Seleccionar</option>
 									<%
 										for(domain.UserRole u : userRoles) {
@@ -146,6 +144,7 @@
 								<select name="txtNumSal" id="txtNumSal">
 									<option value="0">Seleccionar</option>
 									<%
+										
 										for(domain.UserRoom ur : userRooms) {
 											if(ur.getId()==userInfo.getRoomId()){
 									%>
@@ -163,23 +162,23 @@
 								<select name="txtTurn" id="txtTurn">
 									<option value="0">Seleccionar</option>
 									<%
-										if(userInfo.getTurn().equalsIgnoreCase("A.M.")){
+										if(userInfo.getTurn() != null && userInfo.getTurn().equalsIgnoreCase("A.M.")){
 									%>
-									<option value="A.M." selected="selected">A.M.</option>
+										<option value="A.M." selected="selected">A.M.</option>
 									<%
 										} else {
 									%>
-									<option value="A.M.">A.M.</option>
+										<option value="A.M.">A.M.</option>
 									<%		
 										}
 									
-										if(userInfo.getTurn().equalsIgnoreCase("P.M.")){
+										if(userInfo.getTurn() != null && userInfo.getTurn().equalsIgnoreCase("P.M.")){
 									%>
-									<option value="P.M." selected="selected">P.M.</option>
+										<option value="P.M." selected="selected">P.M.</option>
 									<%
 										} else {
 									%>
-									<option value="P.M.">P.M.</option>
+										<option value="P.M.">P.M.</option>
 									<%		
 										}
 									%>

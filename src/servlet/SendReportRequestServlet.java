@@ -57,7 +57,7 @@ public class SendReportRequestServlet extends HttpServlet {
 				
 					@SuppressWarnings("unchecked")
 					ArrayList<ReportItem> reportItems = (ArrayList<ReportItem>)CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateReportOfRequests());
-					if (reportItems.size() > 0){
+					//if (reportItems.size() > 0){
 						Properties propertiesFile = new Properties();
 						String context = getServletContext().getInitParameter("properties");
 						
@@ -68,12 +68,12 @@ public class SendReportRequestServlet extends HttpServlet {
 						request.setAttribute("info", "El correo fue envíado sastifactoriamente");
 						rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
 						rd.forward(request, response);
-					}
+					/*}
 					else{	
 						request.setAttribute("info", "Actualmente no hay ventas para mostrar. Intente más tarde");
 						rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
 						rd.forward(request, response);
-					}
+					}*/
 				} else {
 					request.setAttribute("error", "Usted no posee permisos para realizar esta operación");
 					rd = getServletContext().getRequestDispatcher("/mainMenu.jsp");

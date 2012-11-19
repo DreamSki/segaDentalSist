@@ -47,7 +47,7 @@ public class SearchClientServlet extends HttpServlet {
 		RequestDispatcher rd;
 
 		try{
-			String identityCardNum = request.getParameter("txtCedClient");
+			String identityCardNum = request.getParameter("txtCedClient").replace(".", "");
 			String identityCardId = request.getParameter("txtCedId");
 			String identityCard = identityCardId + identityCardNum;
 			

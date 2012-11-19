@@ -387,11 +387,11 @@ color:#7198E1;
 /* Cambie esto */
 .info-msg {
 	font: 16px Arial, Helvetica, sans-serif;
-	color: #061C37;	
+	color: #0098b6;
 	font-weight: bold;
 }
 /* Cambie esto */
-.error-msg {
+.error-msg, .noReg {
 	font: 16px Arial, Helvetica, sans-serif;
 	color: #FF0000;	
 	font-weight: bold;

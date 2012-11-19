@@ -41,6 +41,18 @@
 				}
 			}
 		};
+		function steps(selected){
+			var step3 = document.getElementById("step3");
+			var step4 = document.getElementById("step4");
+			if (selected){
+				step3.removeAttribute("disabled");
+				step4.removeAttribute("disabled");
+			}
+			else{
+				step3.setAttribute("disabled", true);
+				step4.setAttribute("disabled", true);
+			}
+		}
 		
 	</script>
 </head>
@@ -147,21 +159,21 @@
 				<div id="requestInfo2" style="display:none">
 				<div style="text-align:center;">
 					<input type="image" src="/segaDental/images/paso1_gray.png" name="paso1" height="auto" width="76" onClick="mostrardiv('requestInfo2','requestInfo1');">
-				    <input type="image" src="/segaDental/images/paso2_orange.png" name="paso2" height="auto" width="76">
-					<input type="image" src="/segaDental/images/paso3_gray.png" name="paso3" height="auto" width="76" onClick="mostrardiv('requestInfo2','requestInfo3');">
-					<input type="image" src="/segaDental/images/paso4_gray.png" name="paso4" height="auto" width="76" onClick="mostrardiv('requestInfo2','requestInfo4');">
+				    <input type="image" src="/segaDental/images/paso2_orange.png" name="paso2" height="auto" width="76" >
+					<input type="image" id="step3" src="/segaDental/images/paso3_gray.png" name="paso3" height="auto" width="76" onClick="mostrardiv('requestInfo2','requestInfo3');">
+					<input type="image" id="step4" src="/segaDental/images/paso4_gray.png" name="paso4" height="auto" width="76" onClick="mostrardiv('requestInfo2','requestInfo4');">
 					<br><br>
 				</div>
 				
 					<%= pers + " " + client.getFirstName() %>, le recordamos que la afiliación al <%= plan %> tiene un costo anual
 					de  <%= client.getProduct().getPrice() %>Bs, el cual será debitado de sus tarjetas de crédito, ¿Está usted de acuerdo?<br><br>
 					<form action="#verificarRadio"  method="post">
-						<input type="radio" name="agree" value="0"> No<br>
-						<input type="radio" name="agree" value="1" checked> Si<br>
+						<input type="radio" name="agree" value="0" onClick="steps(false)"> No<br>
+						<input type="radio" name="agree" value="1" onClick="steps(true)" checked> Si<br>
 				
 						<div class="buttonCenterVerif">
 							<input type="button" class="button" value="Volver"  onClick="mostrardiv('requestInfo2','requestInfo1');"/>
-							<input type="button" class="button" value="Siguiente" onClick="getValueRadioButton('requestInfo2','requestInfo3');" />
+							<input type="button" class="button" value="Siguiente" style="margin-left:20px;" onClick="getValueRadioButton('requestInfo2','requestInfo3');" />
 						</div>
 						<a id="goHidden" rel="leanModal" href="#noAgree" style="color: #f7941e; font-weight: bold;"></a><br>
 					
@@ -189,7 +201,7 @@
 				
 					<div class="buttonCenterVerif">
 						<input type="button" class="button" value="Volver"  onClick="mostrardiv('requestInfo3','requestInfo2');"/>
-						<input type="button" class="button" value="Siguiente"  onClick="mostrardiv('requestInfo3','requestInfo4');" />
+						<input type="button" class="button" value="Siguiente"  style="margin-left:20px;" onClick="mostrardiv('requestInfo3','requestInfo4');" />
 					</div>
 							
 						

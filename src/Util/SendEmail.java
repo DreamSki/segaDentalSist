@@ -29,6 +29,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -181,7 +182,7 @@ public class SendEmail {
 	public static void writePdf(ByteArrayOutputStream outputStream, ArrayList<ReportItem> reportItems) throws Exception {
 		
 		
-		Document document=new Document(PageSize.A3.rotate(), 1, 1, 20, 20);
+		Document document=new Document(PageSize.A3.rotate(), 20, 20, 20, 20);
 		PdfWriter.getInstance(document, outputStream);
 		
 		document.open();
@@ -195,174 +196,179 @@ public class SendEmail {
 		Font fontLarge = FontFactory.getFont("tahoma", 10, Font.NORMAL, BaseColor.BLACK);
 		BaseColor color = new BaseColor(154,154,154);
 		
-		PdfPTable table=new PdfPTable(16);
+		if(reportItems.size()==0){
+			document.add(new Paragraph("No se presentaron ventas ni renovaciones durante el día de hoy."));
+		} else {
+			PdfPTable table=new PdfPTable(16);
+			
+			table.setKeepTogether(false);
+			
+			PdfPCell cell = new PdfPCell(new Phrase("Nombre Cliente", fontLarge));
+			cell.setColspan(2);
+			cell.setBackgroundColor(color);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("C.I", fontLarge));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Número de Beneficiarios", fontLarge));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			//table.addCell("Contrato");
+			cell = new PdfPCell(new Phrase("Monto", fontLarge));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Sala", fontLarge));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			//table.addCell("Cantidad");
+			cell = new PdfPCell(new Phrase("Nombre Ejecutivo", fontLarge));
+			cell.setColspan(2);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Turno", fontLarge));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Tipo de TDC", fontLarge));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Número transacción", fontLarge));
+			cell.setColspan(2);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Tipo Banco", fontLarge));
+			cell.setColspan(2);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			cell = new PdfPCell(new Phrase("Dirección", fontLarge));
+			cell.setColspan(2);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(color);
+			table.addCell(cell);
+			
 		
-		table.setKeepTogether(false);
-		
-		PdfPCell cell = new PdfPCell(new Phrase("Nombre Cliente", fontLarge));
-		cell.setColspan(2);
-		cell.setBackgroundColor(color);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("C.I", fontLarge));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Número de Beneficiarios", fontLarge));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		//table.addCell("Contrato");
-		cell = new PdfPCell(new Phrase("Monto", fontLarge));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Sala", fontLarge));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		//table.addCell("Cantidad");
-		cell = new PdfPCell(new Phrase("Nombre Ejecutivo", fontLarge));
-		cell.setColspan(2);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Turno", fontLarge));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Tipo de TDC", fontLarge));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Número transacción", fontLarge));
-		cell.setColspan(2);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Tipo Banco", fontLarge));
-		cell.setColspan(2);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("Dirección", fontLarge));
-		cell.setColspan(2);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setBackgroundColor(color);
-		table.addCell(cell);
-		
-	
-		color = new BaseColor(195,195,195);
-		
-		boolean first = true;
-		boolean firstC = true;
-		for(ReportItem item : reportItems){
-			if (item.getType() == 5){
-				if (firstC){
-					cell = new PdfPCell(new Phrase("Clientes Nuevos", fontLarge));
-					cell.setColspan(16);
+			color = new BaseColor(195,195,195);
+			
+			boolean first = true;
+			boolean firstC = true;
+			for(ReportItem item : reportItems){
+				if (item.getType() == 5){
+					if (firstC){
+						cell = new PdfPCell(new Phrase("Clientes Nuevos", fontLarge));
+						cell.setColspan(16);
+						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+						cell.setBackgroundColor(color);
+						table.addCell(cell);
+						firstC = false;
+					}
+					cell = new PdfPCell(new Phrase(item.getFirstName() + " " + item.getLastName(), font));
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					cell.setBackgroundColor(color);
+					cell.setColspan(2);
 					table.addCell(cell);
-					firstC = false;
-				}
-				cell = new PdfPCell(new Phrase(item.getFirstName() + " " + item.getLastName(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setColspan(2);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getIdentityCard(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase("a", font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				//table.addCell("Contrato");
-				cell = new PdfPCell(new Phrase(item.getAmount().toString(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getRoom().toString(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				//table.addCell("Cantidad");
-				cell = new PdfPCell(new Phrase(item.getSeller(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getTurn(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getCardType(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getVoucher(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getBank(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getCity() + "-" + item.getState(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-			}
-			else {
-				if (first){
-					cell = new PdfPCell(new Phrase("Renovaciones", fontLarge));
-					cell.setColspan(16);
+					cell = new PdfPCell(new Phrase(item.getIdentityCard(), font));
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					cell.setBackgroundColor(color);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase("a", font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					//table.addCell("Contrato");
+					cell = new PdfPCell(new Phrase(item.getAmount().toString(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getRoom().toString(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					//table.addCell("Cantidad");
+					cell = new PdfPCell(new Phrase(item.getSeller(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getTurn(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getCardType(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getVoucher(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getBank(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getCity() + "-" + item.getState(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+				}
+				else {
+					if (first){
+						cell = new PdfPCell(new Phrase("Renovaciones", fontLarge));
+						cell.setColspan(16);
+						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+						cell.setBackgroundColor(color);
+						
+						table.addCell(cell);
+						first = false;
+					}
+					cell = new PdfPCell(new Phrase(item.getFirstName() + " " + item.getLastName(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setColspan(2);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getIdentityCard(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(String.valueOf(item.getNumBenef()), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					//table.addCell("Contrato");
+					cell = new PdfPCell(new Phrase(item.getAmount().toString(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getRoom().toString(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					//table.addCell("Cantidad");
+					cell = new PdfPCell(new Phrase(item.getSeller(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getTurn(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getCardType(), font));
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getVoucher(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getBank(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
+					cell = new PdfPCell(new Phrase(item.getCity() + "-" + item.getState(), font));
+					cell.setColspan(2);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(cell);
 					
-					table.addCell(cell);
-					first = false;
 				}
-				cell = new PdfPCell(new Phrase(item.getFirstName() + " " + item.getLastName(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setColspan(2);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getIdentityCard(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(String.valueOf(item.getNumBenef()), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				//table.addCell("Contrato");
-				cell = new PdfPCell(new Phrase(item.getAmount().toString(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getRoom().toString(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				//table.addCell("Cantidad");
-				cell = new PdfPCell(new Phrase(item.getSeller(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getTurn(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getCardType(), font));
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getVoucher(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getBank(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				cell = new PdfPCell(new Phrase(item.getCity() + "-" + item.getState(), font));
-				cell.setColspan(2);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(cell);
-				
+			
 			}
-		
+			
+			document.add(table);
 		}
 		
-		document.add(table);
 		document.close();
 		
 	}

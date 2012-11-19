@@ -42,17 +42,17 @@ function printPageContentB() {
 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" >
 					<thead>
 						<tr>
-							<th style="border-left:1px solid black;">Nombre Cliente</th>
-							<th style="border-left:1px solid black;">C.I</th>
-							<th style="border-left:1px solid black;">Número de Beneficiarios</th>
-							<th style="border-left:1px solid black;">Monto</th>
-							<th style="border-left:1px solid black;">Sala</th>
-							<th style="border-left:1px solid black;">Nombre Ejecutivo</th>
-							<th style="border-left:1px solid black;">Turno</th>
-							<th style="border-left:1px solid black;">Tipo de TDC</th>
-							<th style="border-left:1px solid black;">Número transacción</th>
-							<th style="border-left:1px solid black;">Tipo Banco</th>
-							<th style="border-left:1px solid black; border-right:1px solid black;">Dirección</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Nombre Cliente</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">C.I</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Número de Beneficiarios</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Monto</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Sala</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Nombre Ejecutivo</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Turno</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Tipo de TDC</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Número transacción</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;">Tipo Banco</th>
+							<th style="border-left:1px solid black;background-color:#C5C5C5;border-right:1px solid black;">Dirección</th>
 						</tr>
 					</thead>
 					<tbody>

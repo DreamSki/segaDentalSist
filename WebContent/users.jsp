@@ -114,7 +114,7 @@
 							<th>Rol</th>
 							<th>Sala</th>
 							<th>Producto</th>
-							<th>Acciones</th>
+							<th width="15%">Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -128,7 +128,7 @@
 						<td><%= u.getRoleName() %></td>
 						<td><%= (u.getRoomName()!=null)?u.getRoomName():"N/A" %></td>
 						<td><%= u.getProductName() %></td>
-						<td><p>
+						<td width="15%">
 							<a href="/segaDental/EditUserServlet?userId=<%= u.getId() %>" style="color: transparent" >
 								<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
 							</a> 

@@ -101,18 +101,15 @@ public class EditUserServlet extends HttpServlet {
 			
 			
 			String userName = request.getParameter("txtUserName");
-			Integer roleId = Integer.valueOf(request.getParameter("txtRoleId"));
+			Integer roleId = Integer.valueOf(request.getParameter("roleId"));
 			Integer roomId;
+			String turn;
 			
 			if((roleId==2) || (roleId==4) || (roleId==5) || (roleId==6)){
 				roomId = Integer.valueOf(request.getParameter("txtNumSal"));
+				turn = request.getParameter("txtTurn");
 			} else {
 				roomId = null;
-			}
-			
-			String turn = request.getParameter("txtTurn");
-			
-			if(turn=="0"){
 				turn = null;
 			}
 			
@@ -124,7 +121,7 @@ public class EditUserServlet extends HttpServlet {
 			user.setLastName(lastName);
 			user.setIdentityCard(identityCardId+identityCardNum);
 			user.setUserName(userName);
-			user.setRoleId(roleId);
+			//user.setRoleId(roleId);
 			user.setRoomId(roomId);
 			user.setTurn(turn);
 			

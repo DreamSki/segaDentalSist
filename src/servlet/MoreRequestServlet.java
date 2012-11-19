@@ -62,7 +62,7 @@ public class MoreRequestServlet extends HttpServlet {
 						RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");
 						rd.forward(request, response);
 					}else{
-						request.setAttribute("info", "No hay mas solicitudes pendientes para mostrar. Intente mas tarde");
+						request.setAttribute("info", "No hay solicitudes pendientes para mostrar. Intente más tarde");
 						request.setAttribute("error", error);
 						RequestDispatcher rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");
 						rd.forward(request, response);

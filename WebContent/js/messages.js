@@ -153,8 +153,8 @@ function validateLogin(form) {
 function validateCreateProduct(form) {
 	  var name = form.txtNameProduct.value;
 	  var price = form.txtPrice.value;
-	  var priceRegex = /^[0-9]+(\.[0-9]+)?$/;
-	 
+	  //var priceRegex = /^[0-9]+(\.[0-9]+)?$/;
+	  var priceRegex = /^\d+(\.\d{1,2})?$/;
 	  
 	  if(name == "") {
 	    inlineMsg('txtNameProduct','Debe introducir el nombre del producto.',2);
@@ -167,7 +167,7 @@ function validateCreateProduct(form) {
 	  }
 	  
 	  if(!price.match(priceRegex)) {
-		inlineMsg('txtPrice','Debe introducir un precio valido.',2);
+		inlineMsg('txtPrice','Debe introducir un precio válido. Utilice sólo números y el punto (.) sólo para separar decimales.',5);
 		return false;
 	  }
 	   
@@ -297,17 +297,17 @@ function validateClient(form) {
 	   
 	  
 	  if(state == "") {
-		    inlineMsg('txtState','Debe introducir el estado donde vive el cliente .',2);
+		    inlineMsg('txtState','Debe introducir el estado donde vive el cliente.',2);
 		    return false;
 	  }
 	  
 	  if(city == "") {
-		    inlineMsg('txtCity','Debe introducir la ciudad donde vive el cliente .',2);
+		    inlineMsg('txtCity','Debe introducir la ciudad donde vive el cliente.',2);
 		    return false;
 	  }
 	  
 	  if(municipality == "") {
-		    inlineMsg('txtMunicipality','Debe introducir el municipio donde vive el cliente .',2);
+		    inlineMsg('txtMunicipality','Debe introducir el municipio donde vive el cliente.',2);
 		    return false;
 	  }
 	 

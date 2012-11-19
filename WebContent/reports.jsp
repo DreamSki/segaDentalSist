@@ -74,7 +74,23 @@
         		<jsp:useBean id="products" type="java.util.ArrayList<domain.Product>" scope="request"/>  	
         		<jsp:useBean id="clientStatus" type="java.util.ArrayList<domain.ClientStatus>" scope="request"/>  
         		<jsp:useBean id="callStatus" type="java.util.ArrayList<domain.StatusJustification>" scope="request"/>  		
-        		<h2>Escoja el reporte que desea generar:</h2><br><br>
+        		<h2>Escoja el reporte que desea generar:</h2>
+        		<%
+        			String info = (String)request.getAttribute("info");
+        			String error = (String)request.getAttribute("error");
+					if(!info.equalsIgnoreCase("")){
+				%>	
+				<p>&nbsp;</p> 
+				<p class="info-msg"><%= info %></p> 
+				<%	
+					}
+					if(!error.equalsIgnoreCase("")){
+				%>	
+           		<p>&nbsp;</p>    
+				<p class="error-msg"><%= error %></p>      
+           		<%	
+					}
+				%><br>
 				<form name="form" action="/segaDental/CreateReportServlet"  method="post">
 					<fieldset>
 						<label for="date">Fecha Afiliación:</label>
