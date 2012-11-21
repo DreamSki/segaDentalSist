@@ -73,9 +73,7 @@ function mostrardiv(div1, div2) {
 					<br>
 					<% if (clientInfo.getType().equalsIgnoreCase("titular")){
 					%>
-						<div id="print_div2">	
-						<div id="title" STYLE="display:none;"> Informacion del cliente <%= clientInfo.getFirstName() %> <%= clientInfo.getLastName() %> </div>
-					 	<form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateClient(this)" method="post">
+						<form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateClient(this)" method="post">
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
 							<input type="hidden" name="type" value="<%= request.getParameter("type") %>" />
 							<input type="hidden" name="txtPropertyTypeId" value="<%= clientInfo.getAddress().getPropertyTypeId() %>" />
@@ -194,10 +192,14 @@ function mostrardiv(div1, div2) {
 							    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= clientInfo.getAddress().getCity() %>"/><br><br>
 								<label for="email">Municipio:</label>
 							    <input id="txtMunicipality" class="good_input" name="txtMunicipality" type="text"  value="<%= clientInfo.getAddress().getMunicipality() %>"/><br><br>
-								<label for="email">Urbanizacion:</label>
-							    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text"  value="<%= clientInfo.getAddress().getUrbanization() %>"/><br><br>
-								<label for="email">Calle:</label>
-							    <input id="txtStreet" class="good_input" name="txtStreet" type="text"  value="<%= clientInfo.getAddress().getStreet() %>"/><br><br>
+								<span id="txtUrbLabel">Urbanización:</span>
+							    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text" style="margin-left: 95px;" value="<%= clientInfo.getAddress().getUrbanization() %>"/>
+								<span id="txtPCLabel">Código Postal:</span>
+							    <input id="txtPostalCode" class="good_input" name="txtPostalCode" type="text" style="margin-left: 60px;"  value="<%= clientInfo.getAddress().getPostalCode()==null ? "" : clientInfo.getAddress().getPostalCode() %>"/><br><br>
+								<span id="txtStreetLabel">Calle:</span>
+							    <input id="txtStreet" class="good_input" name="txtStreet" type="text" style="margin-left: 140px;" value="<%= clientInfo.getAddress().getStreet() %>"/>
+							    <span id="txtRefPointLabel">Punto Referencia:</span>
+							    <input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text" style="margin-left: 40px;" value="<%= clientInfo.getAddress().getReferencePoint()==null ? "" : clientInfo.getAddress().getReferencePoint() %>"/><br><br>
 							    <label for="email">Nombre Propiedad:</label>
 							    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= clientInfo.getAddress().getPropertyName() %>"/>
 								 <br><br>
@@ -222,16 +224,14 @@ function mostrardiv(div1, div2) {
 								
 							</div>
 							</div>
-							<div id="botones" style="text-align:center">
-								<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
-								<input type="submit"  class="buttonModif"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
+							<div style="text-align:center">
+								<input type="button" class="buttonModif" value="Volver"  onClick="javascript:history.back();"/>
+								<input type="submit"  class="buttonModif"  name="sbmtButton" value="Modificar" style="margin-left:80px;" />
 							</div>	
 					</form>      
-					</div>	
-        			<%
+					<%
 					}else{
 					%>	
-					<DIV id="print_div2">	<br>
 					 <form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateBenef(this)" method="post">
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
 							<input type="hidden" name="type" value="<%= request.getParameter("type") %>" />
@@ -284,19 +284,17 @@ function mostrardiv(div1, div2) {
 								<label for="email">Correo Electrónico:</label>
 								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> 
 							</fieldset>
-							<div id="botonesB" style="text-align:center">
-								<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
-								<input type="submit"  class="button"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />
+							<div style="text-align:center">
+								<input type="button" class="buttonModif" value="Volver"  onClick="javascript:history.back();"/>
+								<input type="submit"  class="buttonModif"  name="sbmtButton" value="Modificar" style="margin-left:80px;" />
 							</div>	
 					</form>      
-					</div>	
+					
         			<%	
 					}
 					%>	
 		    <div id="footer"></div>
-		</div>
-	</div>
-	
-
+		    </div>
+		</div>	
 </body>
 </html>

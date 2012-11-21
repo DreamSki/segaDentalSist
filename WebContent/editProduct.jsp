@@ -42,6 +42,11 @@
 					<textarea name="txtDescription" rows="4" cols="31"><%= productInfo.getDescription() %></textarea> <br><br>
 					<label for="price">Precio Base:</label>
 					<input type="text" name="txtPrice" id="txtPrice" maxlength="50" size="10" value="<%= productInfo.getPrice() %>"/> <br><br>
+					<label for="script">Script Verificación Ventas:</label>
+					<p style="font-style:italic;color:grey;font-weight:bold;padding-left: 175px;">Paso 2:</p>
+					<p style="font-style:italic;color:grey;padding-left: 175px;">&lt;&lt;Sr. Nombre Cliente, le recordamos que la afiliación al <input type="text" name="txtScriptStep2" id="txtScriptStep2" maxlength="100" size="20" value="<%= productInfo.getScriptStep2() %>" /> tiene un costo anual de equis BF, el cual fue debitado en sus tarjetas de crédito&gt;&gt;</p>
+					<p style="font-style:italic;color:grey;font-weight:bold;padding-left: 175px;">Paso 3:</p>
+					<p style="font-style:italic;color:grey;padding-left: 175px;">&lt;&lt;Por último Sr. Nombre Cliente, le damos la más cordial bienvenida a lo que será desde este momento, su <input type="text" name="txtScriptStep3" id="txtScriptStep3" maxlength="200" size="50" value="<%= productInfo.getScriptStep3() %>" />, en un lapso de 24 horas, ya usted podrá disfrutar de nuestros servicios&gt;&gt;</p>
 					<%
 					if (productInfo.getStatus() == 1){
 					%>

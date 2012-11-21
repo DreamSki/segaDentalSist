@@ -128,6 +128,8 @@ public class EditClientServlet extends HttpServlet {
 				String urbanization = request.getParameter("txtUrbanization"); 	
 				String street = request.getParameter("txtStreet"); 	
 				String propertyName = request.getParameter("txtPropetyName"); 
+				String referencePoint = request.getParameter("txtReferencePoint");
+				String postalCode = request.getParameter("txtPostalCode");
 			
 				ClientAddress address = new ClientAddress();
 				address.setCity(city);
@@ -136,6 +138,8 @@ public class EditClientServlet extends HttpServlet {
 				address.setUrbanization(urbanization);
 				address.setStreet(street);
 				address.setPropertyName(propertyName);
+				address.setReferencePoint(referencePoint);
+				address.setPostalCode(postalCode);
 				
 				int propertyTypeId  = Integer.valueOf(request.getParameter("txtPropertyTypeId"));
 				address.setPropertyTypeId(propertyTypeId);

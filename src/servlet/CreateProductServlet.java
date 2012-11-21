@@ -71,8 +71,9 @@ public class CreateProductServlet extends HttpServlet {
 			String name = request.getParameter("txtNameProduct");
 			String description = request.getParameter("txtDescription");
 			String price = request.getParameter("txtPrice");
+			String scriptStep2 = request.getParameter("txtScriptStep2");
+			String scriptStep3 = request.getParameter("txtScriptStep3");
 			int isActive = 0;
-			
 			if (request.getParameter("txtIsActive") != null)
 				isActive = 1;			
 			
@@ -81,6 +82,8 @@ public class CreateProductServlet extends HttpServlet {
 			product.setDescription(description);
 			product.setStatus(isActive);
 			product.setPrice(price);
+			product.setScriptStep2(scriptStep2);
+			product.setScriptStep3(scriptStep3);
 						
 			Integer rowsUpdated  = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.CreateProduct(product));
 			

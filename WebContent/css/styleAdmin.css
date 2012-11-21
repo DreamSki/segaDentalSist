@@ -440,6 +440,29 @@ color:#7198E1;
 
 }
 
+#content .formClient #txtUrbLabel{
+	padding-left: 0px;
+	font-weight: bold;
+
+}
+
+#content .formClient #txtStreetLabel{
+	padding-left: 0px;
+	font-weight: bold;
+
+}
+
+#content .formClient #txtPCLabel{
+	padding-left: 20px;
+	font-weight: bold;
+
+}
+
+#content .formClient #txtRefPointLabel{
+	padding-left: 20px;
+	font-weight: bold;
+}
+
 #content .formClient #txtAPLabel{
 	padding-left: 70px;
 	font-weight: bold;
@@ -1224,10 +1247,10 @@ div.box {
 	#signupAddress {
 		text-align: center;
 		width: 430px;
-		height: 500px;
+		height: 600px;
 		font-size: 16px;
 		line-height: 1.5em;
-		background: url('../images/dialogo3.png') left top no-repeat;
+		background: url('../images/dialogo4.png') left top no-repeat;
 		padding: 60px 15px 10px 15px;
 		font: 12px Arial, Helvetica, sans-serif;
 		display: none;
@@ -1349,14 +1372,13 @@ div.box {
 .buttonModif{
 	position:absolute;
 	top:600px;
-	left: 550px;
+	left: 500px;
 	background-color: #1EB1DD;
 	color:#FAFAFA;
 	font-family: Verdana, Arial;
 	cursor: pointer;
-	
-
 }
-	
+
+
 	
     

@@ -39,7 +39,14 @@
 						<label for="description">Descripci&oacute;n:</label>
 						<textarea name="txtDescription" rows="4" cols="31"></textarea> <br><br>
 						<label for="price">Precio Base:</label>
-						<input type="text" name="txtPrice" id="txtPrice" maxlength="50" size="10" /> <br><br><br>
+						<input type="text" name="txtPrice" id="txtPrice" maxlength="50" size="10" /> <br><br>
+						<label for="script">Script Verificación Ventas:</label>
+						<div>
+						<p style="font-style:italic;color:grey;font-weight:bold;padding-left: 175px;">Paso 2:</p>
+						<p style="font-style:italic;color:grey;padding-left: 175px;">&lt;&lt;Sr. Nombre Cliente, le recordamos que la afiliación al <input type="text" name="txtScriptStep2" id="txtScriptStep2" maxlength="100" size="20" /> tiene un costo anual de equis BF, el cual fue debitado en sus tarjetas de crédito&gt;&gt;</p>
+						<p style="font-style:italic;color:grey;font-weight:bold;padding-left: 175px;">Paso 3:</p>
+						<p style="font-style:italic;color:grey;padding-left: 175px;">&lt;&lt;Por último Sr. Nombre Cliente, le damos la más cordial bienvenida a lo que será desde este momento, su <input type="text" name="txtScriptStep3" id="txtScriptStep3" maxlength="200" size="50" />, en un lapso de 24 horas, ya usted podrá disfrutar de nuestros servicios&gt;&gt;</p>
+						</div>
 						<input type="checkbox" name="txtIsActive" class="check" id="txtIsActive" maxlength="50" size="40" value="isActive" />&nbsp; 
 							&nbsp;&nbsp; Se ofrece actualmente <br><br>
 						
@@ -53,7 +60,7 @@
 						<%
 					}
 					%>	
-					<br><br>
+					<br>
 					<div style="text-align:center">
 							<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 							<input type="submit"  class="button"  name="sbmtButton" value="Agregar" style="margin-left:20px;" />

@@ -56,7 +56,8 @@ public class EditClientAddressServlet extends HttpServlet {
 //			System.out.println("+++ name:"+ street);
 			String propertyName = request.getParameter("txtPropetyName"); 
 //			System.out.println("+++ name:"+ propertyName);
-			
+			String referencePoint = request.getParameter("txtReferencePoint");
+			String postalCode = request.getParameter("txtPostalCode");
 			
 			ClientAddress address = new ClientAddress();
 			address.setCity(city);
@@ -65,6 +66,8 @@ public class EditClientAddressServlet extends HttpServlet {
 			address.setUrbanization(urbanization);
 			address.setStreet(street);
 			address.setPropertyName(propertyName);
+			address.setPostalCode(postalCode);
+			address.setReferencePoint(referencePoint);
 			
 			int propertyTypeId  = Integer.valueOf(request.getParameter("propertyTypeId"));
 			address.setPropertyTypeId(propertyTypeId);

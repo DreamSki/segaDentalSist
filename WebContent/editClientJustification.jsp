@@ -40,12 +40,12 @@
         </div>  
 		<div id="content">
         		<h2>Justificación de la modificación:</h2><br><br>
-        			 <form name="form" class="formClient" action="/segaDental/EditClientJustifServlet"  method="get">
+        			 <form name="form" class="formClient" action="/segaDental/EditClientJustifServlet"  method="get" onSubmit="return validateJust(this)">
       					 <jsp:useBean id="clientId" type="java.lang.Integer" scope="request"/> 
 							<input type="hidden" name="txtClientId" value="<%= clientId %>" />
 							<input type="hidden" name="type" value="<%= request.getParameter("type") %>" />
 							Por favor introduzca el motivo de la modificación: <br><br>
-							<textarea name="txtJustifEdit" rows="5" cols="84"></textarea> <br><br><br><br>
+							<textarea id="txtJustifEdit" name="txtJustifEdit" rows="5" cols="84"></textarea> <br><br><br><br>
 							<div style="text-align:center">
 								<input type="button" class="button" value="Volver"  onClick="javascript:history.back();"/>
 								<input type="submit"  class="button"  name="sbmtButton" value="Modificar" style="margin-left:20px;" />

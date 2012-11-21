@@ -29,7 +29,7 @@ public class SelectClientRequest implements DatabaseCommand {
 		PreparedStatement sta = conn.prepareStatement("SELECT C.FIRST_NAME, C.LAST_NAME, C.IDENTITY_CARD," +
 						" C.EMAIL, C.SEX, AT.NAME, CA.STATE, CA.CITY,  CA.MUNICIPALITY, CA.URBANIZATION, CA.STREET, CA.PROPERTY_TYPE_ID, PR.NAME," +
 						" CA.PROPERTY_NAME, CA.TOWER, CA.FLOOR, CA.APARTMENT, CC.ID, CC.NUMBER, CC.BANK, CCT.NAME, CC.EXPIRATION_DATE," +
-						" CC.CVC, P.NAME, CP.AMOUNT" +
+						" CC.CVC, P.NAME, CP.AMOUNT, P.SCRIPT_STEP_2, P.SCRIPT_STEP_3, CA.REFERENCE_POINT, CA.POSTAL_CODE" +
 						" FROM CLIENT C, CLIENT_ADDRESS CA, CLIENT_CREDIT_CARD CC, ADDRESS_TYPE AT," +
 						" CREDIT_CARD_TYPE CCT, PRODUCT P, CLIENT_PRODUCT CP, PROPERTY_TYPE PR" +
 						" WHERE C.ID = CA.CLIENT_ID AND C.ID = CC.CLIENT_ID AND CA.ADDRESS_TYPE_ID = AT.ID" +
@@ -60,6 +60,8 @@ public class SelectClientRequest implements DatabaseCommand {
 			address.setTower(rs.getString(15));
 			address.setFloor(rs.getInt(16));
 			address.setApartment(rs.getString(17));
+			address.setReferencePoint(rs.getString(28));
+			address.setPostalCode(rs.getString(29));
 			
 			ClientCreditCard card = new ClientCreditCard();
 			card.setId(rs.getInt(18));
@@ -72,6 +74,8 @@ public class SelectClientRequest implements DatabaseCommand {
 			Product p = new Product();
 			p.setName(rs.getString(24));
 			p.setPrice(rs.getString(25));
+			p.setScriptStep2(rs.getString(26));
+			p.setScriptStep3(rs.getString(27));
 			
 			clientRequest.setAddress(address);
 			clientRequest.setCard(card);

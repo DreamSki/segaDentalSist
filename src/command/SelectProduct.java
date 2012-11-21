@@ -20,7 +20,7 @@ public class SelectProduct implements DatabaseCommand {
 		// List users in the database
 
 		Product product = new Product();
-		PreparedStatement sta = conn.prepareStatement("SELECT P.ID, P.NAME, P.DESCRIPTION, P.PRICE, P.IS_ACTIVE FROM PRODUCT P WHERE P.ID = ? ");
+		PreparedStatement sta = conn.prepareStatement("SELECT P.ID, P.NAME, P.DESCRIPTION, P.PRICE, P.IS_ACTIVE, P.SCRIPT_STEP_2, P.SCRIPT_STEP_3 FROM PRODUCT P WHERE P.ID = ? ");
 		sta.setLong(1, this.productId);
 		ResultSet rs = sta.executeQuery();
 		
@@ -30,6 +30,8 @@ public class SelectProduct implements DatabaseCommand {
 			product.setDescription(rs.getString(3));
 			product.setPrice(rs.getString(4));
 			product.setStatus(rs.getInt(5));
+			product.setScriptStep2(rs.getString(6));
+			product.setScriptStep3(rs.getString(7));			
 		}
 		
 		rs.close();

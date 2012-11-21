@@ -22,7 +22,11 @@
 			buttonText: "Seleccione una fecha",
 			dateFormat:'dd/mm/yy',
 			changeMonth: true,
-		    changeYear: true
+		    changeYear: true,
+		    defaultDate: "+1w",
+            onClose: function( selectedDate ) {
+                $( "#txtDateEnd" ).datepicker( "option", "minDate", selectedDate );
+            }
 		});
 		$('#txtDateEnd').datepicker({
 			showOn: "button",
@@ -31,7 +35,11 @@
 			buttonText: "Seleccione una fecha",
 			dateFormat:'dd/mm/yy',
 			changeMonth: true,
-		    changeYear: true
+		    changeYear: true,
+		    defaultDate: "+1w",
+            onClose: function( selectedDate ) {
+                $( "#txtDateIni" ).datepicker( "option", "maxDate", selectedDate );
+            }
 		});
 		$('#txtDateIniExp').datepicker({
 			showOn: "button",
@@ -40,7 +48,11 @@
 			buttonText: "Seleccione una fecha",
 			dateFormat:'dd/mm/yy',
 			changeMonth: true,
-		    changeYear: true
+		    changeYear: true,
+		    defaultDate: "+1w",
+            onClose: function( selectedDate ) {
+                $( "#txtDateEndExp" ).datepicker( "option", "minDate", selectedDate );
+            }
 		});
 		$('#txtDateEndExp').datepicker({
 			showOn: "button",
@@ -49,7 +61,11 @@
 			buttonText: "Seleccione una fecha",
 			dateFormat:'dd/mm/yy',
 			changeMonth: true,
-		    changeYear: true
+		    changeYear: true,
+		    defaultDate: "+1w",
+            onClose: function( selectedDate ) {
+                $( "#txtDateIniExp" ).datepicker( "option", "maxDate", selectedDate );
+            }
 		});		
 	} );
 </script>

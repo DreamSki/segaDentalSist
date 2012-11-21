@@ -155,6 +155,8 @@ function validateCreateProduct(form) {
 	  var price = form.txtPrice.value;
 	  //var priceRegex = /^[0-9]+(\.[0-9]+)?$/;
 	  var priceRegex = /^\d+(\.\d{1,2})?$/;
+	  var scriptStep2 = form.txtScriptStep2.value;
+	  var scriptStep3 = form.txtScriptStep3.value;
 	  
 	  if(name == "") {
 	    inlineMsg('txtNameProduct','Debe introducir el nombre del producto.',2);
@@ -170,7 +172,16 @@ function validateCreateProduct(form) {
 		inlineMsg('txtPrice','Debe introducir un precio válido. Utilice sólo números y el punto (.) sólo para separar decimales.',5);
 		return false;
 	  }
-	   
+	  
+	  if(scriptStep2 == "") {
+	    inlineMsg('txtScriptStep2','Debe completar el paso 2 del script de verificación de ventas.', 3);
+	    return false;
+	  }
+	  
+	  if(scriptStep3 == "") {
+	    inlineMsg('txtScriptStep3','Debe completar el paso 3 del script de verificación de ventas.', 3);
+	    return false;
+	  }
 	  
 	  return true;
 }
@@ -184,7 +195,14 @@ function validateJustification(form) {
    return true;
 }
 
-
+function validateJust(form) {
+	var justifi = form.txtJustifEdit.value;
+	if (justifi == ""){
+		inlineMsg('txtJustifEdit', 'Debe introducir la razón por la cual se realiza la modificación de los datos.',3);
+		return false;
+	}
+   return true;
+}
 
 function validatePassword(form) {
 	var oldPass = form.txtOldPassword.value;

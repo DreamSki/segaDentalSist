@@ -29,7 +29,7 @@ public class SelectClient implements DatabaseCommand {
 		if (type.equalsIgnoreCase("titular")){
 			sta = conn.prepareStatement("SELECT C.ID, C.FIRST_NAME, C.LAST_NAME, C.IDENTITY_CARD," +
 						" DATE_FORMAT(C.BIRTHDATE, '%d/%m/%Y'), C.EMAIL, C.SEX, AT.NAME, CA.STATE, CA.CITY,  CA.MUNICIPALITY, CA.URBANIZATION, CA.STREET, CA.PROPERTY_TYPE_ID, PR.NAME," +
-						" CA.PROPERTY_NAME, CA.TOWER, CA.FLOOR, CA.APARTMENT " +
+						" CA.PROPERTY_NAME, CA.TOWER, CA.FLOOR, CA.APARTMENT, CA.REFERENCE_POINT, CA.POSTAL_CODE " +
 						" FROM CLIENT C, CLIENT_ADDRESS CA, ADDRESS_TYPE AT, PROPERTY_TYPE PR" +
 						" WHERE C.ID= CA.CLIENT_ID AND CA.ADDRESS_TYPE_ID = AT.ID AND CA.PROPERTY_TYPE_ID = PR.ID" +
 						" AND C.ID = ?");
@@ -61,6 +61,8 @@ public class SelectClient implements DatabaseCommand {
 				address.setTower(rs.getString(17));
 				address.setFloor(rs.getInt(18));
 				address.setApartment(rs.getString(19));
+				address.setReferencePoint(rs.getString(20));
+				address.setPostalCode(rs.getString(21));
 				
 				client.setAddress(address);
 				client.setType("Titular");

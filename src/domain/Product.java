@@ -7,6 +7,8 @@ public class Product {
 	private int status;
 	private String price;
 	private String description;
+	private String scriptStep2;
+	private String scriptStep3;
 	
 	
 	/**
@@ -64,6 +66,22 @@ public class Product {
 
 	public String getPrice(){
 		return price;
+	}
+
+	public void setScriptStep2(String scriptStep2) {
+		this.scriptStep2 = scriptStep2;
+	}
+
+	public String getScriptStep2() {
+		return scriptStep2;
+	}
+
+	public void setScriptStep3(String scriptStep3) {
+		this.scriptStep3 = scriptStep3;
+	}
+
+	public String getScriptStep3() {
+		return scriptStep3;
 	}
 	
 	

@@ -17,6 +17,8 @@ public class ClientAddress {
 	private int floor;
 	private String apartment;
 	private String direction;
+	private String referencePoint;
+	private String postalCode;
 	
 	/**
 	 * 
@@ -138,13 +140,56 @@ public class ClientAddress {
 	}
 
 	public String getDirection(){
-		if (!property_type_name.equals("Edificio"))
-		this.direction = "Urbanización " + urbanization + ", calle " + street + ", " + property_type_name + 
-			" " + propertyName + ". Municipio " + municipality + ", ciudad " + city + ", estado " + state ;
-		else
+		
+		if (!property_type_name.equals("Edificio")){
+			
+			this.direction = "Urbanización " + urbanization + ", calle " + street + ", " + property_type_name + 
+				" " + propertyName + ". ";
+			
+			if(referencePoint!=null && !referencePoint.equalsIgnoreCase("")){
+				
+				this.direction+="Punto Referencia: "+referencePoint+". ";
+			}
+			
+			this.direction+="Municipio " + municipality + ", ciudad " + city + ", estado " + state + ". ";
+			
+			if(postalCode!=null && !postalCode.equalsIgnoreCase("")){
+				
+				this.direction+="Código Postal "+postalCode+". ";
+			}
+		}else{
 			this.direction = "Urbanización " + urbanization + ", Calle " + street + ", " + property_type_name + 
-			" " + propertyName  + ".Piso " + floor + ", apartamento " + apartment +". Municipio " + municipality + ", ciudad " + city + ", estado " + state ;
+				" " + propertyName  + ".Piso " + floor + ", apartamento " + apartment +". ";
+			
+			if(referencePoint!=null && !referencePoint.equalsIgnoreCase("")){
+				
+				this.direction+="Punto Referencia: "+referencePoint+". ";
+			}
+
+			this.direction+="Municipio " + municipality + ", ciudad " + city + ", estado " + state + ". ";
+			
+			if(postalCode!=null && !postalCode.equalsIgnoreCase("")){
+				
+				this.direction+="Código Postal "+postalCode+". ";
+			}
+		}
 		return direction;
+	}
+
+	public void setReferencePoint(String referencePoint) {
+		this.referencePoint = referencePoint;
+	}
+
+	public String getReferencePoint() {
+		return referencePoint;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
 	}
 	
 

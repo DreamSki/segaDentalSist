@@ -165,7 +165,7 @@
 					<br><br>
 				</div>
 				
-					<%= pers + " " + client.getFirstName() %>, le recordamos que la afiliación al <%= plan %> tiene un costo anual
+					<%= pers + " " + client.getFirstName() %>, le recordamos que la afiliación al <%= client.getProduct().getScriptStep2() %> tiene un costo anual
 					de  <%= client.getProduct().getPrice() %>Bs, el cual será debitado de sus tarjetas de crédito, ¿Está usted de acuerdo?<br><br>
 					<form action="#verificarRadio"  method="post">
 						<input type="radio" name="agree" value="0" onClick="steps(false)"> No<br>
@@ -196,8 +196,7 @@
 					¿Correcto  <%= pers + " " + client.getFirstName() %>?</p><br><br>
 					
 					<p>Por último, <%= pers + " " + client.getFirstName() %> le damos la más cordial bienvenida a lo que será desde este momento,
-					su asistencia odontológica en los 365 días del año, el cual con presentar su cédula de identidad en nuestros
-					consultorios y clínicas del servicio, en un lapso de 24 horas, ya usted podrá disfrutar de nuestros servicios.</p>
+					su <%= client.getProduct().getScriptStep3() %>, en un lapso de 24 horas, ya usted podrá disfrutar de nuestros servicios.</p>
 				
 					<div class="buttonCenterVerif">
 						<input type="button" class="button" value="Volver"  onClick="mostrardiv('requestInfo3','requestInfo2');"/>
@@ -352,11 +351,17 @@
 				  	<label for="municipality">Municipio:</label>
 				    <input id="txtMunicipality" class="good_input" name="txtMunicipality" type="text"  value="<%= address.getMunicipality() %>"/>
 					<br>
-					<label for="urbanization">Urbanizacion:</label>
+					<label for="urbanization">Urbanización:</label>
 				    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text"  value="<%= address.getUrbanization() %>"/>
+				    <br>
+					<label for="postalCode">Código Postal:</label>
+				    <input id="txtPostalCode" class="good_input" name="txtPostalCode" type="text"  value="<%= address.getPostalCode()==null?"":address.getPostalCode() %>"/>
 				    <br>
 				    <label for="street">Calle:</label>
 				    <input id="txtStreet" class="good_input" name="txtStreet" type="text"  value="<%= address.getStreet() %>"/>
+				    <br>
+				    <label for="referencePoint">Punto Referencia:</label>
+				    <input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text"  value="<%= address.getReferencePoint()==null?"":address.getReferencePoint() %>"/>
 				    <br>
 				    <label for="propetyName">Nombre de la propiedad:</label>
 				    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= address.getPropertyName() %>"/>
@@ -381,7 +386,7 @@
 				    %>
 						
 				  </div>
-				  <br><br>
+				  <br>
 				  <div class="btn-fld">
 					 <input type="submit"  class="buttonPopUpSA"  name="sbmtButton" value="Aceptar" style="margin-left:20px;" />
 				  </div>
