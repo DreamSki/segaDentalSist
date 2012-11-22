@@ -42,7 +42,7 @@ label, span {
 					
 	<br>
 	
-	<div id="title" style="font-size:16px; font-weight: bold;"> Información del cliente <%= clientInfo.getFirstName() + " " + clientInfo.getLastName()  %> </div>
+	<div id="title" style="font-size:16px; font-weight: bold;"> Informacion del cliente <%= clientInfo.getFirstName() + " " + clientInfo.getLastName()  %> </div>
 			
 		<br><br>
 			<%
@@ -67,7 +67,7 @@ label, span {
 					<span class="telfOfic">Teléfono de Oficina:</span>
 					<input type="text" name="txtOfiPhone" id="txtOfiPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOficPhone()==null ? "No Dispone" :clientInfo.getTxtOficPhone() %>" /> <br><br>
 					<label class="telfMov">Teléfono Móvil:</label>
-					<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="40" value="<%= clientInfo.getTxtMovPhone()==null ? "No Dispone" : clientInfo.getTxtMovPhone() %>" /> 
+					<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="29" value="<%= clientInfo.getTxtMovPhone()==null ? "No Dispone" : clientInfo.getTxtMovPhone() %>" /> 
 					<span class="telfOtro">Teléfono Otro:</span>
 					<input type="text" name="txtOtherPhone" id="txtOtherPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOtherPhone()==null ? "No Dispone" : clientInfo.getTxtOtherPhone() %>" /> <br><br>
 								
@@ -91,7 +91,13 @@ label, span {
 			    	||  clientInfo.getAddress().getPropertyTypeId() == 5 )
 			    	{
 				    %>
-				 <label for="email">Torre:</label>
+				<span id="txtRefPointLabel">Punto Referencia:</span>
+				<input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text" style="margin-left: 40px;"  size="24" value="<%= clientInfo.getAddress().getReferencePoint()==null ? "" : clientInfo.getAddress().getReferencePoint() %>"/>
+				 <span id="txtPCLabel">Código Postal:</span>
+				<input id="txtPostalCode" class="good_input" name="txtPostalCode" type="text" style="margin-left: 60px;"  value="<%= clientInfo.getAddress().getPostalCode()==null ? "" : clientInfo.getAddress().getPostalCode() %>"/><br><br>
+								
+								
+				<label for="email">Torre:</label>
 				    <input id="txtTower" class="good_input" size="42" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower() %>"/>
 				    <span id="txtFloorLabel" style="margin-left: 10px;">Piso:</span>
 				    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor() %>"/>
@@ -124,7 +130,7 @@ label, span {
 					<span class="telfOfic">Teléfono de Oficina:</span>
 					<input type="text" name="txtOfiPhone" id="txtOfiPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOficPhone()==null ? "No Dispone" :clientInfo.getTxtOficPhone() %>" /> <br><br>
 					<label class="telfMov">Teléfono Móvil:</label>
-					<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="40" value="<%= clientInfo.getTxtMovPhone()==null ? "No Dispone" : clientInfo.getTxtMovPhone() %>" /> 
+					<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="29" value="<%= clientInfo.getTxtMovPhone()==null ? "No Dispone" : clientInfo.getTxtMovPhone() %>" /> 
 					<span class="telfOtro">Teléfono Otro:</span>
 					<input type="text" name="txtOtherPhone" id="txtOtherPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOtherPhone()==null ? "No Dispone" : clientInfo.getTxtOtherPhone() %>" /> <br><br>
 				</fieldset>
