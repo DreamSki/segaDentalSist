@@ -52,15 +52,14 @@ public class EditClientServlet extends HttpServlet {
 					int clientId = Integer.valueOf(request.getParameter("clientId"));
 					String  type = request.getParameter("type");
 					String print = request.getParameter("print");
-					
-					Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type));
-				
+			
 					@SuppressWarnings("unchecked")
 					ArrayList<PhoneType> phoneType = (ArrayList<PhoneType>) CommandExecutor.getInstance().executeDatabaseCommand(new command.ListPhoneType());
+			
 					
-					
+					Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type, phoneType));
+				
 					request.setAttribute("clientId", clientId);
-					request.setAttribute("phoneType", phoneType);
 					request.setAttribute("type", type);
 					request.setAttribute("print", print);
 					request.setAttribute("clientInfo",clientInfo);
@@ -91,6 +90,8 @@ public class EditClientServlet extends HttpServlet {
 		
 		try{
 		
+
+			System.out.println("Tratando a modificar");
 			int clientId = Integer.valueOf(request.getParameter("txtClientId"));
 			String type = request.getParameter("type");
 			
@@ -100,9 +101,12 @@ public class EditClientServlet extends HttpServlet {
 			String identityCardNum = request.getParameter("txtCedIdNum");
 			String email = request.getParameter("txtEmail"); 
 			String sex = request.getParameter("txtGen"); 
+			String txtHabPhone = request.getParameter("txtHabPhone");
+			String txtOficPhone = request.getParameter("txtOfiPhone");
+			String txtMovPhone = request.getParameter("txtMovPhone");
+			String txtOtherPhone = request.getParameter("txtOtherPhone");
 		
 			String birthdate = request.getParameter("txtDateIni");
-			System.out.println("bird " + birthdate);
 			
 			Client c = new Client();
 			c.setClientId(clientId);
@@ -113,7 +117,33 @@ public class EditClientServlet extends HttpServlet {
 			c.setBirthdate(birthdate);
 			c.setSex(sex);
 			
-
+			System.out.println("Tratando a modificar2" + txtHabPhone + "/" +txtMovPhone +"/" + txtOficPhone+"/" + txtOtherPhone);
+			
+			ArrayList<PhoneType> phones = new ArrayList<PhoneType>(); 
+			if (txtHabPhone != ""){
+				System.out.println("txtHab");
+				PhoneType habPhone = new PhoneType(1,"",txtHabPhone);
+				phones.add(habPhone);
+			}
+			
+			if (txtOficPhone != ""){
+				System.out.println("txtofic");
+				PhoneType oficPhone = new PhoneType(2,"",txtOficPhone);
+				phones.add(oficPhone);
+			}
+			if (txtMovPhone != ""){
+				System.out.println("txtmov");
+				PhoneType movPhone = new PhoneType(3,"",txtMovPhone);
+				phones.add(movPhone);
+			}
+			if (txtOtherPhone != ""){
+				System.out.println("txother");
+				PhoneType otherPhone = new PhoneType(4,"",txtOtherPhone);
+				phones.add(otherPhone);
+			}
+			c.setPhones(phones);
+			
+			System.out.println("Entrando a modificar");
 			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClient(c, type));
 			if(rowsUpdated == 1){
 				request.setAttribute("info", "El cliente fue editado exitosamente.");

@@ -8,16 +8,19 @@ import java.util.ArrayList;
 
 import domain.Client;
 import domain.ClientAddress;
+import domain.PhoneType;
 
 
 public class SelectClient implements DatabaseCommand {
 
 	private int id;
 	private String type; 
+	private ArrayList<PhoneType> phoneType;
 	
-	public SelectClient(int id, String type){
+	public SelectClient(int id, String type, ArrayList<PhoneType> phoneType){
 		this.id = id;
 		this.type = type;
+		this.phoneType = phoneType;
 	}
 
 	@Override
@@ -80,7 +83,7 @@ public class SelectClient implements DatabaseCommand {
 					String phone = type + "-" + number;
 					phones.add(phone);
 				}
-				client.setPhones(phones);
+				client.setPhones(phones, phoneType);
 				
 			}
 			
