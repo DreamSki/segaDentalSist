@@ -124,7 +124,7 @@
         		<h2>Solicitudes y Renovaciones por evaluar:</h2>
 				<form action="/segaDental/MoreRequestServlet" method="get">
 					<input type="hidden" id="howMany" class="good_input" name="howMany"  value="<%= listClientRequests.size() %>"/>
-					<input type="image" src="/segaDental/images/solicitar.png" name="askMore" style="position: absolute; top: 198px; left: 800px; height: auto;" />
+					<input type="image" src="/segaDental/images/solicitar.png" name="askMore" style="position: absolute; top: 195px; left: 800px; height: auto;" />
 				</form>
         		<%
         			String info = (String)request.getAttribute("info");
@@ -274,6 +274,14 @@
 					<input type="submit"  class="buttonPopUpDelete"  name="sbmtButton" value="Aceptar"  />
 				</div>
 			</form>
+		</div>
+	</div>
+	
+	<div id="wait">
+		<div id="signup-ct">
+			<h3 id="see_id" class="sprited" >Cargando</h3>
+			<br><br><br>
+			<span id="mensaje" style="font-size:16px;">Por favor espere...</span> <br><br>
 		</div>
 	</div>
 	

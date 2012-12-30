@@ -69,7 +69,7 @@ function validate(form) {
 	}
   }
   
-  inlineMsg('txtProductoId','Debe seleccinar al menos un producto.', 2);
+  inlineMsg('txtProductoId','Debe seleccionar al menos un producto.', 2);
   return false;
 }
 
