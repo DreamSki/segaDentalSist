@@ -39,7 +39,6 @@ label, span {
         	<img alt="logo" src="/segaDental/images/loguito.png"/>
         </div>  
 		<jsp:useBean id="clientInfo" type="domain.Client" scope="request"/> 
-		<jsp:useBean id="phoneType" type="java.util.ArrayList<domain.PhoneType>" scope="request"/>  	
 					
 	<br>
 	
@@ -63,26 +62,16 @@ label, span {
 					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="44" value="<%= clientInfo.getSex() %>" />
 					<label for="email">Correo Electrónico:</label>
 					<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
-					<%
-						ArrayList<String> phones = clientInfo.getPhones();	
-						for( int i = 0; i<phones.size(); i++){
-							String [] phone = phones.get(i).split("-");
-							String type = phone[0];
-							String number = phone[1];
-							int j = 0;
-							for (domain.PhoneType p: phoneType){
-								if (p.getId() == Integer.valueOf(type)){
-									String typeName = p.getName();
-					%>		
-								<label for="phone"><%= typeName %>:</label>
-								<input type="text" name="txtPhone<%=i%>" id="txtPhone<%=i %>" maxlength="50" size="38" value="<%= number %>" /> 
-					
-					<%					
-								}
-							}
-						}
-					%>
-						</fieldset>
+					<label for="telfHab">Teléfono de Habitación:</label>
+					<input type="text" name="txtHabPhone" id="txtHabPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtHabPhone()==null ? "No Dispone" :clientInfo.getTxtHabPhone() %>" /> 
+					<span class="telfOfic">Teléfono de Oficina:</span>
+					<input type="text" name="txtOfiPhone" id="txtOfiPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOficPhone()==null ? "No Dispone" :clientInfo.getTxtOficPhone() %>" /> <br><br>
+					<label class="telfMov">Teléfono Móvil:</label>
+					<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="29" value="<%= clientInfo.getTxtMovPhone()==null ? "No Dispone" : clientInfo.getTxtMovPhone() %>" /> 
+					<span class="telfOtro">Teléfono Otro:</span>
+					<input type="text" name="txtOtherPhone" id="txtOtherPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOtherPhone()==null ? "No Dispone" : clientInfo.getTxtOtherPhone() %>" /> <br><br>
+								
+				</fieldset>
 			
 				<fieldset style="border:none;">	
 				<label for="email">	Estado: </label>
@@ -102,7 +91,13 @@ label, span {
 			    	||  clientInfo.getAddress().getPropertyTypeId() == 5 )
 			    	{
 				    %>
-				 <label for="email">Torre:</label>
+				<span id="txtRefPointLabel">Punto Referencia:</span>
+				<input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text" style="margin-left: 40px;"  size="24" value="<%= clientInfo.getAddress().getReferencePoint()==null ? "" : clientInfo.getAddress().getReferencePoint() %>"/>
+				 <span id="txtPCLabel">Código Postal:</span>
+				<input id="txtPostalCode" class="good_input" name="txtPostalCode" type="text" style="margin-left: 60px;"  value="<%= clientInfo.getAddress().getPostalCode()==null ? "" : clientInfo.getAddress().getPostalCode() %>"/><br><br>
+								
+								
+				<label for="email">Torre:</label>
 				    <input id="txtTower" class="good_input" size="42" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower() %>"/>
 				    <span id="txtFloorLabel" style="margin-left: 10px;">Piso:</span>
 				    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor() %>"/>
@@ -130,28 +125,15 @@ label, span {
 					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="44" value="<%= clientInfo.getSex() %>" />
 					<label for="email">Correo Electrónico:</label>
 					<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
-					<%
-						ArrayList<String> phones = clientInfo.getPhones();
-						if (phones != null){
-							for( int i = 0; i<phones.size(); i++){
-								String [] phone = phones.get(i).split("-");
-								String type = phone[0];
-								String number = phone[1];
-								int j = 0;
-								for (domain.PhoneType p: phoneType){
-									if (p.getId() == Integer.valueOf(type)){
-										String typeName = p.getName();
-						%>		
-									<label for="phone"><%= typeName %>:</label>
-									<input type="text" name="txtPhone<%=i%>" id="txtPhone<%=i %>" maxlength="50" size="38" value="<%= number %>" /> 
-						
-						<%					
-									}
-								}
-							}
-						}
-					%>
-						</fieldset>
+					<label for="telfHab">Teléfono de Habitación:</label>
+					<input type="text" name="txtHabPhone" id="txtHabPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtHabPhone()==null ? "No Dispone" :clientInfo.getTxtHabPhone() %>" /> 
+					<span class="telfOfic">Teléfono de Oficina:</span>
+					<input type="text" name="txtOfiPhone" id="txtOfiPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOficPhone()==null ? "No Dispone" :clientInfo.getTxtOficPhone() %>" /> <br><br>
+					<label class="telfMov">Teléfono Móvil:</label>
+					<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="29" value="<%= clientInfo.getTxtMovPhone()==null ? "No Dispone" : clientInfo.getTxtMovPhone() %>" /> 
+					<span class="telfOtro">Teléfono Otro:</span>
+					<input type="text" name="txtOtherPhone" id="txtOtherPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOtherPhone()==null ? "No Dispone" : clientInfo.getTxtOtherPhone() %>" /> <br><br>
+				</fieldset>
 						<%					
 								}
 							%>

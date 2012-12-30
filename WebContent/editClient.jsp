@@ -69,7 +69,6 @@ function mostrardiv(div1, div2) {
 		<div id="content">
         		<h2>Editar Cliente:</h2>
       				<jsp:useBean id="clientInfo" type="domain.Client" scope="request"/> 
-					<jsp:useBean id="phoneType" type="java.util.ArrayList<domain.PhoneType>" scope="request"/>  	
 					<br>
 					<% if (clientInfo.getType().equalsIgnoreCase("titular")){
 					%>
@@ -132,25 +131,16 @@ function mostrardiv(div1, div2) {
 									%>
 								</select><br><br> 
 								<label for="email">Correo Electrónico:</label>
-								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
-								<%
-									ArrayList<String> phones = clientInfo.getPhones();	
-									for( int i = 0; i<phones.size(); i++){
-										String [] phone = phones.get(i).split("-");
-										String type = phone[0];
-										String number = phone[1];
-										for (domain.PhoneType p: phoneType){
-											if (p.getId() == Integer.valueOf(type)){
-												String typeName = p.getName();
-								%>		
-											<label for="phone"><%= typeName %>:</label>
-											<input type="text" name="txtPhone<%=i%>" id="txtPhone<%=i %>" maxlength="50" size="40" value="<%= number %>" /> <br><br>
-								<%
-											}
-										}
-									}
-								%>
-									</fieldset>
+								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail()==null ? "" :clientInfo.getEmail() %>" /> <br><br>
+								<label for="telfHab">Teléfono de Habitación:</label>
+								<input type="text" name="txtHabPhone" id="txtHabPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtHabPhone()==null ? "" :clientInfo.getTxtHabPhone() %>" /> 
+								<span class="telfOfic">Teléfono de Oficina:</span>
+								<input type="text" name="txtOfiPhone" id="txtOfiPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOficPhone()==null ? "" :clientInfo.getTxtOficPhone() %>" /> <br><br>
+								<label class="telfMov">Teléfono Móvil:</label>
+								<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtMovPhone()==null ? "" : clientInfo.getTxtMovPhone() %>" /> 
+								<span class="telfOtro">Teléfono Otro:</span>
+								<input type="text" name="txtOtherPhone" id="txtOtherPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOtherPhone()==null ? "" : clientInfo.getTxtOtherPhone() %>" /> <br><br>
+								</fieldset>
 								</div>
 							</div>
 							
@@ -202,14 +192,13 @@ function mostrardiv(div1, div2) {
 							    <input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text" style="margin-left: 40px;" value="<%= clientInfo.getAddress().getReferencePoint()==null ? "" : clientInfo.getAddress().getReferencePoint() %>"/><br><br>
 							    <label for="email">Nombre Propiedad:</label>
 							    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= clientInfo.getAddress().getPropertyName() %>"/>
-								 <br><br>
 							    <%
 							    	if (clientInfo.getAddress().getPropertyTypeId() == 1 || clientInfo.getAddress().getPropertyTypeId() == 3 
 							    	||  clientInfo.getAddress().getPropertyTypeId() == 5 )
 							    	{
 							    
 							    %>
-								 <label for="email">Torre:</label>
+								 <span class="txtTower">Torre:</span>
 								    <input id="txtTower" class="good_input" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower() %>"/><br><br>
 								    <span id="txtFloorLabel" >Piso:</span>
 								    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor() %>"/>
@@ -282,7 +271,7 @@ function mostrardiv(div1, div2) {
 									%>
 								</select><br><br>
 								<label for="email">Correo Electrónico:</label>
-								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> 
+								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
 							</fieldset>
 							<div style="text-align:center">
 								<input type="button" class="buttonModif" value="Volver"  onClick="javascript:history.back();"/>

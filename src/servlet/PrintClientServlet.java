@@ -61,15 +61,15 @@ public class PrintClientServlet extends HttpServlet {
 					}else{
 						clientId = Integer.valueOf(id);
 						String  type = request.getParameter("type");
-						
-						Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type));
-					
+						System.out.println("entrando a imprimor");
 						@SuppressWarnings("unchecked")
 						ArrayList<PhoneType> phoneType = (ArrayList<PhoneType>) CommandExecutor.getInstance().executeDatabaseCommand(new command.ListPhoneType());
+						System.out.println("salio de los phone type");
 						
+						
+						Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type, phoneType));
 						
 						request.setAttribute("clientId", clientId);
-						request.setAttribute("phoneType", phoneType);
 						request.setAttribute("type", type);
 						request.setAttribute("clientInfo",clientInfo);
 						

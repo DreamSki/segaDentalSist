@@ -18,7 +18,11 @@ public class Client {
 	private ClientCreditCard card;
 	private Product product;
 	private String type;
-	private ArrayList<String> phones;
+	private String txtMovPhone;
+	private String txtHabPhone;
+	private String txtOficPhone;
+	private String txtOtherPhone;
+	private ArrayList<PhoneType> phones;
 	
 	/**
 	 * 
@@ -143,12 +147,50 @@ public class Client {
 		
 	}
 	
-	public void setPhones(ArrayList<String> phones){
+	public void setPhones(ArrayList<String> phones, ArrayList<PhoneType> phoneType){
+		for( int i = 0; i<phones.size(); i++){
+			String [] phone = phones.get(i).split("-");
+			String type = phone[0];
+			String number = phone[1];
+			for (int j = 0; j < phoneType.size(); j++){
+				if (type.equals("1")){
+					txtHabPhone = number;
+				}else if (type.equals("2")){
+					txtOficPhone = number;
+				}else if (type.equals("3")){
+					txtMovPhone = number;
+				}else{
+					txtOtherPhone = number;
+				}
+			}
+		}
+	}
+
+	public void setPhones(ArrayList<PhoneType> phones){
 		this.phones = phones;
 	}
 
-	public ArrayList<String> getPhones(){
+	
+	public ArrayList<PhoneType> getPhones(){
 		return phones;
 	}
+
+	public String getTxtHabPhone(){
+		return txtHabPhone;
+	}
+	
+	public String getTxtOficPhone(){
+		return txtOficPhone;
+	}
+
+	public String getTxtMovPhone(){
+		return txtMovPhone;
+	}
+	
+	public String getTxtOtherPhone(){
+		return txtOtherPhone;
+	}
+	
+
 
 }
