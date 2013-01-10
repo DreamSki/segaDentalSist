@@ -44,27 +44,24 @@ public class EditClient implements DatabaseCommand {
 			sta.setLong(7, client.getClientId());
 		}
 		int rowsUpdated = sta.executeUpdate();
-		System.out.println("Modificando telefonos3");
 		if (rowsUpdated > 0){
-			System.out.println("Modificando telefonos2");
-			
-			for (int j = 0 ; j < client.getPhones().size(); j++){
-				System.out.println("aqui  " + client.getPhones().get(j).getNumber() + client.getClientId() + client.getPhones().get(j).getId());
-				sta = conn.prepareStatement("UPDATE CLIENT_PHONE SET PHONE_NUMBER = ? WHERE CLIENT_ID = ? AND PHONE_TYPE_ID = ?");
-				sta.setString(1, client.getPhones().get(j).getNumber());
-				sta.setLong(2, client.getClientId());
-				sta.setLong(3, client.getPhones().get(j).getId());
-				int rowsUpdatedAux = sta.executeUpdate();
-				if (rowsUpdatedAux == 0){
-					sta = conn.prepareStatement("INSERT INTO CLIENT_PHONE (CLIENT_ID, PHONE_NUMBER, PHONE_TYPE_ID) VALUES (?,?,?)");
-					sta.setLong(1, client.getClientId());
-					sta.setString(2, client.getPhones().get(j).getNumber());
+			if (type.equalsIgnoreCase("titular")){
+				for (int j = 0 ; j < client.getPhones().size(); j++){
+					sta = conn.prepareStatement("UPDATE CLIENT_PHONE SET PHONE_NUMBER = ? WHERE CLIENT_ID = ? AND PHONE_TYPE_ID = ?");
+					sta.setString(1, client.getPhones().get(j).getNumber());
+					sta.setLong(2, client.getClientId());
 					sta.setLong(3, client.getPhones().get(j).getId());
-					sta.executeUpdate();	
-					System.out.println("Agrego nuevo");
-				}
-				
-			}	
+					int rowsUpdatedAux = sta.executeUpdate();
+					if (rowsUpdatedAux == 0){
+						sta = conn.prepareStatement("INSERT INTO CLIENT_PHONE (CLIENT_ID, PHONE_NUMBER, PHONE_TYPE_ID) VALUES (?,?,?)");
+						sta.setLong(1, client.getClientId());
+						sta.setString(2, client.getPhones().get(j).getNumber());
+						sta.setLong(3, client.getPhones().get(j).getId());
+						sta.executeUpdate();	
+					}
+					
+				}	
+			}
 		}
 		sta.close();
 		

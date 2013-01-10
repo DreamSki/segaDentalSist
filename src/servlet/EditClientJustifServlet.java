@@ -71,7 +71,6 @@ public class EditClientJustifServlet extends HttpServlet {
 			String type = request.getParameter("type");
 			String justif = request.getParameter("txtJustifEdit");
 			
-			System.out.println("titular" + clientId + " " + justif) ;
 			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientJustif(clientId, type, justif));
 			
 			if(rowsUpdated == 1){

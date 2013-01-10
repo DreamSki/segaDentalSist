@@ -22,10 +22,8 @@ public class EditClientJustif implements DatabaseCommand {
 		PreparedStatement sta = null;
 		
 		if (type.equalsIgnoreCase("titular")){
-			System.out.println("titular" + id + " " + justif) ;
 			sta = conn.prepareStatement("UPDATE CLIENT SET EDIT_JUSTIFICATION = ?  WHERE ID = ?");
 		}else{
-			System.out.println("benef" + id + " " + justif) ;
 			sta = conn.prepareStatement("UPDATE CLIENT_BENEFICIARY SET EDIT_JUSTIFICATION = ?  WHERE ID = ?");
 		}	
 		sta.setString(1, justif);

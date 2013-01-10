@@ -77,7 +77,6 @@ public class EditUserPasswordServlet extends HttpServlet {
 			String encryptOldPassword = UserLoginServlet.getEncryptPassword(oldPassword);
 			String encryptPassword = UserLoginServlet.getEncryptPassword(password);
 				
-			System.out.println("vieja " + oldPassword + " enc " + encryptOldPassword + " nueva "+ password + " enc " + encryptPassword  + "id" + userId);
 			User user = new User();
 			user.setPassword(encryptPassword);
 			user.setId(userId);

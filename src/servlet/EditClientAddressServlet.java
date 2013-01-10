@@ -43,19 +43,12 @@ public class EditClientAddressServlet extends HttpServlet {
 
 		try{
 			int clientId = Integer.valueOf(request.getParameter("clientId"));
-//			System.out.println("+++ id:"+ clientId);
 			String state = request.getParameter("txtState");
-//			System.out.println("+++ name:"+ state);
 			String city = request.getParameter("txtCity");
-//			System.out.println("+++ name:"+ city);
 			String municipality = request.getParameter("txtMunicipality"); 	
-//			System.out.println("+++ name:"+ municipality);
 			String urbanization = request.getParameter("txtUrbanization"); 	
-//			System.out.println("+++ name:"+ urbanization);
 			String street = request.getParameter("txtStreet"); 	
-//			System.out.println("+++ name:"+ street);
 			String propertyName = request.getParameter("txtPropetyName"); 
-//			System.out.println("+++ name:"+ propertyName);
 			String referencePoint = request.getParameter("txtReferencePoint");
 			String postalCode = request.getParameter("txtPostalCode");
 			
@@ -73,11 +66,8 @@ public class EditClientAddressServlet extends HttpServlet {
 			address.setPropertyTypeId(propertyTypeId);
 			if (propertyTypeId == 1 || propertyTypeId == 3 || propertyTypeId == 5){
 				String tower = request.getParameter("txtTower"); 	
-//				System.out.println("+++ name:"+ tower);
-				int floor = Integer.valueOf(request.getParameter("txtFloor")); 	
-//				System.out.println("+++ name:"+ floor);
+				String floor = request.getParameter("txtFloor"); 	
 				String apartment = request.getParameter("txtApartment"); 	
-//				System.out.println("+++ name:"+ apartment);
 			
 				address.setTower(tower);
 				address.setFloor(floor);
@@ -88,24 +78,18 @@ public class EditClientAddressServlet extends HttpServlet {
 			
 			String type = request.getParameter("type");
 			int id = Integer.valueOf(request.getParameter("id"));
-//			System.out.println("+++ type:"+ type);
-//			System.out.println("+++ id:"+ id);
-//			System.out.println("aqui");
-//						
 			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientAddress(clientId, address));
 			
 			if(rowsUpdated == 1){
 				request.setAttribute("clientId", clientId);
 				request.setAttribute("type", type);
 				request.setAttribute("id", id);
-				System.out.println("aqui");
 				rd = getServletContext().getRequestDispatcher("/EditRequestServlet");			
 				rd.forward(request, response);
 			} else {
 				request.setAttribute("info", "");
 				request.setAttribute("error", "Ocurrió un error durante la edición del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
 				rd = getServletContext().getRequestDispatcher("/EditRequestServlet");			
-
 				rd.forward(request, response);
 			}
 			
@@ -113,7 +97,6 @@ public class EditClientAddressServlet extends HttpServlet {
 			request.setAttribute("info", "");
 			request.setAttribute("error", "Ocurrió un error durante la edición del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
 			rd = getServletContext().getRequestDispatcher("/EditRequestServlet");			
-
 			rd.forward(request, response);
 		}
 		

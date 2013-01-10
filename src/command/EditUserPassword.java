@@ -27,13 +27,11 @@ public class EditUserPassword implements DatabaseCommand {
 		ResultSet rs = sta.executeQuery();
 		while(rs.next()) {
 			String oldPass = rs.getString(1);
-			System.out.println(" vieja de bd " + oldPass);
 			if (oldPass.equals(oldPassword)){
 				sta = conn.prepareStatement("UPDATE USER SET PASSWORD = ? WHERE ID = ?");
 				sta.setString(1, user.getPassword());
 				sta.setInt(2, user.getId());
 				rowsUpdated = sta.executeUpdate();
-				System.out.println("cambio la contraseña");
 			}
 			else {
 				rowsUpdated = -2;

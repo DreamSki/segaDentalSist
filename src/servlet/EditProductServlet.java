@@ -75,21 +75,14 @@ public class EditProductServlet extends HttpServlet {
 		
 		try{
 			int productId = Integer.valueOf(request.getParameter("txtProductId"));
-			System.out.println("+++ id:"+ productId);
 			String name = request.getParameter("txtNameProduct");
-			System.out.println("+++ name:"+ name);
 			String description = request.getParameter("txtDescription");
-			System.out.println("+++ desc:"+ description);
 			String price = request.getParameter("txtPrice");
-			System.out.println("+++ price:"+ price);
 			String scriptStep2 = request.getParameter("txtScriptStep2");
-			System.out.println("+++ scriptStep2:"+ scriptStep2);
 			String scriptStep3 = request.getParameter("txtScriptStep3");
-			System.out.println("+++ scriptStep3:"+ scriptStep3);
 			int isActive = 0;
 			if (request.getParameter("txtIsActive") != null)
 				isActive = 1;
-			System.out.println("+++ status:"+ isActive);
 			
 			Product product = new Product();
 			product.setId(productId);

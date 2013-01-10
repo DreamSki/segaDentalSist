@@ -70,7 +70,9 @@ function mostrardiv(div1, div2) {
         		<h2>Editar Cliente:</h2>
       				<jsp:useBean id="clientInfo" type="domain.Client" scope="request"/> 
 					<br>
-					<% if (clientInfo.getType().equalsIgnoreCase("titular")){
+					<% 
+						
+						if (clientInfo.getType().equalsIgnoreCase("titular")){
 					%>
 						<form name="form" class="formClient" action="/segaDental/EditClientServlet" onsubmit="return validateClient(this)" method="post">
 							<input type="hidden" name="txtClientId" value="<%= request.getParameter("clientId") %>" />
@@ -93,41 +95,63 @@ function mostrardiv(div1, div2) {
 								<label for="cedId">C&eacute;dula de identidad:</label>
 								<%
 								String identityCard = clientInfo.getIdentityCard();
-								String identityCardId = identityCard.substring(0, 2);
-								String identityCardNum = identityCard.substring(2);
-								%>
-								<select name="txtCedId" id="txtCedId">
-								<%
-								if(identityCardId.equalsIgnoreCase("V-")){
-								%>
-									<option value="V-" selected="selected">V</option>
-									<option value="E-">E</option>
-								<%	
-								} else {
-								%>	
-									<option value="V-">V</option>
-									<option value="E-" selected="selected">E</option>
-								<%
-								}
-								%>
-								</select>
-								<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
-								<label for="date">Fecha de Nacimiento:</label>
-								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate() %>" />
-								<span id="txtGenLabel"> Sexo: </span>
-								<select name="txtGen" id="txtGen">
-									<%	
-									if (clientInfo.getSex().equalsIgnoreCase("f")){
-									%>	
-										<option value="F" selected="selected">Femenino</option>
-										<option value="M">Masculino</option>
+								if (identityCard != null){
+									String identityCardId = identityCard.substring(0, 2);
+									String identityCardNum = identityCard.substring(2);
+									%>
+									<select name="txtCedId" id="txtCedId">
+									<%
+									if(identityCardId.equalsIgnoreCase("V-")){
+									%>
+										<option value="V-" selected="selected">V</option>
+										<option value="E-">E</option>
 									<%	
 									} else {
 									%>	
-									<option value="F">Femenino</option>
-									<option value="M" selected="selected">Masculino</option>
+										<option value="V-">V</option>
+										<option value="E-" selected="selected">E</option>
 									<%
 									}
+									%>
+									</select>
+									<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
+									<%
+								}else{
+								%>
+									<select name="txtCedId" id="txtCedId">
+										<option value="V-">V</option>
+										<option value="E-" >E</option>
+									</select>
+									<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="" /> <br><br>
+								
+								<%
+								}
+								%>
+								<label for="date">Fecha de Nacimiento:</label>
+								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate()==null ? "" : clientInfo.getBirthdate() %>" />
+								<span id="txtGenLabel"> Sexo: </span>
+								<select name="txtGen" id="txtGen">
+									<%	
+									if (clientInfo.getSex() != null){
+										if (clientInfo.getSex().equalsIgnoreCase("f")){
+										%>	
+										<option value="F" selected="selected">Femenino</option>
+										<option value="M">Masculino</option>
+										<%	
+										} else {
+										%>	
+										<option value="F">Femenino</option>
+										<option value="M" selected="selected">Masculino</option>
+										<%
+										}
+									}else{
+										%>	
+											<option value="-" selected="selected">Seleccionar</option>
+											<option value="F">Femenino</option>
+											<option value="M" >Masculino</option>
+										<%
+										}
+									
 									%>
 								</select><br><br> 
 								<label for="email">Correo Electrónico:</label>
@@ -181,17 +205,17 @@ function mostrardiv(div1, div2) {
 								<label for="email">Ciudad: </label>
 							    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= clientInfo.getAddress().getCity() %>"/><br><br>
 								<label for="email">Municipio:</label>
-							    <input id="txtMunicipality" class="good_input" name="txtMunicipality" type="text"  value="<%= clientInfo.getAddress().getMunicipality() %>"/><br><br>
+							    <input id="txtMunicipality" class="good_input" name="txtMunicipality" type="text"  value="<%= clientInfo.getAddress().getMunicipality()==null ? "" : clientInfo.getAddress().getMunicipality() %>"/><br><br>
 								<span id="txtUrbLabel">Urbanización:</span>
-							    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text" style="margin-left: 95px;" value="<%= clientInfo.getAddress().getUrbanization() %>"/>
+							    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text" style="margin-left: 95px;" value="<%= clientInfo.getAddress().getUrbanization()==null ? "" : clientInfo.getAddress().getUrbanization() %>"/>
 								<span id="txtPCLabel">Código Postal:</span>
 							    <input id="txtPostalCode" class="good_input" name="txtPostalCode" type="text" style="margin-left: 60px;"  value="<%= clientInfo.getAddress().getPostalCode()==null ? "" : clientInfo.getAddress().getPostalCode() %>"/><br><br>
 								<span id="txtStreetLabel">Calle:</span>
-							    <input id="txtStreet" class="good_input" name="txtStreet" type="text" style="margin-left: 140px;" value="<%= clientInfo.getAddress().getStreet() %>"/>
+							    <input id="txtStreet" class="good_input" name="txtStreet" type="text" style="margin-left: 140px;" value="<%= clientInfo.getAddress().getStreet()==null ? "" : clientInfo.getAddress().getStreet() %>"/>
 							    <span id="txtRefPointLabel">Punto Referencia:</span>
 							    <input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text" style="margin-left: 40px;" value="<%= clientInfo.getAddress().getReferencePoint()==null ? "" : clientInfo.getAddress().getReferencePoint() %>"/><br><br>
 							    <label for="email">Nombre Propiedad:</label>
-							    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= clientInfo.getAddress().getPropertyName() %>"/>
+							    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= clientInfo.getAddress().getPropertyName()==null ? "" : clientInfo.getAddress().getPropertyName() %>"/>
 							    <%
 							    	if (clientInfo.getAddress().getPropertyTypeId() == 1 || clientInfo.getAddress().getPropertyTypeId() == 3 
 							    	||  clientInfo.getAddress().getPropertyTypeId() == 5 )
@@ -199,11 +223,11 @@ function mostrardiv(div1, div2) {
 							    
 							    %>
 								 <span class="txtTower">Torre:</span>
-								    <input id="txtTower" class="good_input" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower() %>"/><br><br>
+								    <input id="txtTower" class="good_input" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower()==null ? "" :clientInfo.getAddress().getTower() %>"/><br><br>
 								    <span id="txtFloorLabel" >Piso:</span>
-								    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor() %>"/>
+								    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor()==null ? "" :clientInfo.getAddress().getFloor() %>"/>
 								    <span id="txtAPLabel">Apartamento:</span>
-								    <input id="txtApartment" class="good_input" name="txtApartment" type="text" size="5"  value="<%= clientInfo.getAddress().getApartment() %>"/>
+								    <input id="txtApartment" class="good_input" name="txtApartment" type="text" size="5"  value="<%= clientInfo.getAddress().getApartment()==null ? "" : clientInfo.getAddress().getApartment()%>"/>
 									<br>
 								<%
 						    		}
@@ -233,45 +257,67 @@ function mostrardiv(div1, div2) {
 								<label for="cedId">C&eacute;dula de identidad:</label>
 								<%
 								String identityCard = clientInfo.getIdentityCard();
-								String identityCardId = identityCard.substring(0, 2);
-								String identityCardNum = identityCard.substring(2);
-								%>
-								<select name="txtCedId" id="txtCedId">
-								<%
-								if(identityCardId.equalsIgnoreCase("V-")){
-								%>
-									<option value="V-" selected="selected">V</option>
-									<option value="E-">E</option>
-								<%	
-								} else {
-								%>	
-									<option value="V-">V</option>
-									<option value="E-" selected="selected">E</option>
-								<%
-								}
-								%>
-								</select>
-								<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
-								<label for="date">Fecha de Nacimiento:</label>
-								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate() %>" />
-								<span id="txtGenLabel"> Sexo: </span>
-								<select name="txtGen" id="txtGen">
-									<%	
-									if (clientInfo.getSex().equalsIgnoreCase("f")){
-									%>	
-										<option value="F" selected="selected">Femenino</option>
-										<option value="M">Masculino</option>
+								if (identityCard != null){
+									String identityCardId = identityCard.substring(0, 2);
+									String identityCardNum = identityCard.substring(2);
+									%>
+									<select name="txtCedId" id="txtCedId">
+									<%
+									if(identityCardId.equalsIgnoreCase("V-")){
+									%>
+										<option value="V-" selected="selected">V</option>
+										<option value="E-">E</option>
 									<%	
 									} else {
 									%>	
-									<option value="F">Femenino</option>
-									<option value="M" selected="selected">Masculino</option>
+										<option value="V-">V</option>
+										<option value="E-" selected="selected">E</option>
 									<%
 									}
 									%>
+									</select>
+									<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
+									<%
+								}else{
+								%>
+									<select name="txtCedId" id="txtCedId">
+										<option value="V-">V</option>
+										<option value="E-" >E</option>
+									</select>
+									<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="" /> <br><br>
+								
+								<%
+								}
+								%>
+								<label for="date">Fecha de Nacimiento:</label>
+								<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate()==null ? "" : clientInfo.getBirthdate() %>" />
+								<span id="txtGenLabel"> Sexo: </span>
+								<select name="txtGen" id="txtGen">
+									<%	
+									if (clientInfo.getSex() != null){
+										if (clientInfo.getSex().equalsIgnoreCase("f")){
+										%>	
+										<option value="F" selected="selected">Femenino</option>
+										<option value="M">Masculino</option>
+										<%	
+										} else {
+										%>	
+										<option value="F">Femenino</option>
+										<option value="M" selected="selected">Masculino</option>
+										<%
+										}
+									}else{
+										%>	
+											<option value="-" selected="selected">Seleccionar</option>
+											<option value="F">Femenino</option>
+											<option value="M" >Masculino</option>
+										<%
+										}
+									
+									%>
 								</select><br><br>
 								<label for="email">Correo Electrónico:</label>
-								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
+								<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail()==null ? "" : clientInfo.getEmail() %>" /> <br><br>
 							</fieldset>
 							<div style="text-align:center">
 								<input type="button" class="buttonModif" value="Volver"  onClick="javascript:history.back();"/>

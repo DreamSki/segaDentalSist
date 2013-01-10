@@ -45,7 +45,6 @@ public class MoreRequestServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			User user = (User)session.getAttribute("user");
 			int howMany = Integer.valueOf(request.getParameter("howMany"));
-			System.out.println("+++ limit " + howMany);
 			if(user != null){
 				int roleId = user.getRoleId();
 				int checkerId = user.getId();

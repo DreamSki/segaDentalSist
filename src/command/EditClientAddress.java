@@ -24,9 +24,6 @@ public class EditClientAddress implements DatabaseCommand {
 		if (address.getPropertyTypeId() == 1 || address.getPropertyTypeId() == 3 || address.getPropertyTypeId() == 5){
 			sta = conn.prepareStatement("UPDATE CLIENT_ADDRESS SET STATE = ?, CITY = ?, MUNICIPALITY = ?, URBANIZATION = ?," +
 				" STREET = ?, PROPERTY_NAME = ?, TOWER = ?, FLOOR = ?,  APARTMENT = ?, REFERENCE_POINT = ?, POSTAL_CODE = ? WHERE CLIENT_ID = ?");
-			System.out.println("aqui complto" + address.getState() + "-" + address.getCity() + "-" + address.getMunicipality() 
-					+ "-" + address.getMunicipality() + address.getUrbanization() + address.getStreet()  + address.getPropertyName() +
-					address.getTower() +  address.getFloor() + address.getApartment() + address.getReferencePoint() + address.getPostalCode() +" id " +id);
 			
 			sta.setString(1, address.getState());
 			sta.setString(2, address.getCity());
@@ -35,7 +32,7 @@ public class EditClientAddress implements DatabaseCommand {
 			sta.setString(5, address.getStreet());
 			sta.setString(6, address.getPropertyName());
 			sta.setString(7, address.getTower());
-			sta.setInt(8, address.getFloor());
+			sta.setString(8, address.getFloor());
 			sta.setString(9, address.getApartment());
 			
 			if(address.getReferencePoint()==null || address.getReferencePoint().equalsIgnoreCase("")){
@@ -57,7 +54,6 @@ public class EditClientAddress implements DatabaseCommand {
 			sta = conn.prepareStatement("UPDATE CLIENT_ADDRESS SET STATE = ?, CITY = ?, MUNICIPALITY = ?, URBANIZATION = ?," +
 					" STREET = ?, PROPERTY_NAME = ?, REFERENCE_POINT = ?, POSTAL_CODE = ? WHERE CLIENT_ID = ?");
 			
-			System.out.println("aqui solo" + address.getCity() + address.getState());
 			sta.setString(1, address.getState());
 			sta.setString(2, address.getCity());
 			sta.setString(3, address.getMunicipality());

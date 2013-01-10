@@ -19,7 +19,7 @@ public class ProcessData {
 	 */
 	public static void main(String[] args) {
 		
-		String inputFile = "C:/Users/Yomi/Projects/Call Center/Data/DATA MEDICALONE C.A.xls";
+		String inputFile = "D:/workspace/segaDentalSist/Data/DATA MEDICALONE C.A.xls";
 		File inputWorkbook = new File(inputFile);
 	    Workbook w;
 	    
@@ -37,7 +37,7 @@ public class ProcessData {
 		 		Long identityNumber = Long.valueOf(cell.getContents());
 		 		String identityCard; 
 		 		
-		 		if(identityNumber>=80000){
+		 		if(identityNumber>=80000000){
 		 			identityCard = "E-"+identityNumber;
 		 		} else {
 		 			identityCard = "V-"+identityNumber;
@@ -103,9 +103,9 @@ public class ProcessData {
 		 		//Precio
 		 		cell = sheet.getCell(7, i);
 		 		String priceStr = cell.getContents();
-		 		priceStr = priceStr.replaceAll(",", "");
-		 		priceStr = priceStr.replaceAll(".00", "");
-		 		Integer price = Integer.valueOf(priceStr);
+		 		priceStr = priceStr.replaceAll("\\.", "");
+		 		priceStr = priceStr.replaceAll(",", "\\.");
+		 		Double price = Double.valueOf(priceStr);
 		 		
 		 		//Vendedor
 		 		cell = sheet.getCell(8, i);

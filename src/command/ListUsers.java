@@ -31,7 +31,13 @@ public class ListUsers implements DatabaseCommand {
 				lastId = rs.getInt(1);
 				User user = new User();
 				user.setId(lastId);
-				user.setName(rs.getString(2) + " " + rs.getString(3));
+				String name = rs.getString(2);
+				String lastName = rs.getString(3);
+				if ( name == null)
+					name = "";
+				if (lastName == null)
+					lastName = "";
+				user.setName(name + " " + lastName);
 				user.setUserName(rs.getString(4));
 				user.setRoleId(rs.getInt(5));
 				user.setRoleName(rs.getString(6));
@@ -50,7 +56,13 @@ public class ListUsers implements DatabaseCommand {
 					lastId = rs.getInt(1);
 					User user = new User();
 					user.setId(lastId);
-					user.setName(rs.getString(2) + " " + rs.getString(3));
+					String name = rs.getString(2);
+					String lastName = rs.getString(3);
+					if ( name == null)
+						name = "";
+					if (lastName == null)
+						lastName = "";
+					user.setName(name + " " + lastName);
 					user.setUserName(rs.getString(4));
 					user.setRoleId(rs.getInt(5));
 					user.setRoleName(rs.getString(6));

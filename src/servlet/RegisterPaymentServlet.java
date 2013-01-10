@@ -106,7 +106,6 @@ public class RegisterPaymentServlet extends HttpServlet {
 			else{
 				request.setAttribute("info", "");
 				request.setAttribute("error", "Ocurrió un error durante el registro del pago. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-				System.out.println("error");
 				rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
 				rd.forward(request, response);
 			}

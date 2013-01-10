@@ -91,7 +91,6 @@ public class EditClientServlet extends HttpServlet {
 		try{
 		
 
-			System.out.println("Tratando a modificar");
 			int clientId = Integer.valueOf(request.getParameter("txtClientId"));
 			String type = request.getParameter("type");
 			
@@ -117,33 +116,27 @@ public class EditClientServlet extends HttpServlet {
 			c.setBirthdate(birthdate);
 			c.setSex(sex);
 			
-			System.out.println("Tratando a modificar2" + txtHabPhone + "/" +txtMovPhone +"/" + txtOficPhone+"/" + txtOtherPhone);
 			
 			ArrayList<PhoneType> phones = new ArrayList<PhoneType>(); 
 			if (txtHabPhone != ""){
-				System.out.println("txtHab");
 				PhoneType habPhone = new PhoneType(1,"",txtHabPhone);
 				phones.add(habPhone);
 			}
 			
 			if (txtOficPhone != ""){
-				System.out.println("txtofic");
 				PhoneType oficPhone = new PhoneType(2,"",txtOficPhone);
 				phones.add(oficPhone);
 			}
 			if (txtMovPhone != ""){
-				System.out.println("txtmov");
 				PhoneType movPhone = new PhoneType(3,"",txtMovPhone);
 				phones.add(movPhone);
 			}
 			if (txtOtherPhone != ""){
-				System.out.println("txother");
 				PhoneType otherPhone = new PhoneType(4,"",txtOtherPhone);
 				phones.add(otherPhone);
 			}
 			c.setPhones(phones);
 			
-			System.out.println("Entrando a modificar");
 			Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClient(c, type));
 			if(rowsUpdated == 1){
 				request.setAttribute("info", "El cliente fue editado exitosamente.");
@@ -175,8 +168,8 @@ public class EditClientServlet extends HttpServlet {
 				address.setPropertyTypeId(propertyTypeId);
 				
 				if (propertyTypeId == 1 || propertyTypeId == 3 || propertyTypeId == 5){
-					String tower = request.getParameter("txtTower"); 	
-					int floor = Integer.valueOf(request.getParameter("txtFloor")); 	
+					String tower = request.getParameter("txtTower"); 
+					String floor = request.getParameter("txtFloor");
 					String apartment = request.getParameter("txtApartment"); 	
 					address.setTower(tower);
 					address.setFloor(floor);
@@ -186,7 +179,6 @@ public class EditClientServlet extends HttpServlet {
 				if(rowsUpdated == 1){
 					rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.EditClientAddress(clientId, address));
 					if (rowsUpdated == 1){
-						System.out.println("modifico");
 						request.setAttribute("clientId",clientId);
 						request.setAttribute("type", type);
 						rd = getServletContext().getRequestDispatcher("/editClientJustification.jsp");			

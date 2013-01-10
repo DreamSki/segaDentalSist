@@ -94,7 +94,6 @@
 				<%
 					String adj = "el";
 					   String pers = "Sr.";
-					   System.out.println("sex" + client.getSex());
 					   if (client.getSex().equalsIgnoreCase("f"))	{
 						   adj ="la";
 						   pers = "Sra.";
@@ -223,7 +222,7 @@
 					<input type="hidden" id="txtAmount" class="good_input" name="txtAmount"  value="<%= client.getProduct().getPrice() %>"/>
 					<input type="hidden" id="txtCardId" class="good_input" name="txtCardId"  value="<%= client.getCard().getId() %>"/>
 					<input type="hidden" id="type" class="good_input" name="type"  value="<%= request.getParameter("type") %>"/>
-					<% System.out.println(client.getProduct().getPrice()); %>
+					
 					<fieldset>
 						<label for="nameCard">Tipo de Tarjeta:</label>
 						<input type="text" name="txtCardType" id="txtCardType" maxlength="50" size="20" value="<%= card.getCardType() %>" readonly="readonly" style="border:none;"/> <br><br>

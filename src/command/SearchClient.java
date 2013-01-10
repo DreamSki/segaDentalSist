@@ -23,7 +23,6 @@ public class SearchClient implements DatabaseCommand {
 		
 		ArrayList<Client> list = new ArrayList<Client>();
 		
-		System.out.println("Entro aqui a la busqueda");
 		PreparedStatement sta = conn.prepareStatement("SELECT C.ID, C.FIRST_NAME, C.LAST_NAME, C.IDENTITY_CARD," +
 						" C.EMAIL, C.SEX " +
 						" FROM CLIENT C" +

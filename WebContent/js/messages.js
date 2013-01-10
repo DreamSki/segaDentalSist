@@ -294,7 +294,6 @@ function validateClient(form) {
 	  var birthdate = form.txtDateIni.value;
 	  var state = form.txtState.value;
 	  var city = form.txtCity.value;
-	  var municipality = form.txtMunicipality.value;
 	  
 	  if(name == "") {
 	    inlineMsg('txtName','Debe introducir el nombre del cliente.',2);
@@ -324,11 +323,6 @@ function validateClient(form) {
 		    return false;
 	  }
 	  
-	  if(municipality == "") {
-		    inlineMsg('txtMunicipality','Debe introducir el municipio donde vive el cliente.',2);
-		    return false;
-	  }
-	 
 	  return true;
 }
 
@@ -337,6 +331,7 @@ function validateBenef(form) {
 	  var lastName = form.txtLastName.value;
 	  var cedula = form.txtCedIdNum.value;
 	  var birthdate = form.txtDateIni.value;
+	  var sex = form.txtGen.value;
 	  
 	  if(name == "") {
 	    inlineMsg('txtName','Debe introducir el nombre del cliente.',2);
@@ -353,6 +348,10 @@ function validateBenef(form) {
 	   if(birthdate == "") {
 	    inlineMsg('txtDateIni','Debe introducir la fecha de nacimiento del cliente.',2);
 	    return false;
+	  }
+	  if(sex == "-") {
+		    inlineMsg('txtGen','Debe escoger el sexo del cliente.', 2);
+		    return false;
 	  }
 	   
 	  return true;

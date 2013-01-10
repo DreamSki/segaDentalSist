@@ -66,7 +66,6 @@ public class DeleteRequestServlet extends HttpServlet {
 					Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.DeleteRequest(requestId));
 					
 					if(rowsUpdated == 1){
-						System.out.println("");
 						request.setAttribute("info", "La " + type + " fue eliminada sastifactoriamente." );
 						request.setAttribute("error", "");
 						rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
@@ -74,7 +73,6 @@ public class DeleteRequestServlet extends HttpServlet {
 						rd.forward(request, response);
 					} else {
 						request.setAttribute("info", "");
-						System.out.println("Error");
 						request.setAttribute("error", "Ocurrió un error durante la eliminación de la " + type + ". Por favor intente de nuevo y si el error persiste contacte a su administrador.");
 						rd = getServletContext().getRequestDispatcher("/ListRequestsServlet");			
 
