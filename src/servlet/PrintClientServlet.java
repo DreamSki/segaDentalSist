@@ -51,7 +51,6 @@ public class PrintClientServlet extends HttpServlet {
 					
 					String id = request.getParameter("clientId");
 					int clientId  = 0;
-					System.out.println("id" + (id == null));
 					if (id == null){
 						request.setAttribute("info", " ");
 						request.setAttribute("error", " ");
@@ -61,10 +60,8 @@ public class PrintClientServlet extends HttpServlet {
 					}else{
 						clientId = Integer.valueOf(id);
 						String  type = request.getParameter("type");
-						System.out.println("entrando a imprimor");
 						@SuppressWarnings("unchecked")
 						ArrayList<PhoneType> phoneType = (ArrayList<PhoneType>) CommandExecutor.getInstance().executeDatabaseCommand(new command.ListPhoneType());
-						System.out.println("salio de los phone type");
 						
 						
 						Client clientInfo = (Client)CommandExecutor.getInstance().executeDatabaseCommand(new command.SelectClient(clientId, type, phoneType));

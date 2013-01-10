@@ -96,7 +96,6 @@ public class CreateProductServlet extends HttpServlet {
 			else{
 				request.setAttribute("info", "");
 				request.setAttribute("error", "Ocurrió un error durante la creación del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
-				System.out.println("error");
 				rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
 
 				rd.forward(request, response);

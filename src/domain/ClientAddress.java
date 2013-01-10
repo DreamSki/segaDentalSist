@@ -14,7 +14,7 @@ public class ClientAddress {
 	private String property_type_name;
 	private String propertyName;
 	private String tower;
-	private int floor;
+	private String floor;
 	private String apartment;
 	private String direction;
 	private String referencePoint;
@@ -124,11 +124,11 @@ public class ClientAddress {
 		return tower;
 	}
 	
-	public void setFloor(int floor) {
+	public void setFloor(String floor) {
 		this.floor = floor;
 	}
 
-	public int getFloor() {
+	public String getFloor() {
 		return floor;
 	}
 	

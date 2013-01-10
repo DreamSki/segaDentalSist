@@ -63,7 +63,6 @@ RequestDispatcher rd;
 					Integer rowsUpdated = (Integer) CommandExecutor.getInstance().executeDatabaseCommand(new command.DeleteProduct(productId));
 					
 					if(rowsUpdated == 1){
-						System.out.println("Producto eliminado");
 						request.setAttribute("info", "El producto fue eliminado exitosamente.");
 						request.setAttribute("error", "");
 						rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
@@ -71,7 +70,6 @@ RequestDispatcher rd;
 						rd.forward(request, response);
 					} else {
 						request.setAttribute("info", "");
-						System.out.println("Error");
 						request.setAttribute("error", "Ocurrió un error durante la eliminación del producto. Por favor intente de nuevo y si el error persiste contacte a su administrador.");
 						rd = getServletContext().getRequestDispatcher("/ListProductsServlet");			
 

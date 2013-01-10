@@ -162,8 +162,7 @@ public class SendEmail {
 			//send off the email
 			Transport.send(mimeMessage);
 			
-			System.out.println("sent from " + user + 
-					", to " + to);			
+					
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		} finally {

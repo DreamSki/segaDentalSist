@@ -67,8 +67,8 @@ public class EditUserServlet extends HttpServlet {
 					
 					ArrayList<Product> productList = (ArrayList<Product>)CommandExecutor.getInstance().executeDatabaseCommand(new command.ListActiveProducts());
 					request.setAttribute("products",  productList);
-					rd = getServletContext().getRequestDispatcher("/editUser.jsp");			
 
+					rd = getServletContext().getRequestDispatcher("/editUser.jsp");			
 					rd.forward(request, response);
 				} else {
 					request.setAttribute("error", "Usted no posee permisos para realizar esta operación");

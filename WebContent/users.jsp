@@ -123,8 +123,8 @@
 				%>
 					<tr class="gradeA">
 						<td><%= u.getId() %></td>
-						<td><%= u.getName() %></td>
-						<td><%= u.getUserName() %></td>
+						<td><%= u.getName()==null ? "" :  u.getName() %></td>
+						<td><%= u.getUserName()==null ? "" :  u.getUserName() %></td>
 						<td><%= u.getRoleName() %></td>
 						<td><%= (u.getRoomName()!=null)?u.getRoomName():"N/A" %></td>
 						<td><%= u.getProductName() %></td>

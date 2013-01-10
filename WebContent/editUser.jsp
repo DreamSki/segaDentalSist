@@ -84,31 +84,44 @@
 						<fieldset>
 							<input type="hidden" name="txtUserId" value="<%= request.getAttribute("userId") %>" />
 							<label for="name">Nombres:</label>
-							<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= userInfo.getFirstName() %>" /> <br><br>
+							<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= userInfo.getFirstName()==null ? "" :userInfo.getFirstName()%>" /> <br><br>
 							<label for="LastName">Apellidos:</label>
-							<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" value="<%= userInfo.getLastName() %>" /> <br><br>
+							<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" value="<%= userInfo.getLastName()==null ? "" : userInfo.getLastName() %>" /> <br><br>
 							<label for="cedId">C&eacute;dula de identidad:</label>
 							<%
 							String identityCard = userInfo.getIdentityCard();
-							String identityCardId = identityCard.substring(0, 2);
-							String identityCardNum = identityCard.substring(2);
+							if (identityCard != null){
+								String identityCardId = identityCard.substring(0, 2);
+								String identityCardNum = identityCard.substring(2);
+								%>
+								<select name="txtCedId" id="txtCedId">
+								<%
+								if(identityCardId.equalsIgnoreCase("V-")){
+								%>
+									<option value="V-" selected="selected">V</option>
+									<option value="E-">E</option>
+								<%	
+								} else {
+								%>	
+									<option value="V-">V</option>
+									<option value="E-" selected="selected">E</option>
+								<%
+								}
+								%>
+								</select>
+								<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
+								<%
+							}else{
 							%>
-							<select name="txtCedId" id="txtCedId">
-							<%
-							if(identityCardId.equalsIgnoreCase("V-")){
-							%>
-								<option value="V-" selected="selected">V</option>
-								<option value="E-">E</option>
-							<%	
-							} else {
-							%>	
-								<option value="V-">V</option>
-								<option value="E-" selected="selected">E</option>
+								<select name="txtCedId" id="txtCedId">
+									<option value="V-">V</option>
+									<option value="E-" >E</option>
+								</select>
+								<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="" /> <br><br>
+							
 							<%
 							}
 							%>
-							</select>
-							<input type="text" name="txtCedIdNum" id="txtCedIdNum" maxlength="50" size="18" value="<%= identityCardNum %>" /> <br><br>
 							<label for="name">Nombre de usuario:</label>
 							<input type="text" name="txtUserName" id="txtUserName" maxlength="50" value="<%= userInfo.getUserName() %>" /> <br><br>
 							<label for="name">Rol:</label>

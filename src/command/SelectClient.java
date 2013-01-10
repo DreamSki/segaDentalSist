@@ -62,7 +62,7 @@ public class SelectClient implements DatabaseCommand {
 				address.setPropertyTypeName(rs.getString(15));
 				address.setPropertyName(rs.getString(16));
 				address.setTower(rs.getString(17));
-				address.setFloor(rs.getInt(18));
+				address.setFloor(rs.getString(18));
 				address.setApartment(rs.getString(19));
 				address.setReferencePoint(rs.getString(20));
 				address.setPostalCode(rs.getString(21));
