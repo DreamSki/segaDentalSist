@@ -5,9 +5,16 @@ public class PhoneType {
 	private int id;
 	private String name;
 	private String number;
+	private int clientId;
 	
 	
 	public PhoneType(){
+	}
+	
+	public PhoneType(int id, String number, int clientId){
+		this.id = id;
+		this.number = number;
+		this.clientId = clientId;
 	}
 	
 	
@@ -55,5 +62,13 @@ public class PhoneType {
 	
 	public String getNumber(){
 		return number;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+
+	public int getClientId() {
+		return clientId;
 	}
 }

@@ -23,6 +23,7 @@ public class Client {
 	private String txtOficPhone;
 	private String txtOtherPhone;
 	private ArrayList<PhoneType> phones;
+	private int isHolder;
 	
 	/**
 	 * 
@@ -189,6 +190,14 @@ public class Client {
 	
 	public String getTxtOtherPhone(){
 		return txtOtherPhone;
+	}
+
+	public void setIsHolder(int isHolder) {
+		this.isHolder = isHolder;
+	}
+
+	public int getIsHolder() {
+		return isHolder;
 	}
 	
 

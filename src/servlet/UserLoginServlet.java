@@ -98,7 +98,7 @@ public class UserLoginServlet extends HttpServlet {
 	 * @param password
 	 * @return
 	 */
-	protected static String getEncryptPassword(String password){
+	public static String getEncryptPassword(String password){
 		MessageDigest md;
 		
 		try {

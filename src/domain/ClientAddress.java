@@ -19,6 +19,7 @@ public class ClientAddress {
 	private String direction;
 	private String referencePoint;
 	private String postalCode;
+	private int clientId;
 	
 	/**
 	 * 
@@ -190,6 +191,14 @@ public class ClientAddress {
 
 	public String getPostalCode() {
 		return postalCode;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+
+	public int getClientId() {
+		return clientId;
 	}
 	
 
