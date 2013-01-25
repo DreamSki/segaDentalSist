@@ -50,17 +50,17 @@ public class SearchClientServlet extends HttpServlet {
 			String identityCardNum = request.getParameter("txtCedClient").replace(".", "");
 			String identityCardId = request.getParameter("txtCedId");
 			String identityCard = identityCardId + identityCardNum;
-			
+
 			String info = (String)request.getAttribute("info")!=null?(String)request.getAttribute("info"):"";
 			String error = (String)request.getAttribute("error")!=null?(String)request.getAttribute("error"):"";
-		
+
 			@SuppressWarnings("unchecked")
 			ArrayList<Client> list = (ArrayList<Client>) CommandExecutor.getInstance().executeDatabaseCommand(new command.SearchClient(identityCard));
-			
+
 			request.setAttribute("clients", list);
 			request.setAttribute("info", info);
 			request.setAttribute("error", error);
-			
+
 			rd = getServletContext().getRequestDispatcher("/searchResult.jsp");			
 			rd.forward(request, response);
 		} catch (Exception e) {
