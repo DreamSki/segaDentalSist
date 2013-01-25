@@ -277,13 +277,5 @@
 		</div>
 	</div>
 	
-	<div id="wait">
-		<div id="signup-ct">
-			<h3 id="see_id" class="sprited" >Cargando</h3>
-			<br><br><br>
-			<span id="mensaje" style="font-size:16px;">Por favor espere...</span> <br><br>
-		</div>
-	</div>
-	
 </body>
 </html>
