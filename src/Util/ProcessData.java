@@ -344,7 +344,7 @@ public class ProcessData {
 				 		user.setUserName(sellerUserName);
 				 		user.setPassword(encryptPassword);
 				 		user.setRoleId(roleId);
-				 		user.setRoomId(null);
+				 		user.setRoomId(7);
 				 		user.setTurn(turn);
 				 		
 				 		sellerId = (Integer) new command.CreateUser(user).executeDatabaseOperation(conexion);
@@ -371,7 +371,7 @@ public class ProcessData {
 		 				//Fecha Venta
 				 		cell = sheet.getCell(4, i);
 				 		String affiliationDateStr = cell.getContents();
-				 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
 				 		Date affiliationDate = dateFormat.parse(affiliationDateStr);
 				 		SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 				 		affiliationDateStr = dateFormat2.format(affiliationDate);

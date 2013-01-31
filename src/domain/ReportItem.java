@@ -146,7 +146,11 @@ public class ReportItem {
 			this.address += ". Código Postal " + postalCode;
 		}
 		
-		this.address += ".";
+		if(this.address != null){
+			this.address += ".";
+		} else {
+			this.address = "";
+		}		
 	}
 	
 	

@@ -51,17 +51,17 @@ label, span {
 			
 					<fieldset style="border:none;">
 					<label for="name">Nombres:</label>
-					<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= clientInfo.getFirstName() %>" /> 
+					<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= clientInfo.getFirstName()==null? "No Dispone" :clientInfo.getFirstName() %>" /> 
 					<label for="LastName">Apellidos:</label>
-					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" value="<%= clientInfo.getLastName() %>" /> <br><br>
+					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" value="<%= clientInfo.getLastName()==null? "No Dispone" :clientInfo.getLastName() %>" /> <br><br>
 					<label for="cedId">C&eacute;dula de identidad:</label>
-					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="28" value="<%= clientInfo.getIdentityCard() %>" /> 
+					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="28" value="<%= clientInfo.getIdentityCard()==null? "No Dispone" :clientInfo.getIdentityCard() %>" /> 
 					<label for="date">Fecha de Nacimiento:</label>
-					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate() %>" /><br><br>
+					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate()==null? "No Dispone" : clientInfo.getBirthdate()%>" /><br><br>
 					<span id="txtGenLabel"> Sexo: </span>
-					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="44" value="<%= clientInfo.getSex() %>" />
+					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="44" value="<%= clientInfo.getSex()==null? "No Dispone" : clientInfo.getSex() %>" />
 					<label for="email">Correo Electrónico:</label>
-					<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
+					<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail()==null ? "No Dispone" : clientInfo.getEmail() %>" /> <br><br>
 					<label for="telfHab">Teléfono de Habitación:</label>
 					<input type="text" name="txtHabPhone" id="txtHabPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtHabPhone()==null ? "No Dispone" :clientInfo.getTxtHabPhone() %>" /> 
 					<span class="telfOfic">Teléfono de Oficina:</span>
@@ -75,34 +75,34 @@ label, span {
 			
 				<fieldset style="border:none;">	
 				<label for="email">	Estado: </label>
-				<input id="txtCity" class="good_input" name="txtCity" type="text"  size="42" value="<%= clientInfo.getAddress().getState() %>"/>
+				<input id="txtCity" class="good_input" name="txtCity" type="text"  size="42" value="<%= clientInfo.getAddress().getState()==null ? "No Dispone" :clientInfo.getAddress().getState() %>"/>
 				<label for="email">Ciudad: </label>
-			    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= clientInfo.getAddress().getCity() %>"/><br><br>
+			    <input id="txtCity" class="good_input" name="txtCity" type="text"  value="<%= clientInfo.getAddress().getCity()==null ? "No Dispone" :clientInfo.getAddress().getCity() %>"/><br><br>
 				<label for="email">Municipio:</label>
-			    <input id="txtMunicipality" class="good_input" name="txtMunicipality" size="39" type="text"  value="<%= clientInfo.getAddress().getMunicipality() %>"/>
+			    <input id="txtMunicipality" class="good_input" name="txtMunicipality" size="39" type="text"  value="<%= clientInfo.getAddress().getMunicipality()==null ? "No Dispone" :clientInfo.getAddress().getMunicipality() %>"/>
 				<label for="email">Urbanizacion:</label>
-			    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text"  value="<%= clientInfo.getAddress().getUrbanization() %>"/><br><br>
+			    <input id="txtUrbanization" class="good_input" name="txtUrbanization" type="text"  value="<%= clientInfo.getAddress().getUrbanization()==null ? "No Dispone" :clientInfo.getAddress().getUrbanization() %>"/><br><br>
 				<label for="email">Calle:</label>
-			    <input id="txtStreet" class="good_input" name="txtStreet" type="text" size="44" value="<%= clientInfo.getAddress().getStreet() %>"/>
+			    <input id="txtStreet" class="good_input" name="txtStreet" type="text" size="44" value="<%= clientInfo.getAddress().getStreet() ==null ? "No Dispone" :clientInfo.getAddress().getStreet()%>"/>
 			    <label for="email">Nombre Propiedad:</label>
-			    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= clientInfo.getAddress().getPropertyName() %>"/><br><br>
+			    <input id="txtPropetyName" class="good_input" name="txtPropetyName" type="text"  value="<%= clientInfo.getAddress().getPropertyName()==null ? "No Dispone" :clientInfo.getAddress().getPropertyName() %>"/><br><br>
 				    <%
 			    	if (clientInfo.getAddress().getPropertyTypeId() == 1 || clientInfo.getAddress().getPropertyTypeId() == 3 
 			    	||  clientInfo.getAddress().getPropertyTypeId() == 5 )
 			    	{
 				    %>
 				<span id="txtRefPointLabel">Punto Referencia:</span>
-				<input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text" style="margin-left: 40px;"  size="24" value="<%= clientInfo.getAddress().getReferencePoint()==null ? "" : clientInfo.getAddress().getReferencePoint() %>"/>
+				<input id="txtReferencePoint" class="good_input" name="txtReferencePoint" type="text" style="margin-left: 40px;"  size="24" value="<%= clientInfo.getAddress().getReferencePoint()==null ? "No Dispone" : clientInfo.getAddress().getReferencePoint() %>"/>
 				 <span id="txtPCLabel">Código Postal:</span>
-				<input id="txtPostalCode" class="good_input" name="txtPostalCode" type="text" style="margin-left: 60px;"  value="<%= clientInfo.getAddress().getPostalCode()==null ? "" : clientInfo.getAddress().getPostalCode() %>"/><br><br>
+				<input id="txtPostalCode" class="good_input" name="txtPostalCode" type="text" style="margin-left: 60px;"  value="<%= clientInfo.getAddress().getPostalCode()==null ? "No Dispone" : clientInfo.getAddress().getPostalCode() %>"/><br><br>
 								
 								
 				<label for="email">Torre:</label>
-				    <input id="txtTower" class="good_input" size="42" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower() %>"/>
+				    <input id="txtTower" class="good_input" size="42" name="txtTower" type="text"  value="<%= clientInfo.getAddress().getTower()==null ? "No Dispone" :clientInfo.getAddress().getTower()==null %>"/>
 				    <span id="txtFloorLabel" style="margin-left: 10px;">Piso:</span>
-				    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor() %>"/>
+				    <input id="txtFloor" class="good_input" name="txtFloor" type="text" size="5" value="<%= clientInfo.getAddress().getFloor()==null ? "No Dispone" : clientInfo.getAddress().getFloor() %>"/>
 				    <span id="txtAPLabel">Apartamento:</span>
-				    <input id="txtApartment" class="good_input" name="txtApartment" type="text" size="5"  value="<%= clientInfo.getAddress().getApartment() %>"/>
+				    <input id="txtApartment" class="good_input" name="txtApartment" type="text" size="5"  value="<%= clientInfo.getAddress().getApartment()==null ? "No Dispone" : clientInfo.getAddress().getApartment() %>"/>
 					
 				</fieldset>	
 					
@@ -114,17 +114,17 @@ label, span {
 				 
 				 <fieldset style="border:none;">
 					<label for="name">Nombres:</label>
-					<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= clientInfo.getFirstName() %>" /> 
+					<input type="text" name="txtName" id="txtName" maxlength="50" size="40" value="<%= clientInfo.getFirstName()==null? "No Dispone" :clientInfo.getFirstName() %>" /> 
 					<label for="LastName">Apellidos:</label>
-					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" value="<%= clientInfo.getLastName() %>" /> <br><br>
+					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="40" value="<%= clientInfo.getLastName()==null? "No Dispone" :clientInfo.getLastName() %>" /> <br><br>
 					<label for="cedId">C&eacute;dula de identidad:</label>
-					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="28" value="<%= clientInfo.getIdentityCard() %>" /> 
+					<input type="text" name="txtLastName" id="txtLastName" maxlength="50" size="28" value="<%= clientInfo.getIdentityCard()==null? "No Dispone" :clientInfo.getIdentityCard() %>" /> 
 					<label for="date">Fecha de Nacimiento:</label>
-					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate() %>" /><br><br>
+					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="10" value="<%= clientInfo.getBirthdate()==null? "No Dispone" : clientInfo.getBirthdate()%>" /><br><br>
 					<span id="txtGenLabel"> Sexo: </span>
-					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="44" value="<%= clientInfo.getSex() %>" />
+					<input  type="text" name="txtDateIni" id="txtDateIni" maxlength="50" size="44" value="<%= clientInfo.getSex()==null? "No Dispone" : clientInfo.getSex() %>" />
 					<label for="email">Correo Electrónico:</label>
-					<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail() %>" /> <br><br>
+					<input type="text" name="txtEmail" id="txtEmail" maxlength="50" size="40" value="<%= clientInfo.getEmail()==null ? "No Dispone" : clientInfo.getEmail() %>" /> <br><br>
 					<label for="telfHab">Teléfono de Habitación:</label>
 					<input type="text" name="txtHabPhone" id="txtHabPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtHabPhone()==null ? "No Dispone" :clientInfo.getTxtHabPhone() %>" /> 
 					<span class="telfOfic">Teléfono de Oficina:</span>
@@ -133,7 +133,7 @@ label, span {
 					<input type="text" name="txtMovPhone" id="txtMovPhone" maxlength="50" size="29" value="<%= clientInfo.getTxtMovPhone()==null ? "No Dispone" : clientInfo.getTxtMovPhone() %>" /> 
 					<span class="telfOtro">Teléfono Otro:</span>
 					<input type="text" name="txtOtherPhone" id="txtOtherPhone" maxlength="50" size="20" value="<%= clientInfo.getTxtOtherPhone()==null ? "No Dispone" : clientInfo.getTxtOtherPhone() %>" /> <br><br>
-				</fieldset>
+			</fieldset>
 						<%					
 								}
 							%>

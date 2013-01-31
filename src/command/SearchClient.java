@@ -41,7 +41,7 @@ public class SearchClient implements DatabaseCommand {
 			list.add(client);
 			sta = conn.prepareStatement("SELECT CB.ID, CB.IDENTITY_CARD, CB.FIRST_NAME, CB.LAST_NAME, CB.EMAIL FROM CLIENT_BENEFICIARY CB" +
 					" WHERE CLIENT_PRODUCT_ID = (SELECT CP.ID FROM CLIENT_PRODUCT CP" +
-					" WHERE CP.ID = (SELECT C.ID FROM CLIENT C WHERE C.IDENTITY_CARD = ?))");
+					" WHERE CP.CLIENT_ID = (SELECT C.ID FROM CLIENT C WHERE C.IDENTITY_CARD = ?))");
 			sta.setString(1, this.identityCard);
 			rs = sta.executeQuery();
 			while(rs.next()) {
