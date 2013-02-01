@@ -100,6 +100,7 @@
 								<th>Cédula</th>
 								<th>Correo</th>
 								<th>Tipo</th>
+								<th>Producto</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -111,6 +112,7 @@
 								<td><p><%= client.getIdentityCard() %></p></td>
 								<td><p><%= (client.getEmail()!=null)?client.getEmail():"No posee"  %></p></td>
 								<td><p><%= client.getType() %></p></td>
+								<td><p><%= client.getProduct().getName() %></p></td>
 								<td><p>
 								<a href="/segaDental/EditClientServlet?clientId=<%=client.getClientId() %>&type=<%=client.getType() %>&print=0" style="color: transparent" >
 									<img alt="logo" src="/segaDental/images/edit.png"  height="16" width="16" />
